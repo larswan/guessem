@@ -4,15 +4,41 @@ class FriendshipsController < ApplicationController
   # GET /friendships or /friendships.json
   def index
     @friendships = Friendship.all
+    render json: @friendships
+
   end
 
   # GET /friendships/1 or /friendships/1.json
   def show
+    userId = params[:id]
+
+    friendshipsA = Friendship.where(p2Id: params[:id])
+    friendshipsB = Friendship.where(p1Id: params[:id])
+
+    friendIds= []
+
+    friendshipsA.each do |friendship|
+        friendIds.append(friendship.p1Id)
+    end
+
+    friendshipsB.each do |friendship|
+        friendIds.append(friendship.p2Id)
+    end
+
+    friends=[]
+
+    friendIds.each do |friendId|
+      friend = User.find_by(id: friendId)
+      friends << friend
+    end
+
+    render json: friends
   end
 
   # GET /friendships/new
   def new
     @friendship = Friendship.new
+    render json: @friendship
   end
 
   # GET /friendships/1/edit

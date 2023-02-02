@@ -11,9 +11,15 @@ const AllGames = () => {
     return(
         <div className="p-3">
             <text className="font-black" >AllGames</text>
+
             <div onClick={() => { newGameNav() }}>
                 <NameBar info="+ New Game" handleClick={newGameNav}/>
             </div>
+
+            {
+                //render current games
+            }
+            
         </div>
     )
 }

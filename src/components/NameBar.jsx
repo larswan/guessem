@@ -1,8 +1,6 @@
-
-
-const NameBar = ({info, handleClick}) => {
+const NameBar = ({info}) => {
     return (
-        <div className="border-black border-2 rounded p-1" onClick={() => {handleClick}} >
+        <div className="border-black border-2 rounded p-1">
             <text>{info}</text>
         </div>
     )
