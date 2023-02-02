@@ -1,0 +1,57 @@
+<%= form_with(model: game) do |form| %>
+  <% if game.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(game.errors.count, "error") %> prohibited this game from being saved:</h2>
+
+      <ul>
+        <% game.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :p2, style: "display: block" %>
+    <%= form.number_field :p2 %>
+  </div>
+
+  <div>
+    <%= form.label :p1, style: "display: block" %>
+    <%= form.number_field :p1 %>
+  </div>
+
+  <div>
+    <%= form.label :p1SecretCard, style: "display: block" %>
+    <%= form.number_field :p1SecretCard %>
+  </div>
+
+  <div>
+    <%= form.label :p2SecretCard, style: "display: block" %>
+    <%= form.number_field :p2SecretCard %>
+  </div>
+
+  <div>
+    <%= form.label :p1Cards, style: "display: block" %>
+    <%= form.text_area :p1Cards %>
+  </div>
+
+  <div>
+    <%= form.label :p2Cards, style: "display: block" %>
+    <%= form.text_area :p2Cards %>
+  </div>
+
+  <div>
+    <%= form.label :iinProgress, style: "display: block" %>
+    <%= form.check_box :iinProgress %>
+  </div>
+
+  <div>
+    <%= form.label :whosTurn, style: "display: block" %>
+    <%= form.number_field :whosTurn %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

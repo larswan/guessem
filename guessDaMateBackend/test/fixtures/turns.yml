@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  roundNum: 1
+  question: MyString
+  answer: MyString
+  winning: false
+  flippedCards: MyText
+
+two:
+  roundNum: 1
+  question: MyString
+  answer: MyString
+  winning: false
+  flippedCards: MyText

@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Card sets</h1>
+
+<div id="card_sets">
+  <% @card_sets.each do |card_set| %>
+    <%= render card_set %>
+    <p>
+      <%= link_to "Show this card set", card_set %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New card set", new_card_set_path %>

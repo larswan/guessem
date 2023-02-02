@@ -1,0 +1,22 @@
+<%= form_with(model: card_set) do |form| %>
+  <% if card_set.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(card_set.errors.count, "error") %> prohibited this card_set from being saved:</h2>
+
+      <ul>
+        <% card_set.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :topicName, style: "display: block" %>
+    <%= form.text_field :topicName %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

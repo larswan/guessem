@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @card_set %>
+
+<div>
+  <%= link_to "Edit this card set", edit_card_set_path(@card_set) %> |
+  <%= link_to "Back to card sets", card_sets_path %>
+
+  <%= button_to "Destroy this card set", @card_set, method: :delete %>
+</div>
