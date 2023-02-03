@@ -40,8 +40,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_01_171700) do
     t.integer "p1"
     t.integer "p1SecretCard"
     t.integer "p2SecretCard"
-    t.text "p1Cards"
-    t.text "p2Cards"
+    t.text "cards"
+    t.text "topic"
     t.boolean "inProgress", default: true
     t.integer "whosTurn"
     t.integer "currentTurn", default: 1

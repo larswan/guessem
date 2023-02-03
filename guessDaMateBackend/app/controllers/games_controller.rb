@@ -1,9 +1,10 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: %i[ show edit update destroy ]
+  before_action :set_game, only: %i[ create show edit update destroy ]
 
   # GET /games or /games.json
   def index
     @games = Game.all
+    render json: @games
   end
 
   # GET /games/1 or /games/1.json
@@ -13,6 +14,7 @@ class GamesController < ApplicationController
   # GET /games/new
   def new
     @game = Game.new
+    render json: @game
   end
 
   # GET /games/1/edit
@@ -21,17 +23,20 @@ class GamesController < ApplicationController
 
   # POST /games or /games.json
   def create
-    @game = Game.new(game_params)
+    game = Game.new(game_params)
+
 
     respond_to do |format|
-      if @game.save
-        format.html { redirect_to game_url(@game), notice: "Game was successfully created." }
-        format.json { render :show, status: :created, location: @game }
+      if game.save
+        # format.html { redirect_to game_url(@game), notice: "Game was successfully created." }
+        format.json { render :show, status: :created, location: game }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
+        # format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: game.errors, status: :unprocessable_entity }
       end
     end
+
+    render json: game.id
   end
 
   # PATCH/PUT /games/1 or /games/1.json
@@ -65,6 +70,6 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:p2, :p1, :p1SecretCard, :p2SecretCard, :p1Cards, :p2Cards, :inProgress, :whosTurn)
+      params.require(:game).permit(:p2, :p1, :p1SecretCard, :p2SecretCard, :cards, :topic, :inProgress, :whosTurn)
     end
 end

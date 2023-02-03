@@ -29,13 +29,10 @@ const SelectCards = () => {
         // console.log(card, "i: " + i)
         if (card.faceUp == true ){setCount(count - 1)}
         else {setCount(count + 1)}
-
         // create a duplicate card with a revered faceUp value
         let newCard = { ...card, "faceUp": !card.faceUp }
-
         // create a new card set
         let newCards = [...cards]
-
         // sub in the new card in a duplicate array
         newCards[i] = newCard
         setCards(() => {return [...newCards] })
@@ -43,31 +40,52 @@ const SelectCards = () => {
 
     useEffect(()=>{
         console.log("count: " + count)
-        if (count == 6){
+        if (count == 3){
             let selectedCards = cards.filter((card)=>{if(card.faceUp == true){return card}})
             let bothSecretCards = randomTwoFromArray(selectedCards)
            
-            console.log(state)
-            let newGame = { ...state, "cards": selectedCards, p1SecretCard: bothSecretCards[0], p2SecretCard: bothSecretCards[1]}
-            console.log(newGame)
-            // remove cards from newGame array replace with selectedCards array
-            //Add those numbers to the newGam object
+            // console.log(state)
+            // let newGame = { ...state, whosTurn: state.user , cards: selectedCards, p1SecretCard: bothSecretCards[0].id, p2SecretCard: bothSecretCards[1].id, p1: state.user, p2: state.friend.id}
+            // console.log(newGame)
+
             // post newGame to db
-            // return game Id from that post and when res.ok route to GameBoard/:GameId
+            const request = async () => {
+                let req = await fetch(`http://localhost:3000/games`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        p1: state.user, 
+                        p2: state.friend.id,
+                        p1SecretCard: bothSecretCards[0].id, p2SecretCard: bothSecretCards[1].id, 
+                        inProgress: true,
+                        whosTurn: state.user, 
+                        currentTurn: 1,
+                        cards: selectedCards, 
+                        topic: state.topic
+                    })
+                })
+                let res = await req.json()
+                console.log(res)
+                
+                // return game Id from that post and when res.ok route to GameBoard/:GameId
+                if(res.ok){
+                    navigate('/play',{state:{
+                        game: res
+                    }})
+                }
+            }
+            request()
         }
     },[count])
 
-
-
-
     return (
-        <div className="p-3">
+        <div className="">
             <h1 className="font-black" >Select 12 Cards:</h1>
-            <div className="flex-grid">    
+            <div className="flex flex-column flex-wrap space-x-1 space-y-1 justify-center">    
                 {
                     cards?.map((card, i)=>{
                         return(
-                            <div key={card.id} onClick={()=>{handleClick(card, i)}}>
+                            <div key={card.id} className="w-3/12" onClick={()=>{handleClick(card, i)}}>
                                 <CardSetDisplay card={card} />
                             </div>
                         )

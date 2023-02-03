@@ -8,6 +8,7 @@ import AllGames from './pages/AllGames'
 import ChooseTopic from './pages/ChooseTopic'
 import SelectCards from './pages/SelectCards'
 import StartGame from './pages/StartGame'
+import TurnRouter from './pages/TurnRouter'
 
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
           <Route path="/new_game" element={<StartGame />} />
           <Route path="/choose_a_topic" element={<ChooseTopic />} />
           <Route path="/select_cards" element={<SelectCards />} />
+
+          <Route path="/play" element={<TurnRouter />} />
 
           <Route path="/profile" element={<Profile />} />
           <Route path="/test" element={<Test />} />
