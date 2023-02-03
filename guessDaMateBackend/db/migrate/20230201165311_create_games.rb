@@ -7,9 +7,9 @@ class CreateGames < ActiveRecord::Migration[7.0]
       t.integer :p2SecretCard
       t.text :p1Cards
       t.text :p2Cards
-      t.boolean :inProgress
+      t.boolean :inProgress, default: true
       t.integer :whosTurn
-      t.integer :currentTurn
+      t.integer :currentTurn, default: 1
       t.integer :friendshipId
 
       t.timestamps

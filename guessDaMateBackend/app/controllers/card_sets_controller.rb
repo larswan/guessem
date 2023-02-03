@@ -4,10 +4,21 @@ class CardSetsController < ApplicationController
   # GET /card_sets or /card_sets.json
   def index
     @card_sets = CardSet.all
+
+    returnArray = []
+
+    @card_sets.each do |set|
+      containedCards = Card.where(cardSetId: set.id)
+      newObj = {id: set.id, topic: set.topicName, cards: containedCards}
+      returnArray << newObj
+    end
+    
+    render json: returnArray
   end
 
   # GET /card_sets/1 or /card_sets/1.json
   def show
+    
   end
 
   # GET /card_sets/new

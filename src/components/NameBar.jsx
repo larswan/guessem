@@ -1,7 +1,7 @@
 const NameBar = ({info}) => {
     return (
-        <div className="border-black border-2 rounded p-1">
-            <text>{info}</text>
+        <div key={info} className="border-black border-2 rounded p-1">
+            <h1>{info}</h1>
         </div>
     )
 }

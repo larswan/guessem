@@ -42,9 +42,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_01_171700) do
     t.integer "p2SecretCard"
     t.text "p1Cards"
     t.text "p2Cards"
-    t.boolean "inProgress"
+    t.boolean "inProgress", default: true
     t.integer "whosTurn"
-    t.integer "currentTurn"
+    t.integer "currentTurn", default: 1
     t.integer "friendshipId"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
