@@ -5,7 +5,7 @@ class CreateGames < ActiveRecord::Migration[7.0]
       t.integer :p1
       t.integer :p1SecretCard
       t.integer :p2SecretCard
-      t.text :cards
+      t.jsonb :cards
       t.text :topic
       t.boolean :inProgress, default: true
       t.integer :whosTurn

@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  before_action :set_game, only: %i[ create show edit update destroy ]
+  before_action :set_game, only: %i[ show edit update destroy ]
 
   # GET /games or /games.json
   def index
@@ -35,8 +35,6 @@ class GamesController < ApplicationController
         format.json { render json: game.errors, status: :unprocessable_entity }
       end
     end
-
-    render json: game.id
   end
 
   # PATCH/PUT /games/1 or /games/1.json
@@ -70,6 +68,6 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:p2, :p1, :p1SecretCard, :p2SecretCard, :cards, :topic, :inProgress, :whosTurn)
+      params.require(:game).permit(:cards, :p2, :p1, :p1SecretCard, :p2SecretCard, :topic, :inProgress, :whosTurn, :currentTurn)
     end
 end

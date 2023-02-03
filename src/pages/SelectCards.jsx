@@ -54,14 +54,14 @@ const SelectCards = () => {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        p1: state.user, 
+                        game: {p1: state.user, 
                         p2: state.friend.id,
                         p1SecretCard: bothSecretCards[0].id, p2SecretCard: bothSecretCards[1].id, 
                         inProgress: true,
                         whosTurn: state.user, 
                         currentTurn: 1,
-                        cards: selectedCards, 
-                        topic: state.topic
+                        cards: 'selectedCards', 
+                        topic: state.topic}
                     })
                 })
                 let res = await req.json()
@@ -72,6 +72,8 @@ const SelectCards = () => {
                     navigate('/play',{state:{
                         game: res
                     }})
+                } else {
+                    console.log('errors', res)
                 }
             }
             request()
