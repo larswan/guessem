@@ -15,16 +15,17 @@ const TurnRouter = () => {
         navigate('/')
     }
 
-    // useEffect(()=>{
-    //     const request = async () => {
-    //         let req= await fetch(`http://localhost.com/games/${state.gameId}`)
-    //         let res = await req.json()
-    //         console.log(res)
+    useEffect(()=>{
+        console.log(state)
+        const request = async () => {
+            let req= await fetch(`http://localhost.com/games/${state.gameId}`)
+            let res = await req.json()
+            console.log(res)
 
-    //         //set the currentPlayer and otherPlayer
-    //     }
-    //     request()
-    // },[])
+            //set the currentPlayer and otherPlayer
+        }
+        request()
+    },[])
 
     return(
         <div>

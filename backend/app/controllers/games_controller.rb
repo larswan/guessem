@@ -13,6 +13,41 @@ class GamesController < ApplicationController
     render json: @game
   end
 
+  def active_games
+    userId = params[:id]
+    games = []
+
+    userIsP1 = Game.where(p1: params[:id], inProgress: true)
+    userIsP2 = Game.where(p2: params[:id], inProgress: true)
+
+    userIsP1.each do |game|
+      newGame = {id: game.id}
+      user = User.find_by!(id: game.p2)
+      newGame["name"] = user.name
+      if game.whosTurn = userId
+        newGame["myTurn"]=true
+      else
+        newGame["myTurn"]=false
+      end
+      games<<newGame
+    end
+
+    userIsP2.each do |game|
+      newGame = {id: game.id}
+      user = User.find_by!(id: game.p1)
+      newGame["name"] = user.name
+      
+      if game.whosTurn = userId
+        newGame["myTurn"]=true
+      else
+        newGame["myTurn"]=false
+      end
+      games<<newGame
+    end    
+    
+    render json: games
+  end
+
   # POST /games
   def create
     @game = Game.new(game_params)

@@ -40,15 +40,10 @@ const SelectCards = () => {
 
     useEffect(()=>{
         console.log("count: " + count)
-        if (count == 3){
+        if (count == 12){
             let selectedCards = cards.filter((card)=>{if(card.faceUp == true){return card}})
             let bothSecretCards = randomTwoFromArray(selectedCards)
            
-            // console.log(state)
-            // let newGame = { ...state, whosTurn: state.user , cards: selectedCards, p1SecretCard: bothSecretCards[0].id, p2SecretCard: bothSecretCards[1].id, p1: state.user, p2: state.friend.id}
-            // console.log(newGame)
-
-            // post newGame to db
             const request = async () => {
                 let req = await fetch(`http://localhost:3000/games`, {
                     method: "POST",
@@ -65,18 +60,14 @@ const SelectCards = () => {
                     })
                 })
                 let res = await req.json()
-                // let cardShot = await res.cards.json()
-                console.log(res.cards)
-                // console.log(res.cards)
-                // console.log(res)
                 
                 // return game Id from that post and when res.ok route to GameBoard/:GameId
-                if(res.ok){
+                if(req.ok){
                     navigate('/play',{state:{
                         game: res
                     }})
                 } else {
-                    // console.log(res)
+                    console.log(req)
                 }
             }
             request()
