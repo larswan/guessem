@@ -10,7 +10,14 @@ class GamesController < ApplicationController
 
   # GET /games/1
   def show
-    render json: @game
+    newGame = @game.dup
+    player1 = User.find_by!(id: @game.p1)
+    player2= User.find_by!(id: @game.p2)
+    
+    turn = Turn.find_by!(gameId: @game.id, turn: @game.currentTurn)
+
+    render json: {game: @game,p1Name: player1.name, p2Name: player2.name}
+
   end
 
   def active_games
@@ -49,13 +56,14 @@ class GamesController < ApplicationController
   end
 
   # POST /games
-  def create
-    @game = Game.new(game_params)
-
-    if @game.save
-      render json: @game, status: :created, location: @game
+  def newGame
+    gamey = Game.create(game_params)
+    turn1 = Turn.create(turn: 1, gameId: gamey.id, playerId: gamey.p1, flippedCards: gamey.cards)
+    turn2 = Turn.create(turn: 2, gameId: gamey.id, playerId: gamey.p2, flippedCards: gamey.cards)
+    if gamey
+      render json: {game: gamey, turn1: turn1, turn2: turn2}
     else
-      render json: @game.errors.full_messages, status: :unprocessable_entity
+      render json: gamey.errors.full_messages, status: :unprocessable_entity
     end
   end
 

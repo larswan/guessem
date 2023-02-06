@@ -45,7 +45,7 @@ const SelectCards = () => {
             let bothSecretCards = randomTwoFromArray(selectedCards)
            
             const request = async () => {
-                let req = await fetch(`http://localhost:3000/games`, {
+                let req = await fetch(`http://localhost:3000/newGame`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
@@ -60,11 +60,11 @@ const SelectCards = () => {
                     })
                 })
                 let res = await req.json()
-                
-                // return game Id from that post and when res.ok route to GameBoard/:GameId
+            
                 if(req.ok){
+                    console.log(res)
                     navigate('/play',{state:{
-                        game: res
+                        gameId: res.game.id
                     }})
                 } else {
                     console.log(req)
