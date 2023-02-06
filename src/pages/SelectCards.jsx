@@ -60,7 +60,7 @@ const SelectCards = () => {
                         inProgress: true,
                         whosTurn: state.user, 
                         currentTurn: 1,
-                        cards: JSON.stringify({cards: selectedCards}), 
+                        cards: selectedCards, 
                         topic: state.topic}
                     })
                 })
