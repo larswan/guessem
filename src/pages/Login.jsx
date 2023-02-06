@@ -29,7 +29,9 @@ const Login = ({}) => {
         console.log('success:', res);
         setUserObj(res.profileObj);
         console.log(res)
-        navigate("/")
+        navigate("/", {state: {
+            user: userObj
+        }})
         // console.log(res.profileObj.imageUrl)
     }
     const onFailure = (err) => {

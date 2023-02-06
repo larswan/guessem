@@ -1,11 +1,13 @@
-import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
 import NameBar from "../components/NameBar"
+import { useLocation } from "react-router-dom"
 
 const AllGames = () => {
     const navigate = useNavigate()
     const [currentGames, setCurrentGames] = useState([])
     const [userId, setUserId] = useState(1)
+    const [state] = useLocation()
 
     useEffect(()=>{
         const request = async()=>{
