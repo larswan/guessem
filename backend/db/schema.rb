@@ -36,7 +36,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_214142) do
   end
 
   create_table "games", force: :cascade do |t|
-    t.jsonb "cards"
+    t.jsonb "cards", default: {}
     t.integer "p1"
     t.integer "p2"
     t.boolean "p1Turn", default: true
@@ -44,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_214142) do
     t.integer "p1SecretCard"
     t.integer "p2SecretCard"
     t.string "topic"
+    t.integer "whosTurn"
     t.boolean "inProgress", default: true
     t.integer "currentTurn", default: 1
     t.datetime "created_at", null: false

@@ -20,7 +20,7 @@ class GamesController < ApplicationController
     if @game.save
       render json: @game, status: :created, location: @game
     else
-      render json: @game.errors, status: :unprocessable_entity
+      render json: @game.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -46,6 +46,6 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:cards, :p1, :p2, :p1Turn, :p2Turn, :p1SecretCard, :p2SecretCard, :topic, :inProgress, :currentTurn)
+      params.require(:game).permit(:cards, :whosTurn, :p1, :p2, :p1Turn, :p2Turn, :p1SecretCard, :p2SecretCard, :topic, :inProgress, :currentTurn)
     end
 end

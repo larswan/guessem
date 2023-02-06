@@ -60,12 +60,15 @@ const SelectCards = () => {
                         inProgress: true,
                         whosTurn: state.user, 
                         currentTurn: 1,
-                        cards: 'selectedCards', 
+                        cards: JSON.stringify({cards: selectedCards}), 
                         topic: state.topic}
                     })
                 })
                 let res = await req.json()
-                console.log(res)
+                // let cardShot = await res.cards.json()
+                console.log(res.cards)
+                // console.log(res.cards)
+                // console.log(res)
                 
                 // return game Id from that post and when res.ok route to GameBoard/:GameId
                 if(res.ok){
@@ -73,7 +76,7 @@ const SelectCards = () => {
                         game: res
                     }})
                 } else {
-                    console.log('errors', res)
+                    // console.log(res)
                 }
             }
             request()
