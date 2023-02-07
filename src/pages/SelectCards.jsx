@@ -55,7 +55,7 @@ const SelectCards = () => {
                         inProgress: true,
                         whosTurn: state.user, 
                         currentTurn: 1,
-                        cards: selectedCards, 
+                        cards: 1,
                         topic: state.topic}
                     })
                 })

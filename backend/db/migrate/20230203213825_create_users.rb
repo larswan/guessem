@@ -5,6 +5,9 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :googleImageUrl
       t.string :token
+      t.string :googleId
+      t.string :givenName
+      t.string :familyName
 
       t.timestamps
     end

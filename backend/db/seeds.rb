@@ -1,6 +1,6 @@
 puts '🍪 Seeding...'
 
-user1 = User.create(name: "Larson Collier", email: 'collierlarson@gmail.com', googleImageUrl: 'https://media.licdn.com/dms/image/C5603AQHy3I_9KYNZDw/profile-displayphoto-shrink_800_800/0/1650562052908?e=2147483647&v=beta&t=kzemsgYThQ0sFb_jGyaHVDXsWWaOswQZiz_VI7C3Ij8', token: "tokentoken")
+user1 = User.create(name: "Larson Collier", email: 'collier.larson@gmail.com', givenName: 'Larson', familyName: 'Collier', googleId: '106319424501130968820', googleImageUrl: 'https://lh3.googleusercontent.com/a/AEdFTp5a4dYww8NfYeiv-SWZgqL-L5GUeAT_E3GznpPWGAo=s96-c', token: "tokentoken")
 user2 = User.create(name: "Katherine Tsai", email: 'katherine@gmail.com', googleImageUrl: 'https://wallpapers.com/images/featured/4co57dtwk64fb7lv.jpg', token: "tokentoken")
 user3 = User.create(name: "Vincent Lee", email: 'vincent@gmail.com', googleImageUrl: 'https://wallpapers.com/images/featured/4co57dtwk64fb7lv.jpg', token: "tokentoken")
 user4 = User.create(name: "Serrin Doscher", email: 'serrin@gmail.com', googleImageUrl: 'https://i.pinimg.com/736x/5a/e5/98/5ae598ff624217b9a5c008beb8c512d0.jpg', token: "tokentoken")
@@ -34,6 +34,6 @@ Card.create(cardSetId: cardset.id, name: 'Pasta',image: 'guessDaMateBackend/app/
 Card.create(cardSetId: cardset.id, name: 'Pho',image: 'guessDaMateBackend/app/assets/images/white-pho.jpg')
 Card.create(cardSetId: cardset.id, name: 'Pickled Eggs',image: 'guessDaMateBackend/app/assets/images/white-pickled eggs.jpg')
 
-game1=Game.create(p1: user1.id, p2: user2.id, p1SecretCard: card1, p2SecretCard: card2)
+# game1=Game.create(p1: user1.id, p2: user2.id, p1SecretCard: card1, p2SecretCard: card2)
 
 puts '🍪 Done seeding!'

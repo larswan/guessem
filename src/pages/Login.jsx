@@ -7,28 +7,30 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 const Login = ({}) => {
     const navigate = useNavigate()
-    const clientId = import.meta.env.GOOGLE__CLIENT_ID
-    const [userObj, setUserObj] = useState()
+    const clientId = import.meta.env.VITE_GAPI_CLIENT_ID
+    const [userObj, setUserObj] = useState(null)
     
     useEffect(() => {
         const initClient = () => {
             gapi.client.init({
-                clientId: clientId,
-                scope: ''
+                client_id: clientId,
+                redirect_uri: "http://localhost:5173",
+                scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me'
             });
         };
         gapi.load('client:auth2', initClient);
     });
 
     const logOut = () => {
-        setProfile(null);
+        // setUserObj(null);
         navigate("/")
     };
 
     const onSuccess = async (res) => {
-        console.log('success:', res);
-        setUserObj(res.profileObj);
         console.log(res)
+        
+        
+        setUserObj(res.profileObj);
         navigate("/", {state: {
             user: userObj
         }})
@@ -41,7 +43,7 @@ const Login = ({}) => {
     return (
         <div className="footerContainer">
             <div className="login">
-                {profile ? (<GoogleLogout clientId={clientId} buttonText="Log out" onLogoutSuccess={logOut} />) : (
+                {userObj ? (<GoogleLogout clientId={clientId} buttonText="Log out" onLogoutSuccess={logOut} />) : (
                     <GoogleLogin
                         clientId={clientId}
                         buttonText="Sign in with Google"
