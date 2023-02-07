@@ -1,13 +1,12 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import NameBar from "../components/NameBar"
-import { useLocation } from "react-router-dom"
 
 const AllGames = () => {
     const navigate = useNavigate()
     const [currentGames, setCurrentGames] = useState([])
     const [userId, setUserId] = useState(1)
-    const [state] = useLocation()
+    const {state} = useLocation()
 
     useEffect(()=>{
         const request = async()=>{
@@ -17,8 +16,7 @@ const AllGames = () => {
                 console.log(res)
                 setCurrentGames(res)
             }
-            else
-            {err=>{console.log(err)}}
+            else {err=>{console.log(err)}}
         }   
         request()
     },[])
@@ -29,10 +27,7 @@ const AllGames = () => {
 
     const handleClick = (id) => {
         navigate("/play", {state: {
-            gameId: id
-        }})
-
-    }
+            gameId: id }})}
 
     return(
         <div className="p-3">
