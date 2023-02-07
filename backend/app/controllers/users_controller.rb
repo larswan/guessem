@@ -8,6 +8,16 @@ class UsersController < ApplicationController
     render json: @users
   end
 
+  def login
+    user = User.find_by(googleId: params[:googleId])
+    if user
+      render json: {user: user, message: "Suck my ween ruby"}, status: 200
+    else
+      newUser = User.create(user_params)
+      render json: {user: newUser, message: "Welcome, "+ user.name + "!"}, status: 200
+    end
+  end
+
   # GET /users/1
   def show
     render json: @user

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/active_games/:id', to: 'games#active_games'
   post '/first_turns', to: 'turns#first_turns'
   post "/newGame", to: 'games#newGame'
+  post '/login', to: 'users#login'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
