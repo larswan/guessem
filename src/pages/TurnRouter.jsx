@@ -6,25 +6,25 @@ import WaitingForOtherPlayer from "./WaitingForOtherPlayer"
 const TurnRouter = () => {
     const navigate = useNavigate()
     const { state } = useLocation();
-
-    // let currentPlayer
-    // const otherplayer
-
+    let currentPlayer
+    let otherplayer
 
     const backHandler = () => {
         navigate('/')
     }
 
-    // useEffect(()=>{
-    //     const request = async () => {
-    //         let req= await fetch(`http://localhost.com/games/${state.gameId}`)
-    //         let res = await req.json()
-    //         console.log(res)
+    useEffect(()=>{
+        let id = state.gameId
+        console.log(id)
+        const request = async () => {
+            let req= await fetch(`http://localhost:3000/games/${id}`)
+            let res = await req.json()
+            console.log(res)
 
-    //         //set the currentPlayer and otherPlayer
-    //     }
-    //     request()
-    // },[])
+            //set the currentPlayer and otherPlayer
+        }
+        request()
+    },[])
 
     return(
         <div>

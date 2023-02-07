@@ -10,17 +10,60 @@ class GamesController < ApplicationController
 
   # GET /games/1
   def show
-    render json: @game
+    newGame = @game.dup
+    player1 = User.find_by!(id: @game.p1)
+    player2= User.find_by!(id: @game.p2)
+    
+    turn = Turn.find_by!(gameId: @game.id, turn: @game.currentTurn)
+
+    render json: {game: @game,p1Name: player1.name, p2Name: player2.name}
+
+  end
+
+  def active_games
+    userId = params[:id]
+    games = []
+
+    userIsP1 = Game.where(p1: params[:id], inProgress: true)
+    userIsP2 = Game.where(p2: params[:id], inProgress: true)
+
+    userIsP1.each do |game|
+      newGame = {id: game.id}
+      user = User.find_by!(id: game.p2)
+      newGame["name"] = user.name
+      if game.whosTurn = userId
+        newGame["myTurn"]=true
+      else
+        newGame["myTurn"]=false
+      end
+      games<<newGame
+    end
+
+    userIsP2.each do |game|
+      newGame = {id: game.id}
+      user = User.find_by!(id: game.p1)
+      newGame["name"] = user.name
+      
+      if game.whosTurn = userId
+        newGame["myTurn"]=true
+      else
+        newGame["myTurn"]=false
+      end
+      games<<newGame
+    end    
+    
+    render json: games
   end
 
   # POST /games
-  def create
-    @game = Game.new(game_params)
-
-    if @game.save
-      render json: @game, status: :created, location: @game
+  def newGame
+    gamey = Game.create(game_params)
+    turn1 = Turn.create(turn: 1, gameId: gamey.id, playerId: gamey.p1, flippedCards: gamey.cards)
+    turn2 = Turn.create(turn: 2, gameId: gamey.id, playerId: gamey.p2, flippedCards: gamey.cards)
+    if gamey
+      render json: {game: gamey, turn1: turn1, turn2: turn2}
     else
-      render json: @game.errors, status: :unprocessable_entity
+      render json: gamey.errors.full_messages, status: :unprocessable_entity
     end
   end
 
@@ -46,6 +89,6 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:cards, :p1, :p2, :p1Turn, :p2Turn, :p1SecretCard, :p2SecretCard, :topic, :inProgress, :currentTurn)
+      params.require(:game).permit(:whosTurn, :p1, :p2, :p1Turn, :p2Turn, :p1SecretCard, :p2SecretCard, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
     end
 end

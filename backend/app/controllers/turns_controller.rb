@@ -13,6 +13,13 @@ class TurnsController < ApplicationController
     render json: @turn
   end
 
+  # def first_turns
+  #   turn1 = Turn.create(answer: "its atleast making new turns", turn: 1, gameId: params[:gameId], playerId: params[:p1], flippedCards: params[:flippedCards])
+  #   turn2 = Turn.create(turn: 2, gameId: params[:gameId], playerId: params[:p2], flippedCards: params[:flippedCards])
+  #   render json: {turn1: turn1, turn2: turn2}
+  # end
+  
+
   # POST /turns
   def create
     @turn = Turn.new(turn_params)
@@ -46,6 +53,6 @@ class TurnsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def turn_params
-      params.require(:turn).permit(:active, :gameId, :turn, :playerId, :question, :answer, :flippedCards, :winning)
+      params.require(:turn).permit(:p1, :p2, :active, :gameId, :turn, :playerId, :question, :answer, :flippedCards, :winning)
     end
 end
