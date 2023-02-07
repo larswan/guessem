@@ -6,8 +6,7 @@ import WaitingForOtherPlayer from "./WaitingForOtherPlayer"
 const TurnRouter = () => {
     const navigate = useNavigate()
     const { state } = useLocation();
-    let currentPlayer
-    let otherplayer
+    const [gameData, setGameData] = useState()
 
     const backHandler = () => {
         navigate('/')
@@ -19,10 +18,12 @@ const TurnRouter = () => {
         const request = async () => {
             let req= await fetch(`http://localhost:3000/games/${id}`)
             let res = await req.json()
-            console.log(res)
+            console.log(res)   
+            setGameData(res)      
+            }
 
-            //set the currentPlayer and otherPlayer
-        }
+        // if user.id == gameData.game.whosTurn && gameData.game.currentTurn == 1 => navigate(questionScreen)
+        // elseif user.id == gameData.game.whosTurn navigate(answerScreen)
         request()
     },[])
 

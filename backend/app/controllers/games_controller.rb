@@ -16,7 +16,7 @@ class GamesController < ApplicationController
     
     turn = Turn.find_by!(gameId: @game.id, turn: @game.currentTurn)
 
-    render json: {game: @game,p1Name: player1.name, p2Name: player2.name}
+    render json: {game: @game, p1: player1, p2: player2}
 
   end
 
