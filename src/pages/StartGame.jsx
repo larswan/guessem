@@ -30,7 +30,7 @@ const StartGame = () => {
 
     const handleClick = (friend) => {
         navigate("/choose_a_topic", { state:{
-            user: userId,
+            user: user.id,
             friend: friend
         }
         })
