@@ -19,6 +19,7 @@ const AddFriend = ({user}) =>{
         })
         let res = await req.json()
         console.log(res)
+        setText('')
     }
 
     return(

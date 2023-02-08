@@ -49,7 +49,7 @@ class FriendshipsController < ApplicationController
       return
     end
 
-    if !friend and !friend2
+    if !friend1 and !friend2
       render json: {error: "There is no user with this e-mail"}, status: 200
       return
     end
