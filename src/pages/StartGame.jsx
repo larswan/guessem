@@ -27,6 +27,8 @@ const StartGame = () => {
             let res = await req.json()
             console.log(req.ok)
             if (req.ok) {setFriends(res)}
+            else if (req.error){alert(req.error)}
+            console.log(friends)
         }
         request()
     },[])
@@ -56,7 +58,7 @@ const StartGame = () => {
             ) : (
                 <div>You don't have any friends.. and you never will... unless you add them by e-mail.</div>
             )}
-            <AddFriend user={user} />
+            <AddFriend user={user} setFriends={setFriends}/>
         </div>
     )
 }

@@ -7,6 +7,7 @@ import Cookies from 'js-cookie'
 import GuessQ from "./GuessQ"
 import Wait from "./Wait"
 import AnswerQ from "./AnswerQ"
+import Header from "../components/Header"
 
 const TurnRouter = () => {
     const navigate = useNavigate()
@@ -64,6 +65,7 @@ const TurnRouter = () => {
                 {
                     gameData? 
                     <div>
+                        <Header />
                         <h1> Whos turn: {gameData.game.whosTurn}</h1>
                         <h1>Current Player Id: {user.id}</h1>
                         <h1>Turn #: {gameData.game.currentTurn}</h1>

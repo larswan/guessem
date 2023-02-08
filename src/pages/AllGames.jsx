@@ -22,7 +22,7 @@ const AllGames = ({ userObj, setUserObj }) => {
             let req = await fetch(`http://localhost:3000/active_games/${cookieUserId}`)
             let res= await req.json()
             if(req.ok) {
-                // console.log(res)
+                console.log(res)
                 setCurrentGames(res)
             }
             else {err=>{console.log(err)}}
@@ -51,8 +51,8 @@ const AllGames = ({ userObj, setUserObj }) => {
                 currentGames?.map((game)=>{
                     if(game.myTurn == true)
                     return(
-                        <div onClick={() => { handleClick(game.id) }}>
-                            <NameBar info={game.name} />
+                        <div key={game.opponentName} onClick={() => { handleClick(game.id) }}>
+                            <NameBar info={game.opponentName}/>
                         </div>
                     )
                 })
@@ -62,10 +62,10 @@ const AllGames = ({ userObj, setUserObj }) => {
             {
                 //render current games (only if active, send back other users name, and game id)
                 currentGames?.map((game)=>{
-                    if (game.myTurn == false)
+                    if (game.whosTurn == user.id)
                     return(
                         <div onClick={() => { handleClick(game.id) }}>
-                            <NameBar info={game.name} />
+                            <NameBar info={game.opponentName} />
                         </div>                    )
                 })
             }

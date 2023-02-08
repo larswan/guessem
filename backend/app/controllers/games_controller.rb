@@ -37,10 +37,10 @@ class GamesController < ApplicationController
     userIsP2 = Game.where(p2: params[:id], inProgress: true)
 
     userIsP1.each do |game|
-      newGame = {id: game.id}
+      newGame = {id: game.id, whosTurn: game.whosTurn}
       user = User.find_by!(id: game.p2)
-      newGame["name"] = user.name
-      if game.whosTurn = userId
+      newGame["opponentName"] = user.name
+      if game.whosTurn == userId
         newGame["myTurn"]=true
       else
         newGame["myTurn"]=false
@@ -49,11 +49,11 @@ class GamesController < ApplicationController
     end
 
     userIsP2.each do |game|
-      newGame = {id: game.id}
+      newGame = {id: game.id, whosTurn: game.whosTurn}
       user = User.find_by!(id: game.p1)
-      newGame["name"] = user.name
+      newGame["opponentName"] = user.name
       
-      if game.whosTurn = userId
+      if game.whosTurn == userId
         newGame["myTurn"]=true
       else
         newGame["myTurn"]=false

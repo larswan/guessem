@@ -1,11 +1,17 @@
 import { useState } from "react"
 
-const AddFriend = ({user}) =>{
+const AddFriend = ({user, setFriends}) =>{
     const [text, setText] = useState('')
     // const user = {id: 1}
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        // const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        // if (!emailRegex.test(text)) {
+        //     alert("Email is not in the correct format");
+        //     return;
+        // }
 
         let req= await fetch("http://localhost:3000/friendships", {
             method: 'POST',
@@ -24,9 +30,9 @@ const AddFriend = ({user}) =>{
 
     return(
         <div>
-            <form onSubmit={handleSubmit} name="addFriend">
-                <input  name="email" type="email" placeholder="Add friend by e-mail" value={text} onChange={(e)=>{setText(e.target.value)}}></input>
-                <button className="font-black  text-white bg-green-600">+ ADD</button>
+            <form className="py-2" onSubmit={handleSubmit} name="addFriend">
+                <input  className="p-1" name="email" type="email" required placeholder="Add friend by e-mail" value={text} onChange={(e)=>{setText(e.target.value)}}></input>
+                <button className="font-black rounded-sm text-white bg-green-600 py-1 px-2 ml-2">+ ADD</button>
             </form>        
         </div>
     )
