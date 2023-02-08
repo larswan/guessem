@@ -25,6 +25,7 @@ const AddFriend = ({user, setFriends}) =>{
         })
         let res = await req.json()
         console.log(res)
+        if (res.ok && !res.error){setFriends((prev)=>{[...prev, res]})}
         setText('')
     }
 
