@@ -37,12 +37,16 @@ class FriendshipsController < ApplicationController
 
   # POST /friendships
   def create
-    @friendship = Friendship.new(friendship_params)
 
-    if @friendship.save
-      render json: @friendship, status: :created, location: @friendship
+    friend1 = User.find_by(id: params[:p1Id])
+    friend2 = User.find_by(email: params[:p2email])
+
+    friendship = Friendship.new(p1Id: friend1.id, p2Id: friend2.id)
+
+    if friendship.save
+      render json: friendship, status: :created, location: friendship
     else
-      render json: @friendship.errors, status: :unprocessable_entity
+      render json: friendship.errors, status: :unprocessable_entity
     end
   end
 

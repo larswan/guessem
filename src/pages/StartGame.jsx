@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import NameBar from "../components/NameBar"
+import AddFriend from "../components/AddFriend"
 
 const StartGame = () => {
     const navigate = useNavigate()
@@ -43,6 +44,7 @@ const StartGame = () => {
                     )
                 })
             }
+            <AddFriend />
         </div>
     )
 }
