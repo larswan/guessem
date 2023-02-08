@@ -40,6 +40,7 @@ const AllGames = ({ userObj, setUserObj }) => {
 
     return(
         <div className="p-3">
+            {user?<h1>signed in as {user.name}</h1>: null}
             {/* <h1 className="font-black" >AllGames</h1> */}
             <div onClick={() => { newGameNav() }}>
                 <NameBar info="+ New Game" handleClick={newGameNav}/>
@@ -49,7 +50,7 @@ const AllGames = ({ userObj, setUserObj }) => {
             {
                 //render current games (only if active, send back other users name, and game id)
                 currentGames?.map((game)=>{
-                    if(game.myTurn == true)
+                    if(game.myTurn == false)
                     return(
                         <div key={game.opponentName} onClick={() => { handleClick(game.id) }}>
                             <NameBar info={game.opponentName}/>
