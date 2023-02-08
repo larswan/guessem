@@ -23,7 +23,9 @@ const Login = ({ userObj, setUserObj } ) => {
     });
 
     const logOut = () => {
-        Cookies.remove('user')
+        Cookies.remove('userId')
+        Cookies.remove('userName')
+        Cookies.remove('userImage')
         setUserObj(null);
         navigate("/login")
         
@@ -54,7 +56,9 @@ const Login = ({ userObj, setUserObj } ) => {
             console.log(postRes)
 
             // add user object cookie
-            Cookies.set('user', postRes.id)
+            Cookies.set('userId', postRes.id)
+            Cookies.set('userName', postRes.name)
+            Cookies.set('userImage', postRes.googleImageUrl)
             navigate("/")
         }
         request()

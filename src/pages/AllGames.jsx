@@ -8,16 +8,18 @@ import Cookies from 'js-cookie'
 const AllGames = ({ userObj, setUserObj }) => {
     const navigate = useNavigate()
     const [currentGames, setCurrentGames] = useState([])
-    const [userId, setUserId] = useState()
+    const [user, setUser] = useState()
 
     useEffect(()=>{
-        let cookieUser = Cookies.get('user')
+        let cookieUserId = Cookies.get('userId')
+        let cookieUserName = Cookies.get('userName')
+        let cookieUserImage = Cookies.get('userImage')
 
-        if (!cookieUser){navigate('/login')}
-        else {setUserId(cookieUser)}        
+        if (!cookieUserId) { navigate('/login') }
+        else { setUser({ id: cookieUserId, name: cookieUserName, image: cookieUserImage }) } 
         
         const request = async()=>{
-            let req = await fetch(`http://localhost:3000/active_games/${userId}`)
+            let req = await fetch(`http://localhost:3000/active_games/${cookieUserId}`)
             let res= await req.json()
             if(req.ok) {
                 // console.log(res)
