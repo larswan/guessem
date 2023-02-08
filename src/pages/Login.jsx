@@ -40,6 +40,7 @@ const Login = ({}) => {
                 },
                 body: JSON.stringify({
                     email: userObj.profileObj.email,
+                    name: userObj.profileObj.name,
                     googleId: userObj.profileObj.googleId,
                     givenName: userObj.profileObj.givenName,
                     familyName: userObj.profileObj.familyName,
