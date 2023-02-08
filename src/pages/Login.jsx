@@ -35,14 +35,16 @@ const Login = ({}) => {
         let request = async () =>{
             let req = await fetch('http://localhost:3000/login', {
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
-                    password: "111",
-                    email: "collier.larson@gmail.com",
-                    googleId: "106319424501130968820",
-                    givenName: "Larson",
-                    familyName: "Collier",
-                    googleImageUrl: "https://lh3.googleusercontent.com/a/AEdFTp5a4dYww8NfYeiv-SWZgqL-L5GUeAT_E3GznpPWGAo=s96-c",
-                    token: "postedToken"
+                    email: userObj.profileObj.email,
+                    googleId: userObj.profileObj.googleId,
+                    givenName: userObj.profileObj.givenName,
+                    familyName: userObj.profileObj.familyName,
+                    googleImageUrl: userObj.profileObj.imageUrl,
+                    token: "posted Token"
                 })
             })
             let res = await req.json()

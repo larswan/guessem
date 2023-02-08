@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def login
     user = User.find_by(googleId: params[:googleId])
     if user
-      render json: {user: user, message: "Suck my ween ruby"}, status: 200
+      render json: {user: user, message: "Welcome back " + user.givenName + "!"}, status: 200
     else 
       newUser = User.new(user_params)
       # newUser = User.new(googleId: params[:googleId], email: params[:email], name: params[:name], googleImageUrl: params[:googleImageUrl], token: params[:token], googleId: params[:googleId], givenName: params[:givenName], familyName: params[:familyName])
