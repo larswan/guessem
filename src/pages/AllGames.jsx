@@ -8,7 +8,7 @@ import Cookies from 'js-cookie'
 const AllGames = ({ userObj, setUserObj }) => {
     const navigate = useNavigate()
     const [currentGames, setCurrentGames] = useState([])
-    const [userId, setUserId] = useState(1)
+    const [userId, setUserId] = useState()
 
     useEffect(()=>{
         let cookieUser = Cookies.get('user')
