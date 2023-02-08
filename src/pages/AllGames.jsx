@@ -1,8 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import NameBar from "../components/NameBar"
+import LogoutButton from "../components/LogoutButton"
 
-const AllGames = () => {
+const AllGames = ({ userObj, setUserObj }) => {
     const navigate = useNavigate()
     const [currentGames, setCurrentGames] = useState([])
     const [userId, setUserId] = useState(1)
@@ -60,6 +61,7 @@ const AllGames = () => {
                         </div>                    )
                 })
             }
+            <LogoutButton userObj={userObj} setUserObj={setUserObj} />
         </div>
     )
 }

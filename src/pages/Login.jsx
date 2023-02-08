@@ -5,10 +5,9 @@ import { gapi } from 'gapi-script';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 
-const Login = ({}) => {
+const Login = ({ userObj, setUserObj } ) => {
     const navigate = useNavigate()
     const clientId = import.meta.env.VITE_GAPI_CLIENT_ID
-    const [userObj, setUserObj] = useState(null)
     
     // request token from google
     useEffect(() => {
@@ -24,44 +23,36 @@ const Login = ({}) => {
 
     const logOut = () => {
         setUserObj(null);
-        // navigate("/")
+        navigate("/login")
     };
 
     const onSuccess = async (res) => {
         setUserObj(res);
-    }
+        // console.log(res)
 
-    useEffect(() => {
-        let request = async () =>{
+        let request = async () => {
             let req = await fetch('http://localhost:3000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    email: userObj.profileObj.email,
-                    name: userObj.profileObj.name,
-                    googleId: userObj.profileObj.googleId,
-                    givenName: userObj.profileObj.givenName,
-                    familyName: userObj.profileObj.familyName,
-                    googleImageUrl: userObj.profileObj.imageUrl,
+                    email: res.profileObj.email,
+                    name: res.profileObj.name,
+                    googleId: res.profileObj.googleId,
+                    givenName: res.profileObj.givenName,
+                    familyName: res.profileObj.familyName,
+                    googleImageUrl: res.profileObj.imageUrl,
                     token: "posted Token"
                 })
             })
-            let res = await req.json()
-            console.log("res is below!")
-            console.log(res)
+            let postRes = await req.json()
+            console.log(postRes)
+            // add user object cookie
+            navigate("/")
         }
-        
-        if (userObj != null){
-            console.log(userObj.profileObj)
-            request()
-        } 
-        
-        // navigate("/", {
-        //     state: {user: userObj}
-        // })
-    },[userObj])
+        request()
+    }
 
     const onFailure = (err) => {
         console.log('failed:', err);
