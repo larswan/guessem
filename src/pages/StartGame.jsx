@@ -18,7 +18,7 @@ const StartGame = () => {
         else { setUserId(cookieUser) }      
 
         const request= async()=>{
-            let req = await fetch(`http://localhost:3000/friendships/${userId}`)
+            let req = await fetch(`http://localhost:3000/friendships/${cookieUser}`)
             let res = await req.json()
             console.log(res)
             setFriends(res)
@@ -39,7 +39,7 @@ const StartGame = () => {
         <div className="p-3">
             <BackButton />
             <h1 className="font-black" >Choose a Friend:</h1>
-            {/* {   
+            {   
                 friends?.map((friend)=>{
                     return(
                         <div onClick={() => {handleClick(friend)}} key={friend.id}>
@@ -47,7 +47,7 @@ const StartGame = () => {
                         </div>
                     )
                 })
-            } */}
+            }
             <AddFriend />
         </div>
     )
