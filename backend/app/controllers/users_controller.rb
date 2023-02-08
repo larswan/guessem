@@ -11,13 +11,13 @@ class UsersController < ApplicationController
   def login
     user = User.find_by(googleId: params[:googleId])
     if user
-      render json: {user: user, message: "Welcome back " + user.givenName + "!"}, status: 200
+      render json: user, status: 200
     else 
       newUser = User.new(googleId: params[:googleId], email: params[:email], name: params[:name], googleImageUrl: params[:googleImageUrl], token: params[:token], googleId: params[:googleId], givenName: params[:givenName], familyName: params[:familyName])
       if newUser.save 
-        render json: {user: newUser, message:  "Welcome to Whodve "  + params[:givenName] + "!"}, status: 200
+        render json: newUser, status: 200
       else
-        render json: {error: "hey bud it didnt save"}
+        render json: {error: "Couldn't generate user with that e-mail"}, status: 401
       end
     end
   end
