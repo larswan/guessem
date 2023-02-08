@@ -9,7 +9,9 @@ const AllGames = ({ userObj, setUserObj }) => {
     const [userId, setUserId] = useState(1)
     const {state} = useLocation()
 
+
     useEffect(()=>{
+        setUserId(state.id)
         const request = async()=>{
             let req = await fetch(`http://localhost:3000/active_games/${userId}`)
             let res= await req.json()

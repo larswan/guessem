@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_214142) do
     t.integer "playerId"
     t.string "question"
     t.string "answer"
+    t.integer "guessedCard"
     t.jsonb "flippedCards"
     t.boolean "winning", default: false
     t.datetime "created_at", null: false

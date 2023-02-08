@@ -7,6 +7,7 @@ class CreateTurns < ActiveRecord::Migration[7.0]
       t.integer :playerId
       t.string :question
       t.string :answer
+      t.integer :guessedCard, default: nil
       t.jsonb :flippedCards
       t.boolean :winning, default: false
 
