@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react'
 import { gapi } from 'gapi-script';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import Cookies from 'js-cookie'
 
 
 const Login = ({ userObj, setUserObj } ) => {
@@ -22,12 +23,15 @@ const Login = ({ userObj, setUserObj } ) => {
     });
 
     const logOut = () => {
+        Cookies.remove('user')
         setUserObj(null);
         navigate("/login")
+        
     };
 
     const onSuccess = async (res) => {
         setUserObj(res);
+        
         // console.log(res)
 
         let request = async () => {
@@ -43,12 +47,14 @@ const Login = ({ userObj, setUserObj } ) => {
                     givenName: res.profileObj.givenName,
                     familyName: res.profileObj.familyName,
                     googleImageUrl: res.profileObj.imageUrl,
-                    token: "posted Token"
+                    // token: "posted Token"
                 })
             })
             let postRes = await req.json()
             console.log(postRes)
+
             // add user object cookie
+            Cookies.set('user', postRes.id)
             navigate("/")
         }
         request()

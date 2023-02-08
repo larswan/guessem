@@ -53,7 +53,7 @@ Card.create(cardSetId: cardset1.id, name: 'Slack Admin',image: 'backend/app/asse
 
 Card.create(cardSetId: cardset2.id, name: 'Amneet',image: 'backend/app/assets/images/phase5/amneet.jpg')
 Card.create(cardSetId: cardset2.id, name: 'Colter',image: 'backend/app/assets/images/phase5/colter.png')
-Card.create(cardSetId: cardset2.id, name: 'Cooper',image: 'backend/app/assets/images/phase5/cooper.png')
+Card.create(cardSetId: cardset2.id, name: 'Cooper',image: 'backend/app/assets/images/phase5/cooper.jpg')
 Card.create(cardSetId: cardset2.id, name: 'Connor',image: 'backend/app/assets/images/phase5/connor.png')
 Card.create(cardSetId: cardset2.id, name: 'Cristian',image: 'backend/app/assets/images/phase5/cristian.png')
 Card.create(cardSetId: cardset2.id, name: 'Helen',image: 'backend/app/assets/images/phase5/helen.jpg')

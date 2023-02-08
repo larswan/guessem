@@ -2,21 +2,25 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import NameBar from "../components/NameBar"
 import LogoutButton from "../components/LogoutButton"
+import Cookies from 'js-cookie'
+
 
 const AllGames = ({ userObj, setUserObj }) => {
     const navigate = useNavigate()
     const [currentGames, setCurrentGames] = useState([])
     const [userId, setUserId] = useState(1)
-    const {state} = useLocation()
-
 
     useEffect(()=>{
-        setUserId(state.id)
+        let cookieUser = Cookies.get('user')
+
+        if (!cookieUser){navigate('/login')}
+        else {setUserId(cookieUser)}        
+        
         const request = async()=>{
             let req = await fetch(`http://localhost:3000/active_games/${userId}`)
             let res= await req.json()
             if(req.ok) {
-                console.log(res)
+                // console.log(res)
                 setCurrentGames(res)
             }
             else {err=>{console.log(err)}}

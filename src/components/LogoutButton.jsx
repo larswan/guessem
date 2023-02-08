@@ -1,6 +1,8 @@
 import {  GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie'
+
 
 
 const LogoutButton = ({ userObj, setUserObj }) =>{
@@ -8,6 +10,7 @@ const LogoutButton = ({ userObj, setUserObj }) =>{
     const navigate = useNavigate()
 
     const logOut = () => {
+        Cookies.remove('user')
         setUserObj(null);
         navigate("/login")
     };
