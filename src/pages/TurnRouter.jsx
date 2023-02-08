@@ -11,7 +11,7 @@ import AnswerQ from "./AnswerQ"
 const TurnRouter = () => {
     const navigate = useNavigate()
     const { state } = useLocation();
-    const [gameData, setGameData] = useState()
+    const [gameData, setGameData] = useState(null)
     const [user, setUser] = useState()
     const [phase, setPhase] = useState()
 
@@ -25,20 +25,31 @@ const TurnRouter = () => {
 
         //get game info
         let gameId = state.gameId
-        console.log(gameId)
-
         const request = async () => {
             let req= await fetch(`http://localhost:3000/games/${gameId}`)
             let res = await req.json()
-            console.log(res)   
             setGameData(res)      
             }
-        // if user.id == gameData.game.whosTurn && gameData.game.currentTurn == 1 => navigate(questionScreen)
-        // elseif user.id == gameData.game.whosTurn navigate(answerScreen)
         request()
     },[])
 
-    // define switch based on 
+    // define phase
+    useEffect(()=>{
+        console.log(user)
+        console.log(gameData)
+
+        if(gameData){
+            if (gameData.game.whosTurn =! user.id) { setPhase("wait")}
+            else { console.log(gameData.game, " ", user.id )}
+        }
+        
+    // if user.id == gameData.game.whosTurn && gameData.game.currentTurn == 1 => navigate(questionScreen)
+    // elseif user.id == gameData.game.whosTurn navigate(answerScreen)
+
+
+
+    },[gameData])
+
 
     switch (phase) {
         case 'wait':
@@ -48,7 +59,18 @@ const TurnRouter = () => {
         case 'guess':
             return <GuessQ gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
         default:
-            return <DefaultPhase />;
+            return (
+            <div>
+                {
+                    gameData? 
+                    <div>
+                        <h1> Whos turn: {gameData.game.whosTurn}</h1>
+                        <h1>Current Player Id: {user.id}</h1>
+                        <h1>Turn #: {gameData.game.currentTurn}</h1>
+                    </div>
+                    : null
+                }
+            </div>);
     }
 
 }
