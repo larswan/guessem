@@ -1,10 +1,8 @@
-import { useReducer, useState } from "react"
+import { useState } from "react"
 
-
-
-const AddFriend = () =>{
+const AddFriend = ({user}) =>{
     const [text, setText] = useState('')
-    const user = {id: 1}
+    // const user = {id: 1}
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -21,9 +19,7 @@ const AddFriend = () =>{
         })
         let res = await req.json()
         console.log(res)
-
     }
-
 
     return(
         <div>

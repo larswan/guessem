@@ -7,7 +7,7 @@ import Header from "../components/Header"
 
 const StartGame = () => {
     const navigate = useNavigate()
-    const [friends, setFriends] = useState()
+    const [friends, setFriends] = useState(null)
     const [user, setUser] = useState()
 
     // get all friends by user id
@@ -17,13 +17,16 @@ const StartGame = () => {
         let cookieUserImage = Cookies.get('userImage')
         
         if (!cookieUserId) { navigate('/login') }
-        else { setUser({id: cookieUserId, name: cookieUserName, image: cookieUserImage})}      
+        else { setUser({
+            id: cookieUserId, 
+            name: cookieUserName, 
+            image: cookieUserImage})}      
 
         const request= async()=>{
             let req = await fetch(`http://localhost:3000/friendships/${cookieUserId}`)
             let res = await req.json()
-            console.log(res)
-            setFriends(res)
+            console.log(req.ok)
+            if (req.ok) {setFriends(res)}
         }
         request()
     },[])
@@ -42,16 +45,18 @@ const StartGame = () => {
             <Header user={user}/>
 
             <h1 className="font-black" >Choose a Friend:</h1>
-            {   
-                friends?.map((friend)=>{
-                    return(
-                        <div onClick={() => {handleClick(friend)}} key={friend.id}>
-                            <NameBar info={friend.name}/>
+            {friends ? (
+                friends.map((friend) => {
+                    return (
+                        <div onClick={() => handleClick(friend)} key={friend.id}>
+                            <NameBar info={friend.name} />
                         </div>
-                    )
+                    );
                 })
-            }
-            <AddFriend />
+            ) : (
+                <div>You don't have any friends.. and you never will... unless you add them by e-mail.</div>
+            )}
+            <AddFriend user={user} />
         </div>
     )
 }

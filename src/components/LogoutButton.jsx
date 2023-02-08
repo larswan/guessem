@@ -10,7 +10,9 @@ const LogoutButton = ({ userObj, setUserObj }) =>{
     const navigate = useNavigate()
 
     const logOut = () => {
-        Cookies.remove('user')
+        Cookies.remove('userId')
+        Cookies.remove('userImage')
+        Cookies.remove('userName')
         setUserObj(null);
         navigate("/login")
     };

@@ -41,6 +41,19 @@ class FriendshipsController < ApplicationController
     friend1 = User.find_by(id: params[:p1Id])
     friend2 = User.find_by(email: params[:p2email])
 
+    f1 = Friendship.find_by(p1Id: friend1.id, p2Id: friend2.id)
+    f2 = Friendship.find_by(p2Id: friend1.id, p1Id: friend2.id)
+
+    if f1 or f2 
+      render json: {error: "Yall are already friends!"}, status: 200
+      return
+    end
+
+    if !friend and !friend2
+      render json: {error: "There is no user with this e-mail"}, status: 200
+      return
+    end
+
     friendship = Friendship.new(p1Id: friend1.id, p2Id: friend2.id)
 
     if friendship.save
