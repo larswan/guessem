@@ -62,13 +62,26 @@ class GamesController < ApplicationController
     prevTurn = Turn.find_by(id: params[:turnId])
 
     prevTurn.update(active: false, question: params[:question], flippedCards: params[:cards], guessedCard: nil)
-    game.update(whosTurn: params[:whosTurnNext], currentTurn: (prevTurn.turn +1))
+    incrementTurn = (prevTurn.turn + 1)
+    game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn)
 
-    nextTurn = Turn.new()
-    nextTurn.save
-
+    incrementTurn2 = (prevTurn.turn + 2)
+    nextTurn = Turn.new(turn: incrementTurn2, flippedCards: params[:cards], playerId: prevTurn.playerId, gameId: prevTurn.gameId)
+    if nextTurn.save
+      player1 = User.find_by!(id: game.p1)
+      player2= User.find_by!(id: game.p2)
+      turns = Turn.where(gameId: game.id)
+      render json: {game: game, p1: player1, p2: player2, turns: turns}
+    else 
+      render json: {error: "nextTurn didnt save but atleast this error is showing"}, status:400
+    end
     # CAN I CALL "SHOW" HERE? game.show()
-    #self.show
+    # self.show
+    # this is a duplicate of SHOW method
+    # player1 = User.find_by!(id: game.p1)
+    # player2= User.find_by!(id: game.p2)
+    # turns = Turn.where(gameId: game.id)
+    # render json: {game: game, p1: player1, p2: player2, turns: turns}
 
   end
 

@@ -22,7 +22,7 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
             setSecretCard(gameData.game.p1SecretCard)
             console.log('player set to 2') }
         else { console.log("cant tell which players turn it is. check GuessQ component. Gamedata.game.p1Id= ", gameData.game.p1Id, " and user.id= ", user.id)}
-                
+
         setCards(gameData.turns[gameData.game.currentTurn].flippedCards)
     },[])
 
@@ -42,17 +42,18 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
 
     const handleSendQuestion = async (e) => {
         e.preventDefault()
-        // console.log(question)
-        let whosTurnNext = player == 1 ? gameData.game.p2Id : gameData.game.p1Id
+        console.log("sendQuestion ran. Question is: ", question)
+        let whosTurnNext = (player == 1) ? gameData.game.p2 : gameData.game.p1
 
         let req = await fetch("http://localhost:3000/sendQuestion",{ 
+            method: 'POST',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                cards: cards,
                 turnId: gameData.turns[gameData.game.currentTurn].id,
                 question: question,
                 gameId: gameData.game.id,
-                whosTurnNext: whosTurnNext
+                whosTurnNext: whosTurnNext,
+                cards: cards,
             })
         })
         let res = await req.json()
