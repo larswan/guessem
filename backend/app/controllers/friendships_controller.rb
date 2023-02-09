@@ -37,12 +37,31 @@ class FriendshipsController < ApplicationController
 
   # POST /friendships
   def create
-    @friendship = Friendship.new(friendship_params)
 
-    if @friendship.save
-      render json: @friendship, status: :created, location: @friendship
+    # finding the users
+    friend1 = User.find_by(id: params[:p1Id])
+    friend2 = User.find_by(email: params[:p2email])
+
+    # if theres not user with that email exit 
+    if !friend2
+      render json: {error: "There is no user with this e-mail"}, status: 200
+      return
+    end
+    
+    # finding existing friendships
+    f1 = Friendship.find_by(p1Id: friend1.id, p2Id: friend2.id)
+    f2 = Friendship.find_by(p2Id: friend1.id, p1Id: friend2.id)
+
+    if f1 or f2 
+      render json: {error: "Yall are already friends!"}, status: 200
+      return
     else
-      render json: @friendship.errors, status: :unprocessable_entity
+      friendship = Friendship.new(p1Id: friend1.id, p2Id: friend2.id)
+      if friendship.save
+        render json: friend2, status: :created, location: friendship
+      else
+        render json: friendship.errors, status: :unprocessable_entity
+      end
     end
   end
 

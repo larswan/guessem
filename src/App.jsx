@@ -12,14 +12,16 @@ import TurnRouter from './pages/TurnRouter'
 
 
 function App() {
+  const [userObj, setUserObj] = useState(null)
+
  
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login userObj={userObj} setUserObj={setUserObj} />} />
           
-          <Route path="/" element={<AllGames />} />
+          <Route path="/" element={<AllGames userObj={userObj} setUserObj={setUserObj} />} />
           <Route path="/new_game" element={<StartGame />} />
           <Route path="/choose_a_topic" element={<ChooseTopic />} />
           <Route path="/select_cards" element={<SelectCards />} />

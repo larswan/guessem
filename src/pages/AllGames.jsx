@@ -1,68 +1,72 @@
-import { useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useContext, useEffect, useState } from "react"
 import NameBar from "../components/NameBar"
+import LogoutButton from "../components/LogoutButton"
+import Cookies from 'js-cookie'
+import GameBar from "../components/GameBar"
+import NewGameButton from "../components/NewGameButton"
 
-const AllGames = () => {
+
+const AllGames = ({ userObj, setUserObj }) => {
     const navigate = useNavigate()
     const [currentGames, setCurrentGames] = useState([])
-    const [userId, setUserId] = useState(1)
+    const [user, setUser] = useState()
 
     useEffect(()=>{
+        let cookieUserId = Cookies.get('userId')
+        let cookieUserName = Cookies.get('userName')
+        let cookieUserImage = Cookies.get('userImage')
+
+        if (!cookieUserId) { navigate('/login') }
+        else { setUser({ id: cookieUserId, name: cookieUserName, image: cookieUserImage }) } 
+        
         const request = async()=>{
-            let req = await fetch(`http://localhost:3000/active_games/${userId}`)
+            let req = await fetch(`http://localhost:3000/active_games/${cookieUserId}`)
             let res= await req.json()
             if(req.ok) {
                 console.log(res)
                 setCurrentGames(res)
             }
-            else
-            {err=>{console.log(err)}}
+            else {err=>{console.log(err)}}
         }   
         request()
     },[])
 
-    const newGameNav = () => {
-        navigate("/new_game")
-    }
-
     const handleClick = (id) => {
         navigate("/play", {state: {
-            gameId: id
-        }})
-
-    }
+            gameId: id }})}
 
     return(
         <div className="p-3">
-            {/* <h1 className="font-black" >AllGames</h1> */}
-            <div onClick={() => { newGameNav() }}>
-                <NameBar info="+ New Game" handleClick={newGameNav}/>
-            </div>
+            {user?<h1>signed in as {user.name}</h1>: null}
             <h1 className="font-black" >Your Turn</h1>
 
             {
                 //render current games (only if active, send back other users name, and game id)
                 currentGames?.map((game)=>{
-                    if(game.myTurn == true)
-                    return(
-                        <div onClick={() => { handleClick(game.id) }}>
-                            <NameBar info={game.name} />
-                        </div>
-                    )
+                    if(game.whosTurn == user.id)
+                        return(
+                            <div key={i} onClick={() => { handleClick(game.id) }}>
+                                <GameBar game={game}/>
+                            </div>
+                        )
                 })
             }
             <h1 className="font-black" >Their Turn</h1>
 
             {
                 //render current games (only if active, send back other users name, and game id)
-                currentGames?.map((game)=>{
-                    if (game.myTurn == false)
-                    return(
-                        <div onClick={() => { handleClick(game.id) }}>
-                            <NameBar info={game.name} />
-                        </div>                    )
+                currentGames?.map((game, i)=>{
+                    if (game.whosTurn != user.id)
+                        return(
+                            <div key={i} onClick={() => { handleClick(game.id) }}>
+                                <GameBar game={game} />
+                            </div> )
                 })
             }
+            <NewGameButton />
+
+            <LogoutButton userObj={userObj} setUserObj={setUserObj} />
         </div>
     )
 }

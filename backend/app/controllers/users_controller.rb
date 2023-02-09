@@ -8,6 +8,20 @@ class UsersController < ApplicationController
     render json: @users
   end
 
+  def login
+    user = User.find_by(googleId: params[:googleId])
+    if user
+      render json: user, status: 200
+    else 
+      newUser = User.new(googleId: params[:googleId], email: params[:email], name: params[:name], googleImageUrl: params[:googleImageUrl], token: params[:token], googleId: params[:googleId], givenName: params[:givenName], familyName: params[:familyName])
+      if newUser.save 
+        render json: newUser, status: 200
+      else
+        render json: {error: "Couldn't generate user with that e-mail"}, status: 401
+      end
+    end
+  end
+
   # GET /users/1
   def show
     render json: @user
@@ -46,6 +60,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :name, :googleImageUrl, :token)
+      params.require(:user).permit(:email, :name, :googleImageUrl, :token, :googleId, :givenName, :familyName)
     end
 end

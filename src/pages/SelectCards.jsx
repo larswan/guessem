@@ -36,12 +36,14 @@ const SelectCards = () => {
         // sub in the new card in a duplicate array
         newCards[i] = newCard
         setCards(() => {return [...newCards] })
+        console.log(cards.length)
     }
 
     useEffect(()=>{
         console.log("count: " + count)
         if (count == 12){
-            let selectedCards = cards.filter((card)=>{if(card.faceUp == true){return card}})
+            let selectedCards = cards.filter(card => card.faceUp === true);
+            console.log(selectedCards.length)
             let bothSecretCards = randomTwoFromArray(selectedCards)
            
             const request = async () => {
@@ -51,11 +53,12 @@ const SelectCards = () => {
                     body: JSON.stringify({
                         game: {p1: state.user, 
                         p2: state.friend.id,
-                        p1SecretCard: bothSecretCards[0].id, p2SecretCard: bothSecretCards[1].id, 
+                        p1SecretCard: bothSecretCards[0], 
+                        p2SecretCard: bothSecretCards[1], 
                         inProgress: true,
                         whosTurn: state.user, 
                         currentTurn: 1,
-                        cards: selectedCards, 
+                        cards: selectedCards,
                         topic: state.topic}
                     })
                 })

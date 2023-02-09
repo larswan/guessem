@@ -2,40 +2,83 @@ import { useNavigate, useLocation } from "react-router-dom"
 import { useEffect, useReducer, useState } from "react"
 import GameBoard from "./GameBoard"
 import WaitingForOtherPlayer from "./WaitingForOtherPlayer"
+import BackButton from "../components/BackButton"
+import Cookies from 'js-cookie'
+import GuessQ from "./GuessQ"
+import Wait from "./Wait"
+import AnswerQ from "./AnswerQ"
+import Header from "../components/Header"
 
 const TurnRouter = () => {
     const navigate = useNavigate()
     const { state } = useLocation();
-    const [gameData, setGameData] = useState()
-
-    const backHandler = () => {
-        navigate('/')
-    }
+    const [gameData, setGameData] = useState(null)
+    const [user, setUser] = useState()
+    const [phase, setPhase] = useState()
+    let gameId
 
     useEffect(()=>{
-        let id = state.gameId
-        console.log(id)
+        // get user info
+        let cookieUserId = Cookies.get('userId')
+        let cookieUserName = Cookies.get('userName')
+        let cookieUserImage = Cookies.get('userImage')
+        if (!cookieUserId) { navigate('/login') }
+        else { setUser({ id: cookieUserId, name: cookieUserName, image: cookieUserImage }) } 
+        
+        //get game info
+        if (!gameId) {gameId = state.gameId}
         const request = async () => {
-            let req= await fetch(`http://localhost:3000/games/${id}`)
+            let req= await fetch(`http://localhost:3000/games/${gameId}`)
             let res = await req.json()
-            console.log(res)   
+            
+            console.log("GameId= ", gameId, " and at TurnRouter line 37 game object is vv")
             setGameData(res)      
-            }
-
-        // if user.id == gameData.game.whosTurn && gameData.game.currentTurn == 1 => navigate(questionScreen)
-        // elseif user.id == gameData.game.whosTurn navigate(answerScreen)
+            console.log(res)
+        }
         request()
+
     },[])
 
-    return(
-        <div>
-            <img className="w-10 h-9 p-2 border-black" onClick={() => { backHandler() }} src="https://cdn.iconscout.com/icon/free/png-256/back-arrow-1767523-1502427.png" />
-            {
-                // add boolean to choose which screen it goes to, based on whos turn it is (waiting or gameboard)
+    // define phase
+    useEffect(()=>{
+        if (gameData && user){
+            let yourTurn = (gameData.game.whosTurn == user.id)
+            console.log("Your turn? ", yourTurn)
+    
+            if(!yourTurn){ setPhase("wait")}
+            else if (gameData.game.currentTurn == 1) 
+            {setPhase("guess")}
+            else if("still thinking on this") {setPhase(null)}
+            else {setPhase(null)}
             }
-            TurnRouter
-        </div>
-    )
+            // if user.id == gameData.game.whosTurn && gameData.game.currentTurn == 1 => navigate(questionScreen)
+            // elseif user.id == gameData.game.whosTurn navigate(answerScreen)
+        }
+    ,[gameData])
+
+    switch (phase) {
+        case 'wait':
+            return <Wait gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase} />;
+        case 'answer':
+            return <AnswerQ gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase} />;
+        case 'guess':
+            return <GuessQ gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
+        default:
+            return (
+            <div>
+                {
+                    gameData? 
+                    <div>
+                        <Header />
+                        <h1> Whos turn: {gameData.game.whosTurn}</h1>
+                        <h1>Current Player Id: {user.id}</h1>
+                        <h1>Turn #: {gameData.game.currentTurn}</h1>
+                    </div>
+                    : null
+                }
+            </div>);
+    }
+
 }
 
 export default TurnRouter

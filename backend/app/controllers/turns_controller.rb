@@ -53,6 +53,6 @@ class TurnsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def turn_params
-      params.require(:turn).permit(:p1, :p2, :active, :gameId, :turn, :playerId, :question, :answer, :flippedCards, :winning)
+      params.require(:turn).permit(:p1, :p2, :active, :gameId, :turn, :playerId, :question, :answer, :flippedCards, :winning, :guessedCard)
     end
 end

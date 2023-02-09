@@ -39,25 +39,28 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_214142) do
     t.jsonb "cards", default: {}
     t.integer "p1"
     t.integer "p2"
-    t.boolean "p1Turn", default: true
-    t.boolean "p2Turn", default: false
-    t.integer "p1SecretCard"
-    t.integer "p2SecretCard"
+    t.string "winningQuestion"
+    t.string "winningAnswer"
+    t.jsonb "winningCard"
+    t.integer "winningUser"
+    t.jsonb "p1SecretCard"
+    t.jsonb "p2SecretCard"
     t.string "topic"
     t.integer "whosTurn"
     t.boolean "inProgress", default: true
-    t.integer "currentTurn", default: 1
+    t.integer "currentTurn", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "turns", force: :cascade do |t|
-    t.boolean "active", default: true
+    t.string "status", default: "blank"
     t.integer "gameId"
     t.integer "turn", default: 1
     t.integer "playerId"
     t.string "question"
     t.string "answer"
+    t.integer "guessedCard"
     t.jsonb "flippedCards"
     t.boolean "winning", default: false
     t.datetime "created_at", null: false
@@ -69,6 +72,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_214142) do
     t.string "name"
     t.string "googleImageUrl"
     t.string "token"
+    t.string "googleId"
+    t.string "givenName"
+    t.string "familyName"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

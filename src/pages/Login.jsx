@@ -1,61 +1,85 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react'
+import { gapi } from 'gapi-script';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import Cookies from 'js-cookie'
 
-function Login() {
+
+const Login = ({ userObj, setUserObj } ) => {
     const navigate = useNavigate()
-
-    const [users, setUsers] = useState([])
-    const [currentUser, setCurrentUser] = useState([])
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    })
-
-
+    const clientId = import.meta.env.VITE_GAPI_CLIENT_ID
+    
+    // request token from google
     useEffect(() => {
+        const initClient = () => {
+            gapi.client.init({
+                client_id: clientId,
+                redirect_uri: "http://localhost:5173",
+                scope: 'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/plus.me'
+            });
+        };
+        gapi.load('client:auth2', initClient);
+    });
+
+    const logOut = () => {
+        Cookies.remove('userId')
+        Cookies.remove('userName')
+        Cookies.remove('userImage')
+        setUserObj(null);
+        navigate("/login")
+        
+    };
+
+    const onSuccess = async (res) => {
+        setUserObj(res);
+        
+        // console.log(res)
+
         let request = async () => {
-            let req = await fetch(`http://localhost:3000/users`)
-            let res = await req.json()
-            setUsers(res)
+            let req = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: res.profileObj.email,
+                    name: res.profileObj.name,
+                    googleId: res.profileObj.googleId,
+                    givenName: res.profileObj.givenName,
+                    familyName: res.profileObj.familyName,
+                    googleImageUrl: res.profileObj.imageUrl,
+                    // token: "posted Token"
+                })
+            })
+            let postRes = await req.json()
+            console.log(postRes)
+
+            // add user object cookie
+            Cookies.set('userId', postRes.id)
+            Cookies.set('userName', postRes.name)
+            Cookies.set('userImage', postRes.googleImageUrl)
+            navigate("/")
         }
         request()
-    }, [])
-
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        users.some(user => {
-            if (user.email === formData.email && user.password === formData.password) {
-                setCurrentUser(user)
-                console.log("welcome back!")
-                navigate('/profile')
-            } else {
-                console.log('user not found', currentUser)
-            }
-        })
-            ;
     }
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value })
-    }
-
+    const onFailure = (err) => {
+        console.log('failed:', err);
+    };
 
     return (
-        <div className="grandparent-form-div">
-            <h2 className="gallery-header">ENTER YOUR GALLERY</h2><br />
-            <div className="parent-submit-div">
-                <div className="" onSubmit={(e) => { handleSubmit(e) }}>
-                    <h2 className="login-header">LOG IN</h2><br />
-                    <form className="form">
-                        <input className="input-field" type="email" value={formData.email} name='email' onChange={e => handleChange(e)} placeholder="EMAIL" /><br />
-                        <input className="input-field" type="password" value={formData.password} name='password' onChange={e => handleChange(e)} placeholder="PASSWORD" /><br />
-                        <div className="submit-button-div">
-                            <input className="submit-button" type="submit" />
-                        </div>
-                    </form>
-                </div>
+        <div className="footerContainer">
+            <div className="login">
+                {userObj ? (<GoogleLogout clientId={clientId} buttonText="Log out" onLogoutSuccess={logOut} />) : (
+                    <GoogleLogin
+                        clientId={clientId}
+                        buttonText="Sign in with Google"
+                        onSuccess={onSuccess}
+                        onFailure={onFailure}
+                        cookiePolicy={'single_host_origin'}
+                        isSignedIn={true} />
+                )}
             </div>
         </div>
     )
