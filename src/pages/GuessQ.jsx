@@ -1,6 +1,7 @@
 import Header from "../components/Header"
 import { useState, useEffect } from "react"
 import CardPlayDisplay from "../components/CardPlayDisplay"
+import GuessModeButton from "../components/GuessModeButton"
 
 
 const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
@@ -12,11 +13,14 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
         console.log(gameData.game.cards)
     },[])
 
-    const handleClick = (card, i) => {
+    const clickFlipCard = (card, i) => {
         let newCard = { ...card, "faceUp": !card.faceUp }
         let newCards = [...cards]
         newCards[i] = newCard
         setCards(() => { return [...newCards] })
+    }
+    const clickGuessCard = (card, i) => {
+        console.log(card, i)
     }
 
     const handleSubmit = () => {
@@ -32,7 +36,7 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
                 {
                     cards?.map((card, i)=>{
                         return(
-                            <div className="w-3/12" onClick={() => {handleClick(card, i) }}>
+                            <div className="w-3/12" onClick={() => {guessMode ? clickGuessCard(card, i) :clickFlipCard(card, i) }}>
                                 <CardPlayDisplay  card={card} />
                             </div>
                         )
@@ -43,6 +47,9 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
                 <input className="py-1" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
                 <button className="font-black bg-green-600 py-1 px-2 text-white ml-2 rounded-sm" onSubmit={handleSubmit()}>ASK</button>
             </form>
+            <h1 className="flex justify-center">or</h1>
+
+            <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} />
 
         </div>
     )

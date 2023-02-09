@@ -4,6 +4,7 @@ import NameBar from "../components/NameBar"
 import LogoutButton from "../components/LogoutButton"
 import Cookies from 'js-cookie'
 import GameBar from "../components/GameBar"
+import NewGameButton from "../components/NewGameButton"
 
 
 const AllGames = ({ userObj, setUserObj }) => {
@@ -31,10 +32,6 @@ const AllGames = ({ userObj, setUserObj }) => {
         request()
     },[])
 
-    const newGameNav = () => {
-        navigate("/new_game")
-    }
-
     const handleClick = (id) => {
         navigate("/play", {state: {
             gameId: id }})}
@@ -42,10 +39,6 @@ const AllGames = ({ userObj, setUserObj }) => {
     return(
         <div className="p-3">
             {user?<h1>signed in as {user.name}</h1>: null}
-            {/* <h1 className="font-black" >AllGames</h1> */}
-            <div onClick={() => { newGameNav() }}>
-                <NameBar info="+ New Game" handleClick={newGameNav}/>
-            </div>
             <h1 className="font-black" >Your Turn</h1>
 
             {
@@ -71,6 +64,8 @@ const AllGames = ({ userObj, setUserObj }) => {
                             </div> )
                 })
             }
+            <NewGameButton />
+
             <LogoutButton userObj={userObj} setUserObj={setUserObj} />
         </div>
     )
