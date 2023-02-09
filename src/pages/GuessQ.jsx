@@ -11,8 +11,11 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
         console.log(gameData.game.cards)
     },[])
 
-    const handleClick = (card) => {
-        console.log("clicked ", card.name, " faceUp = ", card.faceUp)
+    const handleClick = (card, i) => {
+        let newCard = { ...card, "faceUp": !card.faceUp }
+        let newCards = [...cards]
+        newCards[i] = newCard
+        setCards(() => { return [...newCards] })
     }
 
     const handleSubmit = () => {
@@ -26,9 +29,9 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
 
             <div className="flex flex-column flex-wrap space-x-1 space-y-1 justify-center">
                 {
-                    cards?.map((card)=>{
+                    cards?.map((card, i)=>{
                         return(
-                            <div className="w-3/12" onClick={() => {handleClick(card) }}>
+                            <div className="w-3/12" onClick={() => {handleClick(card, i) }}>
                                 <CardPlayDisplay  card={card} />
                             </div>
                         )
