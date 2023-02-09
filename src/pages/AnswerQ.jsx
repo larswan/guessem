@@ -1,6 +1,6 @@
 import Header from "../components/Header"
 
-const AnswerQ = ({ gameDate, setGameData, user, setPhase }) => {
+const AnswerQ = ({ gameData, setGameData, user, setPhase }) => {
     return (
     <div>
         <Header />

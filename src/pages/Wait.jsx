@@ -1,6 +1,6 @@
 import Header from '../components/Header'
 
-const Wait = ({ gameDate, setGameData, user, setPhase }) => {
+const Wait = ({ gameData, setGameData, user, setPhase }) => {
     return (
         <div>
             <Header />
