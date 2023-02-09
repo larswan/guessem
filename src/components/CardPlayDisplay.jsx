@@ -1,6 +1,6 @@
-const CardSetDisplay = ({card}) => {
+const CardSetDisplay = ({card, guessMode}) => {
     return(
-        <div className={card.faceUp ? "border-2 border-black" : "border-2 border-l-indigo-50"}>
+        <div className={"border-2 border-black"}>
             <img src={card.faceUp ? card.image : "backend/app/assets/images/cardBack.jpg"} />
         </div>
     )

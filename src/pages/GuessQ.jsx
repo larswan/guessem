@@ -6,6 +6,7 @@ import CardPlayDisplay from "../components/CardPlayDisplay"
 const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
     const [cards, setCards] = useState(gameData.game.cards)
     const [question, setQuestion] = useState('')
+    const [guessMode, setGuessMode] = useState(false)
 
     useEffect(()=>{
         console.log(gameData.game.cards)
@@ -23,7 +24,7 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
     }
 
     return (
-        <div>
+        <div className='px-2'>
             <Header user={user} />
             <h1 className="font-black">MAKE A GUESS</h1>
 
@@ -38,9 +39,9 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
                     })
                 }
             </div>
-            <form>
-                <input className="p-1" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
-                <button className="bg-blue-600" onSubmit={handleSubmit()}>ASK</button>
+            <form className="py-2 flex justify-center">
+                <input className="py-1" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
+                <button className="font-black bg-green-600 py-1 px-2 text-white ml-2 rounded-sm" onSubmit={handleSubmit()}>ASK</button>
             </form>
 
         </div>
