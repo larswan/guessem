@@ -3,7 +3,6 @@ import { useState, useEffect } from "react"
 import CardPlayDisplay from "../components/CardPlayDisplay"
 import GuessModeButton from "../components/GuessModeButton"
 
-
 const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
     const [cards, setCards] = useState(gameData.game.cards)
     const [question, setQuestion] = useState('')
@@ -14,14 +13,14 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
     useEffect(()=>{
         if (gameData.game.p1==user.id){
             setPlayer(1); 
-            setSecretCard(gameData.game.p2SecretCard)
+            setSecretCard(gameData.game.p1SecretCard)
             console.log('player set to 1');
         }
         else if (gameData.game.p2 == user.id) { 
             setPlayer(2); 
-            setSecretCard(gameData.game.p1SecretCard)
+            setSecretCard(gameData.game.p2SecretCard)
             console.log('player set to 2') }
-        else { console.log("cant tell which players turn it is. check GuessQ component. Gamedata.game.p1= ", gameData.game.p1Id, " and user.id= ", user.id)}
+        else { console.log("cant tell which players turn it is. check GuessQ component. Gamedata.game.p1= ", gameData.game.p1, " and user.id= ", user.id)}
 
         setCards(gameData.turns[gameData.game.currentTurn].flippedCards)
     },[])
@@ -37,7 +36,6 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
         console.log("clickGuessedCard fired")
         // logic to see if winning
         // patch to game 
-
     }
 
     const handleSendQuestion = async (e) => {
@@ -65,7 +63,6 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
         <div className='px-2'>
             <Header user={user} />
             <h1 className="font-black">MAKE A GUESS</h1>
-
             <div className="flex flex-column flex-wrap space-x-1 space-y-1 justify-center">
                 {
                     cards?.map((card, i)=>{
