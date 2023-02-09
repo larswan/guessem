@@ -36,6 +36,7 @@ const SelectCards = () => {
         // sub in the new card in a duplicate array
         newCards[i] = newCard
         setCards(() => {return [...newCards] })
+        console.log(cards.length)
     }
 
     useEffect(()=>{
