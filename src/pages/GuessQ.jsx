@@ -8,9 +8,15 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
     const [cards, setCards] = useState(gameData.game.cards)
     const [question, setQuestion] = useState('')
     const [guessMode, setGuessMode] = useState(false)
+    const [player, setPlayer ] = useState()
 
     useEffect(()=>{
-        console.log(gameData.game.cards)
+        if (gameData.game.p1Id===user.id){setPlayer(1)}
+        else if (gameData.game.p2Id === user.id){setPlayer(2)}
+        else { console.log(gameData.game.p1Id, user.id)}
+
+
+        console.log(gameData)
     },[])
 
     const clickFlipCard = (card, i) => {
@@ -19,12 +25,29 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
         newCards[i] = newCard
         setCards(() => { return [...newCards] })
     }
-    const clickGuessCard = (card, i) => {
+    const clickGuessCard = async (card, i) => {
         console.log(card, i)
+        // logic to see if winning
+
+        // patch to game 
+
     }
 
-    const handleSubmit = () => {
-        console.log(question)
+    const handleSendQuestion = async () => {
+        // console.log(question)
+
+        let req = await fetch("http://localhost:3000/sendQuestion",{ 
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                cards: cards,
+                turnId: XXXXXXX,
+                question: question,
+            })
+        })
+        let res = await req.json()
+        console.log(res)
+
+        // setGameData
     }
 
     return (
@@ -45,12 +68,10 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
             </div>
             <form className="py-2 flex justify-center">
                 <input className="py-1" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
-                <button className="font-black bg-green-600 py-1 px-2 text-white ml-2 rounded-sm" onSubmit={handleSubmit()}>ASK</button>
+                <button className="font-black bg-green-600 py-1 px-2 text-white ml-2 rounded-sm" onSubmit={()=>{handleSendQuestion()}}>ASK</button>
             </form>
             <h1 className="flex justify-center">or</h1>
-
             <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} />
-
         </div>
     )
 }
