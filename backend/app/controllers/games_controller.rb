@@ -40,6 +40,8 @@ class GamesController < ApplicationController
       newGame = {id: game.id, whosTurn: game.whosTurn}
       user = User.find_by!(id: game.p2)
       newGame["opponentName"] = user.name
+      newGame['topic'] = game.topic
+      newGame['whosTurn'] = game.whosTurn
       if game.whosTurn == userId
         newGame["myTurn"]=true
       else
@@ -52,6 +54,7 @@ class GamesController < ApplicationController
       newGame = {id: game.id, whosTurn: game.whosTurn}
       user = User.find_by!(id: game.p1)
       newGame["opponentName"] = user.name
+      newGame['topic'] = game.topic
       
       if game.whosTurn == userId
         newGame["myTurn"]=true

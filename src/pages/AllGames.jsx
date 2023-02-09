@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react"
 import NameBar from "../components/NameBar"
 import LogoutButton from "../components/LogoutButton"
 import Cookies from 'js-cookie'
+import GameBar from "../components/GameBar"
 
 
 const AllGames = ({ userObj, setUserObj }) => {
@@ -50,24 +51,24 @@ const AllGames = ({ userObj, setUserObj }) => {
             {
                 //render current games (only if active, send back other users name, and game id)
                 currentGames?.map((game)=>{
-                    if(game.myTurn == false)
-                    return(
-                        <div key={game.opponentName} onClick={() => { handleClick(game.id) }}>
-                            <NameBar info={game.opponentName}/>
-                        </div>
-                    )
+                    if(game.whosTurn == user.id)
+                        return(
+                            <div key={i} onClick={() => { handleClick(game.id) }}>
+                                <GameBar game={game}/>
+                            </div>
+                        )
                 })
             }
             <h1 className="font-black" >Their Turn</h1>
 
             {
                 //render current games (only if active, send back other users name, and game id)
-                currentGames?.map((game)=>{
-                    if (game.whosTurn == user.id)
-                    return(
-                        <div onClick={() => { handleClick(game.id) }}>
-                            <NameBar info={game.opponentName} />
-                        </div>                    )
+                currentGames?.map((game, i)=>{
+                    if (game.whosTurn != user.id)
+                        return(
+                            <div key={i} onClick={() => { handleClick(game.id) }}>
+                                <GameBar game={game} />
+                            </div> )
                 })
             }
             <LogoutButton userObj={userObj} setUserObj={setUserObj} />

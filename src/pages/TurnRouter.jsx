@@ -36,20 +36,26 @@ const TurnRouter = () => {
 
     // define phase
     useEffect(()=>{
-        console.log(user)
-        console.log(gameData)
-
-        if(gameData){
-            if (gameData.game.whosTurn =! user.id) { setPhase("wait")}
-            else { console.log(gameData.game, " ", user.id )}
+        if (gameData && user){
+            // console.log(user)
+            // console.log(gameData)
+    
+            let yourTurn = (gameData.game.whosTurn == user.id)
+            console.log("Your turn? ", yourTurn)
+    
+            if(!yourTurn){ setPhase("wait")}
+            else if (gameData.game.currentTurn == 1) 
+            {setPhase("guess")}
+            else if("still thinking on this") {setPhase(null)}
+            else {setPhase(null)}
+            
+        }
         }
         
     // if user.id == gameData.game.whosTurn && gameData.game.currentTurn == 1 => navigate(questionScreen)
     // elseif user.id == gameData.game.whosTurn navigate(answerScreen)
 
-
-
-    },[gameData])
+    ,[gameData])
 
 
     switch (phase) {
