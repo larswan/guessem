@@ -4,7 +4,6 @@ class GamesController < ApplicationController
   # GET /games
   def index
     @games = Game.all
-
     render json: @games
   end
 
@@ -30,11 +29,7 @@ class GamesController < ApplicationController
       newGame["opponentName"] = user.name
       newGame['topic'] = game.topic
       newGame['whosTurn'] = game.whosTurn
-      if game.whosTurn == userId
-        newGame["myTurn"]=true
-      else
-        newGame["myTurn"]=false
-      end
+      
       games<<newGame
     end
 
@@ -44,11 +39,6 @@ class GamesController < ApplicationController
       newGame["opponentName"] = user.name
       newGame['topic'] = game.topic
       
-      if game.whosTurn == userId
-        newGame["myTurn"]=true
-      else
-        newGame["myTurn"]=false
-      end
       games<<newGame
     end    
     
