@@ -30,12 +30,13 @@ const TurnRouter = () => {
         const request = async () => {
             let req= await fetch(`http://localhost:3000/games/${gameId}`)
             let res = await req.json()
+            
+            console.log("GameId= ", gameId, " and at TurnRouter line 37 game object is vv")
             setGameData(res)      
+            console.log(res)
         }
         request()
 
-        console.log("GameId= ", gameId, " and at TurnRouter line 37 game object is vv")
-        console.log(gameData)
     },[])
 
     // define phase

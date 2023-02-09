@@ -21,7 +21,7 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
             setPlayer(2); 
             setSecretCard(gameData.game.p1SecretCard)
             console.log('player set to 2') }
-        else { console.log("cant tell which players turn it is. check GuessQ component. Gamedata.game.p1Id= ", gameData.game.p1Id, " and user.id= ", user.id)}
+        else { console.log("cant tell which players turn it is. check GuessQ component. Gamedata.game.p1= ", gameData.game.p1Id, " and user.id= ", user.id)}
 
         setCards(gameData.turns[gameData.game.currentTurn].flippedCards)
     },[])
@@ -58,8 +58,7 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
         })
         let res = await req.json()
         console.log(res)
-
-        // setGameData
+        setGameData(res)
     }
 
     return (

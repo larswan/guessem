@@ -61,7 +61,7 @@ class GamesController < ApplicationController
     game = Game.find_by(id: params[:gameId])
     prevTurn = Turn.find_by(id: params[:turnId])
 
-    prevTurn.update(active: false, question: params[:question], flippedCards: params[:cards], guessedCard: nil)
+    prevTurn.update(question: params[:question], flippedCards: params[:cards], guessedCard: nil, status: "asked")
     incrementTurn = (prevTurn.turn + 1)
     game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn)
 
@@ -107,6 +107,6 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:whosTurn, :p1, :p2, :p1Turn, :p2Turn, :p1SecretCard, :p2SecretCard, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
+      params.require(:game).permit(:winningQuestion, :winningAnswer, :winningCard, :winningUser, :whosTurn, :p1, :p2, :p1SecretCard, :p2SecretCard, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
     end
 end

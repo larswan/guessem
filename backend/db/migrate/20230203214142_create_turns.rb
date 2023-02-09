@@ -1,7 +1,7 @@
 class CreateTurns < ActiveRecord::Migration[7.0]
   def change
     create_table :turns do |t|
-      t.boolean :active, default: true
+      t.string :status, default: "new"
       t.integer :gameId
       t.integer :turn, default: 1
       t.integer :playerId
