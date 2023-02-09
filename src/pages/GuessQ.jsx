@@ -15,8 +15,10 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
         else if (gameData.game.p2Id === user.id){setPlayer(2)}
         else { console.log(gameData.game.p1Id, user.id)}
 
+        setCards(gameData.turns[gameData.game.currentTurn-1].flippedCards)
 
         console.log(gameData)
+        console.log(gameData.turns[gameData.game.currentTurn -1].flippedCards)
     },[])
 
     const clickFlipCard = (card, i) => {
