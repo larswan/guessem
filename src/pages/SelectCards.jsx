@@ -42,7 +42,8 @@ const SelectCards = () => {
     useEffect(()=>{
         console.log("count: " + count)
         if (count == 12){
-            let selectedCards = cards.filter((card)=>{if(card.faceUp == true){return card}})
+            let selectedCards = cards.filter(card => card.faceUp === true);
+            console.log(selectedCards.length)
             let bothSecretCards = randomTwoFromArray(selectedCards)
            
             const request = async () => {
@@ -56,7 +57,7 @@ const SelectCards = () => {
                         inProgress: true,
                         whosTurn: state.user, 
                         currentTurn: 1,
-                        cards: cards,
+                        cards: selectedCards,
                         topic: state.topic}
                     })
                 })

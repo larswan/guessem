@@ -5,6 +5,8 @@ import CardPlayDisplay from "../components/CardPlayDisplay"
 
 const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
     const [cards, setCards] = useState(gameData.game.cards)
+    const [question, setQuestion] = useState('')
+
     useEffect(()=>{
         console.log(gameData.game.cards)
     },[])
@@ -13,6 +15,9 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
         console.log("clicked ", card.name, " faceUp = ", card.faceUp)
     }
 
+    const handleSubmit = () => {
+        console.log(question)
+    }
 
     return (
         <div>
@@ -29,8 +34,11 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
                         )
                     })
                 }
-
             </div>
+            <form>
+                <input className="p-1" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
+                <button className="bg-blue-600" onSubmit={handleSubmit()}>ASK</button>
+            </form>
 
         </div>
     )
