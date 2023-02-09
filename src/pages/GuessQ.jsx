@@ -9,16 +9,21 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
     const [question, setQuestion] = useState('')
     const [guessMode, setGuessMode] = useState(false)
     const [player, setPlayer ] = useState()
+    const [secretCard, setSecretCard] = useState()
 
     useEffect(()=>{
-        if (gameData.game.p1Id===user.id){setPlayer(1)}
-        else if (gameData.game.p2Id === user.id){setPlayer(2)}
-        else { console.log(gameData.game.p1Id, user.id)}
-
+        if (gameData.game.p1==user.id){
+            setPlayer(1); 
+            setSecretCard(gameData.game.p2SecretCard)
+            console.log('player set to 1');
+        }
+        else if (gameData.game.p2 == user.id) { 
+            setPlayer(2); 
+            setSecretCard(gameData.game.p1SecretCard)
+            console.log('player set to 2') }
+        else { console.log("cant tell which players turn it is. check GuessQ component. Gamedata.game.p1Id= ", gameData.game.p1Id, " and user.id= ", user.id)}
+                
         setCards(gameData.turns[gameData.game.currentTurn].flippedCards)
-
-        console.log(gameData)
-        console.log(gameData.turns[gameData.game.currentTurn].flippedCards)
     },[])
 
     const clickFlipCard = (card, i) => {
@@ -27,23 +32,27 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
         newCards[i] = newCard
         setCards(() => { return [...newCards] })
     }
-    const clickGuessCard = async (card, i) => {
-        console.log(card, i)
-        // logic to see if winning
 
+    const clickGuessCard = async (card, i) => {
+        console.log("clickGuessedCard fired")
+        // logic to see if winning
         // patch to game 
 
     }
 
-    const handleSendQuestion = async () => {
+    const handleSendQuestion = async (e) => {
+        e.preventDefault()
         // console.log(question)
+        let whosTurnNext = player == 1 ? gameData.game.p2Id : gameData.game.p1Id
 
         let req = await fetch("http://localhost:3000/sendQuestion",{ 
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 cards: cards,
-                turnId: XXXXXXX,
+                turnId: gameData.turns[gameData.game.currentTurn].id,
                 question: question,
+                gameId: gameData.game.id,
+                whosTurnNext: whosTurnNext
             })
         })
         let res = await req.json()
@@ -61,16 +70,16 @@ const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
                 {
                     cards?.map((card, i)=>{
                         return(
-                            <div className="w-3/12" onClick={() => {guessMode ? clickGuessCard(card, i) :clickFlipCard(card, i) }}>
+                            <div className="w-3/12" onClick={()=>{guessMode ? clickGuessCard(card, i) : clickFlipCard(card, i) }}>
                                 <CardPlayDisplay  card={card} />
                             </div>
                         )
                     })
                 }
             </div>
-            <form className="py-2 flex justify-center">
+            <form onSubmit={handleSendQuestion} className="py-2 flex justify-center">
                 <input className="py-1" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
-                <button className="font-black bg-green-600 py-1 px-2 text-white ml-2 rounded-sm" onSubmit={()=>{handleSendQuestion()}}>ASK</button>
+                <button className="font-black bg-green-600 py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>
             </form>
             <h1 className="flex justify-center">or</h1>
             <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} />

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post '/first_turns', to: 'turns#first_turns'
   post "/newGame", to: 'games#newGame'
   post '/login', to: 'users#login'
+  post '/sendQuestion', to: 'games#sendQuestion'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

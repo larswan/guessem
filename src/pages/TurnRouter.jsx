@@ -15,6 +15,7 @@ const TurnRouter = () => {
     const [gameData, setGameData] = useState(null)
     const [user, setUser] = useState()
     const [phase, setPhase] = useState()
+    let gameId
 
     useEffect(()=>{
         // get user info
@@ -23,23 +24,23 @@ const TurnRouter = () => {
         let cookieUserImage = Cookies.get('userImage')
         if (!cookieUserId) { navigate('/login') }
         else { setUser({ id: cookieUserId, name: cookieUserName, image: cookieUserImage }) } 
-
+        
         //get game info
-        let gameId = state.gameId
+        if (!gameId) {gameId = state.gameId}
         const request = async () => {
             let req= await fetch(`http://localhost:3000/games/${gameId}`)
             let res = await req.json()
             setGameData(res)      
-            }
+        }
         request()
+
+        console.log("GameId= ", gameId, " and at TurnRouter line 37 game object is vv")
+        console.log(gameData)
     },[])
 
     // define phase
     useEffect(()=>{
         if (gameData && user){
-            // console.log(user)
-            // console.log(gameData)
-    
             let yourTurn = (gameData.game.whosTurn == user.id)
             console.log("Your turn? ", yourTurn)
     
@@ -48,15 +49,11 @@ const TurnRouter = () => {
             {setPhase("guess")}
             else if("still thinking on this") {setPhase(null)}
             else {setPhase(null)}
-            
+            }
+            // if user.id == gameData.game.whosTurn && gameData.game.currentTurn == 1 => navigate(questionScreen)
+            // elseif user.id == gameData.game.whosTurn navigate(answerScreen)
         }
-        }
-        
-    // if user.id == gameData.game.whosTurn && gameData.game.currentTurn == 1 => navigate(questionScreen)
-    // elseif user.id == gameData.game.whosTurn navigate(answerScreen)
-
     ,[gameData])
-
 
     switch (phase) {
         case 'wait':

@@ -48,13 +48,28 @@ class GamesController < ApplicationController
   # POST /games
   def newGame
     gamey = Game.create(game_params)
-    turn1 = Turn.create(turn: 1, gameId: gamey.id, playerId: gamey.p1, flippedCards: gamey.cards)
-    turn2 = Turn.create(turn: 2, gameId: gamey.id, playerId: gamey.p2, flippedCards: gamey.cards)
+    turn1 = Turn.create(turn: 0, gameId: gamey.id, playerId: gamey.p1, flippedCards: gamey.cards)
+    turn2 = Turn.create(turn: 1, gameId: gamey.id, playerId: gamey.p2, flippedCards: gamey.cards)
     if gamey
       render json: {game: gamey, turn1: turn1, turn2: turn2}
     else
       render json: gamey.errors.full_messages, status: :unprocessable_entity
     end
+  end
+
+  def sendQuestion
+    game = Game.find_by(id: params[:gameId])
+    prevTurn = Turn.find_by(id: params[:turnId])
+
+    prevTurn.update(active: false, question: params[:question], flippedCards: params[:cards], guessedCard: nil)
+    game.update(whosTurn: params[:whosTurnNext], currentTurn: (prevTurn.turn +1))
+
+    nextTurn = Turn.new()
+    nextTurn.save
+
+    # CAN I CALL "SHOW" HERE? game.show()
+    #self.show
+
   end
 
   # PATCH/PUT /games/1
