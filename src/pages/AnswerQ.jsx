@@ -2,27 +2,16 @@ import Header from "../components/Header"
 import { useState, useEffect } from "react"
 import SecretCardAnswer from "../components/SecretCardAnswer"
 
-const AnswerQ = ({ gameData, setGameData, user, setPhase, opponentsTurn }) => {
+const AnswerQ = ({ opponentsTurn,opponentSecret, setPhase, gameData, setGameData, user, secretCard, player, cards }) => {
     const [answer, setAnswer] = useState('')
-    const [player, setPlayer] = useState()
-    const [secretCard, setSecretCard] = useState()
     const [allCards, setAllCards] = useState()
 
-    useEffect(() => {
-        if (gameData.game.p1 == user.id) {
-            setPlayer(1);
-            setSecretCard(gameData.p1SecretCard)
-            console.log('player set to 1');
-        }
-        else if (gameData.game.p2 == user.id) {
-            setPlayer(2);
-            setSecretCard(gameData.p2SecretCard)
-            console.log('player set to 2')
-        }
-        else { console.log("cant tell which players turn it is. check GuessQ component. Gamedata.game.p1= ", gameData.game.p1, " and user.id= ", user.id) }
-
-        setAllCards(gameData.game.cards)
-    }, [])
+    useEffect(()=>{
+        // console.log(secretCard)
+        // console.log(currentTurn)
+        // console.log(prevTurn)
+        console.log(opponentsTurn)
+    })
 
     const handleAnswer = async (e) => {
         e.preventDefault()
@@ -48,7 +37,8 @@ const AnswerQ = ({ gameData, setGameData, user, setPhase, opponentsTurn }) => {
     return (
         <div>
         <Header user={user}/>
-        <h1 className="font-black">MAKE A GUESS</h1>
+        <h1 className="font-black">ANSWER THEM</h1>
+        {/* <h1>{opponentsTurn.question}</h1> */}
         {
             secretCard ?
             <div className=" flex justify-center">

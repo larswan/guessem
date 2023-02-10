@@ -3,28 +3,10 @@ import { useState, useEffect } from "react"
 import CardPlayDisplay from "../components/CardPlayDisplay"
 import GuessModeButton from "../components/GuessModeButton"
 
-const GuessQ = ({ gameData, setGameData, user, setPhase }) => {
-    const [cards, setCards] = useState(gameData.game.cards)
+const GuessQ = ({ opponentSecret, setPhase, gameData, setGameData, user, secretCard, player, cards  }) => {
     const [question, setQuestion] = useState('')
     const [guessMode, setGuessMode] = useState(false)
-    const [player, setPlayer ] = useState()
-    const [secretCard, setSecretCard] = useState()
-
-    useEffect(()=>{
-        if (gameData.game.p1==user.id){
-            setPlayer(1); 
-            setSecretCard(gameData.game.p1SecretCard)
-            console.log('player set to 1');
-        }
-        else if (gameData.game.p2 == user.id) { 
-            setPlayer(2); 
-            setSecretCard(gameData.game.p2SecretCard)
-            console.log('player set to 2') }
-        else { console.log("cant tell which players turn it is. check GuessQ component. Gamedata.game.p1= ", gameData.game.p1, " and user.id= ", user.id)}
-
-        setCards(gameData.turns[gameData.game.currentTurn].flippedCards)
-    },[])
-
+    
     const clickFlipCard = (card, i) => {
         let newCard = { ...card, "faceUp": !card.faceUp }
         let newCards = [...cards]
