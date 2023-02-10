@@ -50,7 +50,11 @@ const AnswerQ = ({ gameData, setGameData, user, setPhase, opponentsTurn }) => {
         <Header user={user}/>
         <h1 className="font-black">MAKE A GUESS</h1>
         {
-            secretCard ? <SecretCardAnswer card={secretCard} /> : null
+            secretCard ?
+            <div className=" flex justify-center">
+                <SecretCardAnswer card={secretCard} />
+            </div>    
+            : null
         }
 
         <form onSubmit={handleAnswer} className="py-2 ">
