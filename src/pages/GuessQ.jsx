@@ -3,7 +3,7 @@ import { useState, useEffect } from "react"
 import CardPlayDisplay from "../components/CardPlayDisplay"
 import GuessModeButton from "../components/GuessModeButton"
 
-const GuessQ = ({ opponentSecret, setPhase, gameData, setGameData, user, secretCard, player, cards  }) => {
+const GuessQ = ({opponent, opponentSecret, setPhase, gameData, setGameData, user, secretCard, player, cards  }) => {
     const [question, setQuestion] = useState('')
     const [guessMode, setGuessMode] = useState(false)
     
@@ -23,7 +23,6 @@ const GuessQ = ({ opponentSecret, setPhase, gameData, setGameData, user, secretC
     const handleSendQuestion = async (e) => {
         e.preventDefault()
         console.log("sendQuestion ran. Question is: ", question)
-        let whosTurnNext = (player == 1) ? gameData.game.p2 : gameData.game.p1
 
         let req = await fetch("http://localhost:3000/sendQuestion",{ 
             method: 'POST',
@@ -32,7 +31,7 @@ const GuessQ = ({ opponentSecret, setPhase, gameData, setGameData, user, secretC
                 turnId: gameData.turns[gameData.game.currentTurn].id,
                 question: question,
                 gameId: gameData.game.id,
-                whosTurnNext: whosTurnNext,
+                whosTurnNext: opponent.id,
                 cards: cards,
             })
         })

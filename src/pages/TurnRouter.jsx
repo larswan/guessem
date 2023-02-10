@@ -19,6 +19,7 @@ const TurnRouter = () => {
     const [phase, setPhase] = useState("default")
     const [user, setUser] = useState()
     const [player, setPlayer] = useState()
+    const [opponent, setOpponent] = useState()
     const [secretCard, setSecretCard] = useState()
     const [opponentSecret, setOpponentSecret] = useState()
     const [currentTurn, setCurrentTurn] = useState()
@@ -56,13 +57,15 @@ const TurnRouter = () => {
     useEffect(()=>{
         if (gameData && user){
             if (gameData.game.p1 == user.id) {
-                setPlayer(1);
+                setPlayer(gameData.p1);
+                setOpponent(gameData.p2)
                 setSecretCard(gameData.p1SecretCard)
                 setOpponentSecret(gameData.game.p2SecretCard)
                 console.log('player set to 1');
             }
             else if (gameData.game.p2 == user.id) {
-                setPlayer(2);
+                setPlayer(gameData.p2);
+                setOpponent(gameData.p1)
                 setSecretCard(gameData.p2SecretCard)
                 setOpponentSecret(gameData.game.p1SecretCard)
                 console.log('player set to 2')
@@ -75,9 +78,7 @@ const TurnRouter = () => {
             setPrevTurn((gameData.game.currentTurn-1))
 
             let yourTurn = (gameData.game.whosTurn == user.id)
-
-                        
-    
+                          
             if(!yourTurn){ setPhase("wait")}
             else if (gameData.game.currentTurn == 1){setPhase("guess")}
             else if (opponentsTurn.status=="asked") {setPhase('answer')}
@@ -91,11 +92,11 @@ const TurnRouter = () => {
 
     switch (phase) {
         case 'wait':
-            return <Wait  secretCard={secretCard} player={player} cards={cards} gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase} />;
+            return <Wait opponent={opponent} secretCard={secretCard} player={player} cards={cards} gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase} />;
         case 'answer':
-            return <AnswerQ allCards={allCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} gameData={gameData} opponentsTurn={opponentsTurn} setGameData={setGameData} user={user} setPhase={setPhase} />;
+            return <AnswerQ opponent={opponent} allCards={allCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} gameData={gameData} opponentsTurn={opponentsTurn} setGameData={setGameData} user={user} setPhase={setPhase} />;
         case 'guess':
-            return <GuessQ opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards}  gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
+            return <GuessQ opponent={opponent} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards}  gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
         default:
             return (
             <div>
