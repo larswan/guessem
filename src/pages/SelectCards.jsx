@@ -52,8 +52,8 @@ const SelectCards = () => {
                     body: JSON.stringify({
                         game: {p1: state.user, 
                         p2: state.friend.id,
-                        p1SecretCard: bothSecretCards[0], 
-                        p2SecretCard: bothSecretCards[1], 
+                        p1SecretCard: bothSecretCards[0].id, 
+                        p2SecretCard: bothSecretCards[1].id, 
                         inProgress: true,
                         whosTurn: state.user, 
                         currentTurn: 1,

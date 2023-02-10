@@ -41,10 +41,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_214142) do
     t.integer "p2"
     t.string "winningQuestion", default: ""
     t.string "winningAnswer", default: ""
-    t.jsonb "winningCard", default: {}
+    t.integer "winningCard"
     t.integer "winningUser"
-    t.jsonb "p1SecretCard", default: {}
-    t.jsonb "p2SecretCard", default: {}
+    t.integer "p1SecretCard"
+    t.integer "p2SecretCard"
     t.string "topic"
     t.integer "whosTurn"
     t.boolean "inProgress", default: true
