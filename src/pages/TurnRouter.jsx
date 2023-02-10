@@ -16,6 +16,7 @@ const TurnRouter = () => {
     const [user, setUser] = useState()
     const [phase, setPhase] = useState()
     let gameId
+    let opponentsTurn
 
     useEffect(()=>{
         // get user info
@@ -30,27 +31,30 @@ const TurnRouter = () => {
         const request = async () => {
             let req= await fetch(`http://localhost:3000/games/${gameId}`)
             let res = await req.json()
-            
+
             console.log("GameId= ", gameId, " and at TurnRouter line 37 game object is vv")
-            setGameData(res)      
             console.log(res)
+
+            setGameData(res)      
         }
         request()
-
     },[])
 
     // define phase
     useEffect(()=>{
         if (gameData && user){
             let yourTurn = (gameData.game.whosTurn == user.id)
-            console.log("Your turn? ", yourTurn)
+            // console.log("Your turn? ", yourTurn)
+            if (gameData.game.currentTurn>0){opponentsTurn = gameData.turns[(gameData.game.currentTurn - 1)]}             
+            // console.log(gameData.turns[(gameData.game.currentTurn - 1)].status)
     
             if(!yourTurn){ setPhase("wait")}
-            else if (gameData.game.currentTurn == 1) 
-            {setPhase("guess")}
+            else if (gameData.game.currentTurn == 1){setPhase("guess")}
+            else if (opponentsTurn.status=="asked") {setPhase('answer')}
             else if("still thinking on this") {setPhase(null)}
             else {setPhase(null)}
             }
+
             // if user.id == gameData.game.whosTurn && gameData.game.currentTurn == 1 => navigate(questionScreen)
             // elseif user.id == gameData.game.whosTurn navigate(answerScreen)
         }
@@ -60,7 +64,7 @@ const TurnRouter = () => {
         case 'wait':
             return <Wait gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase} />;
         case 'answer':
-            return <AnswerQ gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase} />;
+            return <AnswerQ gameData={gameData} opponentsTurn={opponentsTurn} setGameData={setGameData} user={user} setPhase={setPhase} />;
         case 'guess':
             return <GuessQ gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
         default:

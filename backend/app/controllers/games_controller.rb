@@ -107,6 +107,6 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:winningQuestion, :winningAnswer, :winningCard, :winningUser, :whosTurn, :p1, :p2, :p1SecretCard, :p2SecretCard, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
+      params.require(:game).permit(:winningQuestion, :winningAnswer, winningCard: [:id, :image, :name, :faceUp, :created_at, :updated_at] , :winningUser, p1SecretCard: [:id, :image, :name, :faceUp, :created_at, :updated_at] , p2SecretCard: [:id, :image, :name, :faceUp, :created_at, :updated_at] , :whosTurn, :p1, :p2, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
     end
 end

@@ -36,20 +36,19 @@ const SelectCards = () => {
         // sub in the new card in a duplicate array
         newCards[i] = newCard
         setCards(() => {return [...newCards] })
-        console.log(cards.length)
     }
 
     useEffect(()=>{
         console.log("count: " + count)
         if (count == 12){
             let selectedCards = cards.filter(card => card.faceUp === true);
-            console.log(selectedCards.length)
             let bothSecretCards = randomTwoFromArray(selectedCards)
+            console.log(bothSecretCards)
            
             const request = async () => {
                 let req = await fetch(`http://localhost:3000/newGame`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: {"Content-Type": "application/json"},
                     body: JSON.stringify({
                         game: {p1: state.user, 
                         p2: state.friend.id,

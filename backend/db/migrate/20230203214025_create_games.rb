@@ -4,12 +4,12 @@ class CreateGames < ActiveRecord::Migration[7.0]
       t.jsonb :cards, default: {}
       t.integer :p1
       t.integer :p2
-      t.string :winningQuestion
-      t.string :winningAnswer
-      t.jsonb :winningCard
-      t.integer :winningUser
-      t.jsonb :p1SecretCard
-      t.jsonb :p2SecretCard
+      t.string :winningQuestion, default: ""
+      t.string :winningAnswer, default: ""
+      t.jsonb :winningCard, default: {}
+      t.integer :winningUser, default: nil
+      t.jsonb :p1SecretCard, default: {}
+      t.jsonb :p2SecretCard, default: {}
       t.string :topic
       t.integer :whosTurn
       t.boolean :inProgress, default: true
