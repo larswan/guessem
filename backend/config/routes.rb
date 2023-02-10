@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   post "/newGame", to: 'games#newGame'
   post '/login', to: 'users#login'
   post '/sendQuestion', to: 'games#sendQuestion'
+  post '/answerQuestion', to: 'games#answerQuestion'
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

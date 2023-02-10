@@ -59,6 +59,16 @@ class GamesController < ApplicationController
     end
   end
 
+  def answerQuestion
+    turn = Turn.find_by(id: params[:turnId])
+    if turn.update(answer: params[:answer], status: "answered")
+      render json: {turn: turn}
+    else  
+      render json: {error: "turn didnt update. :/"}, status: 400
+    end
+
+  end
+
   def sendQuestion
     game = Game.find_by(id: params[:gameId])
     prevTurn = Turn.find_by(id: params[:turnId])
@@ -84,7 +94,6 @@ class GamesController < ApplicationController
     # player2= User.find_by!(id: game.p2)
     # turns = Turn.where(gameId: game.id)
     # render json: {game: game, p1: player1, p2: player2, turns: turns}
-
   end
 
   # PATCH/PUT /games/1

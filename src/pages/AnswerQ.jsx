@@ -10,12 +10,12 @@ const AnswerQ = ({ opponent, opponentsTurn,opponentSecret, setPhase, gameData, s
         // console.log(secretCard)
         // console.log(currentTurn)
         // console.log(prevTurn)
-        console.log(opponent)
+        // console.log(opponent)
     })
 
     const handleAnswer = async (e) => {
         e.preventDefault()
-        console.log("handleAnswer ran. Answer is: ", answer)
+        // console.log("handleAnswer ran. Answer is: ", answer)
 
         // post answerQuestion 
         // patch previous turn with answer, change status to answered
@@ -28,10 +28,9 @@ const AnswerQ = ({ opponent, opponentsTurn,opponentSecret, setPhase, gameData, s
             })
         })
         let res = await req.json()
+        console.log("handle answer response below")
         console.log(res)
-
-        // find a way to update gameData with new turn so that it moves to question screen
-        // setGameData(res)
+        setPhase("guess")
     }
 
     return (
