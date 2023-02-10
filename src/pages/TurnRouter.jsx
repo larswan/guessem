@@ -16,20 +16,18 @@ const TurnRouter = () => {
     const [gameData, setGameData] = useState(null)
     const [cards, setCards] = useState()
     const [allCards, setAllCards] = useState()
-    const [phase, setPhase] = useState()
+    const [phase, setPhase] = useState("default")
     const [user, setUser] = useState()
     const [player, setPlayer] = useState()
     const [secretCard, setSecretCard] = useState()
     const [opponentSecret, setOpponentSecret] = useState()
     const [currentTurn, setCurrentTurn] = useState()
     const [prevTurn, setPrevTurn] = useState()
-
+    const [opponentsTurn, setOpponentsTurn] = useState()
 
     let gameId
-    let opponentsTurn
 
     useEffect(()=>{
-
         // get user info
         let cookieUserId = Cookies.get('userId')
         let cookieUserName = Cookies.get('userName')
@@ -44,9 +42,12 @@ const TurnRouter = () => {
             let res = await req.json()
 
             console.log("GameId= ", gameId, " and at TurnRouter line 37 game object is vv")
+
             console.log(res)
 
-            setGameData(res)      
+            setGameData(res)   
+            // setting opponents turn to the last 
+            if (res.game.currentTurn > 0) { setOpponentsTurn(res.turns[(res.game.currentTurn - 1)]) }   
         }
         request()
     },[])
@@ -75,8 +76,7 @@ const TurnRouter = () => {
 
             let yourTurn = (gameData.game.whosTurn == user.id)
 
-            if (gameData.game.currentTurn>0)
-                {opponentsTurn = gameData.turns[(gameData.game.currentTurn - 1)]}             
+                        
     
             if(!yourTurn){ setPhase("wait")}
             else if (gameData.game.currentTurn == 1){setPhase("guess")}
