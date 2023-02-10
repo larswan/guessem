@@ -61,8 +61,13 @@ class GamesController < ApplicationController
 
   def answerQuestion
     turn = Turn.find_by(id: params[:turnId])
+    
     if turn.update(answer: params[:answer], status: "answered")
-      render json: {turn: turn}
+      game = Game.find_by(id: turn.gameId)
+      player1 = User.find_by!(id: game.p1)
+      player2= User.find_by!(id: game.p2)
+      turns = Turn.where(gameId: game.id)
+      render json: {game: game, p1: player1, p2: player2, turns: turns}
     else  
       render json: {error: "turn didnt update. :/"}, status: 400
     end
