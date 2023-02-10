@@ -1,6 +1,11 @@
+import { useEffect } from "react"
 
 
 const SecretCardAnswer = ({card}) => {
+
+    useEffect(()=>{
+        console.log(card)
+    },[])
 
     return(
         <div>
