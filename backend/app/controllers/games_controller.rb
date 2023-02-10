@@ -12,8 +12,10 @@ class GamesController < ApplicationController
     newGame = @game.dup
     player1 = User.find_by!(id: @game.p1)
     player2= User.find_by!(id: @game.p2)
+    p1SecretCard = Card.find_by(id: newGame.p1SecretCard)
+    p2SecretCard = Card.find_by(id: newGame.p2SecretCard)
     turns = Turn.where(gameId: @game.id)
-    render json: {game: @game, p1: player1, p2: player2, turns: turns}
+    render json: {game: @game, p1: player1, p2: player2, turns: turns, p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
   end
 
   def active_games
