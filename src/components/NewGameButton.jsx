@@ -7,7 +7,7 @@ const NewGameButton = () => {
         navigate("/new_game")
     }
     return(
-        <div onClick={() => { newGameNav() }} className="font-black bg-green-600 py-1 px-2 text-white ml-2 my-2 rounded-full">
+        <div onClick={()=>{newGameNav()}} className="font-black bg-blue py-1 px-2 text-white ml-2 my-2 rounded-full">
             + NEW GAME
         </div>
     )

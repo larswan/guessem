@@ -65,8 +65,9 @@ const AllGames = ({ userObj, setUserObj }) => {
                 })
             }
             <NewGameButton />
-
-            <LogoutButton userObj={userObj} setUserObj={setUserObj} />
+            <div className="flex justify-center fixed bottom-2 left-0 right-0">
+                <LogoutButton userObj={userObj} setUserObj={setUserObj} />
+            </div>
         </div>
     )
 }

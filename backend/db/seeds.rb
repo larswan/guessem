@@ -1,10 +1,14 @@
 puts '🍪 Seeding...'
 
+user0 = User.create(name: "Joe Biden", givenName: "Joey", familyName: "Biden", email: 'goebidemrecords@gmail.com', googleImageUrl: 'https://lh3.googleusercontent.com/a/AEdFTp46KHv6y1vpQO986BHr6nZzL8JGOwVvQcsEtMY=s96-c', googleId: '115686375380160512803', token: "tokentoken")
+
 user1 = User.create(name: "Larson Collier", email: 'collier.larson@gmail.com', givenName: 'Larson', familyName: 'Collier', googleId: '106319424501130968820', googleImageUrl: 'https://lh3.googleusercontent.com/a/AEdFTp5a4dYww8NfYeiv-SWZgqL-L5GUeAT_E3GznpPWGAo=s96-c', token: "tokentoken")
 user2 = User.create(name: "Katherine Tsai", email: 'katherine@gmail.com', googleImageUrl: 'https://wallpapers.com/images/featured/4co57dtwk64fb7lv.jpg', googleId: '1234', token: "tokentoken")
 user3 = User.create(name: "Vincent Lee", email: 'vincent@gmail.com', googleImageUrl: 'https://wallpapers.com/images/featured/4co57dtwk64fb7lv.jpg', googleId: '1234', token: "tokentoken")
 user4 = User.create(name: "Serrin Doscher", email: 'serrin@gmail.com', googleImageUrl: 'https://i.pinimg.com/736x/5a/e5/98/5ae598ff624217b9a5c008beb8c512d0.jpg', googleId: '1234', token: "tokentoken")
 
+
+friendship0 = Friendship.create(p1Id: user1.id, p2Id: user0.id)
 friendship1 = Friendship.create(p1Id: user1.id, p2Id: user2.id)
 friendship2 = Friendship.create(p1Id: user3.id, p2Id: user4.id)
 friendship3 = Friendship.create(p1Id: user1.id, p2Id: user3.id)
