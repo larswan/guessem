@@ -40,13 +40,12 @@ const TurnRouter = () => {
         
         //get game info
         if (!gameId) {gameId = state.gameId}
+
         const request = async () => {
             let req= await fetch(`http://localhost:3000/games/${gameId}`)
             let res = await req.json()
 
-            console.log("GameId= ", gameId, " and at TurnRouter line 37 game object is vv")
-
-            console.log(res)
+            console.log("GameId= ", gameId, " and at TurnRouter line 48 game object is: ", res)
             setGameData(res)   
 
             // setting opponents turn to the last 
@@ -60,6 +59,10 @@ const TurnRouter = () => {
     // Once game state has settled, define phase and set player, cards, allCards and secretCards
     useEffect(()=>{
         if (gameData && user){
+            if (gameData.game.currentTurn > 0) { setOpponentsTurn(gameData.turns[(gameData.game.currentTurn - 1)]) }
+            //setting your last turn
+            if (gameData.game.currentTurn > 1) { setPrevTurn(gameData.turns[(gameData.game.currentTurn - 2)]) }
+            
             console.log("turn router useEffect [gameData] use effect GAMEDATA: ", gameData)
             if (gameData.game.p1 == user.id) {
                 setPlayer(gameData.p1);
@@ -83,13 +86,20 @@ const TurnRouter = () => {
 
             let yourTurn = (gameData.game.whosTurn == user.id)
 
-            console.log("oppTurn", opponentsTurn)
-                          
+            
             if(!yourTurn){ setPhase("wait")}
-            else if (gameData.game.currentTurn == 1){setPhase("guess")}
-            else if (opponentsTurn.status=="asked") {setPhase('answer')}
-            else if (opponentsTurn.status=="answered") {setPhase('guess')}
-            else {setPhase(null)}
+            else if (gameData.game.currentTurn == 0){setPhase("guess")}
+            else if (opponentsTurn.status=="asked") {
+                console.log("oppTurn", opponentsTurn)
+                setPhase('answer')
+            }
+            else if (opponentsTurn.status == "answered" || opponentsTurn.status == null) {
+                console.log("oppTurn", opponentsTurn)
+                setPhase('guess')
+            }
+            else {
+                console.log("oppTurn", opponentsTurn)
+                setPhase(null)}
             }
 
             // if user.id == gameData.game.whosTurn && gameData.game.currentTurn == 1 => navigate(questionScreen)
