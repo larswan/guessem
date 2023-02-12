@@ -2,8 +2,9 @@ import Header from "../components/Header"
 import { useState, useEffect } from "react"
 import CardPlayDisplay from "../components/CardPlayDisplay"
 import GuessModeButton from "../components/GuessModeButton"
+import AnswerDisplay from "../components/AnswerDisplay"
 
-const GuessQ = ({opponent, opponentSecret, setPhase, gameData, setGameData, user, secretCard, player, cards  }) => {
+const GuessQ = ({opponent, opponentSecret, setPhase, gameData, setGameData, user, secretCard, player, cards, setCards }) => {
     const [question, setQuestion] = useState('')
     const [guessMode, setGuessMode] = useState(false)
     
@@ -43,7 +44,10 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, setGameData, user
     return (
         <div className='px-2'>
             <Header user={user} />
-            <h1 className="font-black">MAKE A GUESS</h1>
+            {/* {
+                if turn>1 
+                <AnswerDisplay prevTurn />
+            } */}
             <div className="flex flex-column flex-wrap space-x-1 space-y-1 justify-center">
                 {
                     cards?.map((card, i)=>{
@@ -55,6 +59,8 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, setGameData, user
                     })
                 }
             </div>
+            <h1 className="font-black">MAKE A GUESS</h1>
+
             <form onSubmit={handleSendQuestion} className="py-2 flex justify-center">
                 <input className="py-1" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
                 <button className="font-black bg-green-600 py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>

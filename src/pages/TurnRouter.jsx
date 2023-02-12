@@ -1,13 +1,15 @@
 import { useNavigate, useLocation } from "react-router-dom"
 import { useEffect, useReducer, useState } from "react"
-import GameBoard from "./GameBoard"
-import WaitingForOtherPlayer from "./WaitingForOtherPlayer"
-import BackButton from "../components/BackButton"
 import Cookies from 'js-cookie'
 import GuessQ from "./GuessQ"
 import Wait from "./Wait"
 import AnswerQ from "./AnswerQ"
 import Header from "../components/Header"
+
+// TBD
+import GameBoard from "./GameBoard"
+import WaitingForOtherPlayer from "./WaitingForOtherPlayer"
+import BackButton from "../components/BackButton"
 
 const TurnRouter = () => {
     const navigate = useNavigate()
@@ -45,15 +47,17 @@ const TurnRouter = () => {
             console.log("GameId= ", gameId, " and at TurnRouter line 37 game object is vv")
 
             console.log(res)
-
             setGameData(res)   
+
             // setting opponents turn to the last 
             if (res.game.currentTurn > 0) { setOpponentsTurn(res.turns[(res.game.currentTurn - 1)]) }   
+            //setting your last turn
+            if (res.game.currentTurn > 1) { setPrevTurn(res.turns[(res.game.currentTurn - 2)]) }  
         }
         request()
     },[])
 
-    // Once game state has settled define phase and set player, cards, allCards and secretCards
+    // Once game state has settled, define phase and set player, cards, allCards and secretCards
     useEffect(()=>{
         if (gameData && user){
             if (gameData.game.p1 == user.id) {
@@ -75,13 +79,15 @@ const TurnRouter = () => {
             setCards(gameData.turns[gameData.game.currentTurn].flippedCards)
             setAllCards(gameData.game.cards)
             setCurrentTurn(gameData.game.currentTurn)
-            setPrevTurn((gameData.game.currentTurn-1))
 
             let yourTurn = (gameData.game.whosTurn == user.id)
+
+            console.log("oppTurn", opponentsTurn)
                           
             if(!yourTurn){ setPhase("wait")}
             else if (gameData.game.currentTurn == 1){setPhase("guess")}
             else if (opponentsTurn.status=="asked") {setPhase('answer')}
+            else if (opponentsTurn.status=="answered") {setPhase('guess')}
             else {setPhase(null)}
             }
 
@@ -96,7 +102,7 @@ const TurnRouter = () => {
         case 'answer':
             return <AnswerQ opponent={opponent} allCards={allCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} gameData={gameData} opponentsTurn={opponentsTurn} setGameData={setGameData} user={user} setPhase={setPhase} />;
         case 'guess':
-            return <GuessQ opponent={opponent} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards}  gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
+            return <GuessQ opponent={opponent} setCards={setCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards}  gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
         default:
             return (
             <div>

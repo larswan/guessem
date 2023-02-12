@@ -6,19 +6,9 @@ const AnswerQ = ({ opponent, opponentsTurn,opponentSecret, setPhase, gameData, s
     const [answer, setAnswer] = useState('')
     const [allCards, setAllCards] = useState()
 
-    useEffect(()=>{
-        // console.log(secretCard)
-        // console.log(currentTurn)
-        // console.log(prevTurn)
-        // console.log(opponent)
-    })
-
     const handleAnswer = async (e) => {
         e.preventDefault()
-        // console.log("handleAnswer ran. Answer is: ", answer)
-
-        // post answerQuestion 
-        // patch previous turn with answer, change status to answered
+        
         let req = await fetch("http://localhost:3000/answerQuestion", {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -28,9 +18,8 @@ const AnswerQ = ({ opponent, opponentsTurn,opponentSecret, setPhase, gameData, s
             })
         })
         let res = await req.json()
-        console.log("handle answer response below")
-        console.log(res)
-        setPhase("guess")
+        console.log("handle answer response ", res)
+        setGameData(res)
     }
 
     return (
