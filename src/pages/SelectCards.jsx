@@ -21,7 +21,6 @@ const SelectCards = () => {
 
     useEffect(()=>{
         let facingCards = state.cards.map((card)=>{return {...card, faceUp: false}})
-        console.log(facingCards)
         setCards(facingCards)
     }, [])
 
@@ -39,11 +38,11 @@ const SelectCards = () => {
     }
 
     useEffect(()=>{
-        console.log("count: " + count)
+        // console.log("count: " + count)
         if (count == 12){
             let selectedCards = cards.filter(card => card.faceUp === true);
             let bothSecretCards = randomTwoFromArray(selectedCards)
-            console.log(bothSecretCards)
+            // console.log(bothSecretCards)
            
             const request = async () => {
                 let req = await fetch(`http://localhost:3000/newGame`, {
@@ -56,7 +55,7 @@ const SelectCards = () => {
                         p2SecretCard: bothSecretCards[1].id, 
                         inProgress: true,
                         whosTurn: state.user, 
-                        currentTurn: 1,
+                        currentTurn: 0,
                         cards: selectedCards,
                         topic: state.topic}
                     })
@@ -64,12 +63,12 @@ const SelectCards = () => {
                 let res = await req.json()
             
                 if(req.ok){
-                    console.log(res)
+                    console.log("selectCards res ", res)
                     navigate('/play',{state:{
                         gameId: res.game.id
                     }})
                 } else {
-                    console.log(req)
+                    console.log("problem. selectCards REQ: ",req)
                 }
             }
             request()

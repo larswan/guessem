@@ -64,10 +64,12 @@ class GamesController < ApplicationController
     
     if turn.update(answer: params[:answer], status: "answered")
       game = Game.find_by(id: turn.gameId)
+      p1SecretCard = Card.find_by(id: game.p1SecretCard)
+      p2SecretCard = Card.find_by(id: game.p2SecretCard)
       player1 = User.find_by!(id: game.p1)
       player2= User.find_by!(id: game.p2)
       turns = Turn.where(gameId: game.id)
-      render json: {game: game, p1: player1, p2: player2, turns: turns}
+      render json: {game: game, p1: player1, p2: player2, turns: turns, p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
     else  
       render json: {error: "turn didnt update. :/"}, status: 400
     end
@@ -88,7 +90,9 @@ class GamesController < ApplicationController
       player1 = User.find_by!(id: game.p1)
       player2= User.find_by!(id: game.p2)
       turns = Turn.where(gameId: game.id)
-      render json: {game: game, p1: player1, p2: player2, turns: turns}
+      p1SecretCard = Card.find_by(id: game.p1SecretCard)
+      p2SecretCard = Card.find_by(id: game.p2SecretCard)
+      render json: {game: game, p1: player1, p2: player2, turns: turns,p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
     else 
       render json: {error: "nextTurn didnt save but atleast this error is showing"}, status:400
     end

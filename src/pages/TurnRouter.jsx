@@ -60,20 +60,20 @@ const TurnRouter = () => {
     // Once game state has settled, define phase and set player, cards, allCards and secretCards
     useEffect(()=>{
         if (gameData && user){
-            console.log(gameData)
+            console.log("turn router useEffect [gameData] use effect GAMEDATA: ", gameData)
             if (gameData.game.p1 == user.id) {
                 setPlayer(gameData.p1);
                 setOpponent(gameData.p2)
                 setSecretCard(gameData.p1SecretCard)
                 setOpponentSecret(gameData.game.p2SecretCard)
-                console.log('player set to 1');
+                // console.log('player set to 1');
             }
             else if (gameData.game.p2 == user.id) {
                 setPlayer(gameData.p2);
                 setOpponent(gameData.p1)
                 setSecretCard(gameData.p2SecretCard)
                 setOpponentSecret(gameData.game.p1SecretCard)
-                console.log('player set to 2')
+                // console.log('player set to 2')
             }
             else { console.log("cant tell which players turn it is. check GuessQ component. Gamedata.game.p1= ", gameData.game.p1, " and user.id= ", user.id) }
             
