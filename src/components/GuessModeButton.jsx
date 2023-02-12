@@ -8,7 +8,7 @@ const GuessModeButton = ({guessMode, setGuessMode}) => {
 
     return(
         <div className="">
-            <div onClick={()=>{handleClick()}} className="flex justify-center font-black bg-green-600 py-1 px-2 text-white ml-2 my-2 rounded-full">
+            <div onClick={()=>{handleClick()}} className="flex justify-center font-black bg-red py-1 px-2 text-white ml-2 my-2 rounded-full">
                 Guess A Card!
             </div>
         </div>

@@ -60,6 +60,7 @@ const TurnRouter = () => {
     // Once game state has settled, define phase and set player, cards, allCards and secretCards
     useEffect(()=>{
         if (gameData && user){
+            console.log(gameData)
             if (gameData.game.p1 == user.id) {
                 setPlayer(gameData.p1);
                 setOpponent(gameData.p2)

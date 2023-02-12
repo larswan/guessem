@@ -63,7 +63,7 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, setGameData, user
 
             <form onSubmit={handleSendQuestion} className="py-2 flex justify-center">
                 <input className="py-1" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
-                <button className="font-black bg-green-600 py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>
+                <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>
             </form>
             <h1 className="flex justify-center">or</h1>
             <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} />
