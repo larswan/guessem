@@ -9,6 +9,7 @@ class CreateGames < ActiveRecord::Migration[7.0]
       t.integer :winningCard
       t.integer :winningUser, default: nil
       t.integer :p1SecretCard
+      t.string :phase, default: "guess"
       t.integer :p2SecretCard
       t.string :topic
       t.integer :whosTurn

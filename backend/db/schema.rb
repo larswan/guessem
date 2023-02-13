@@ -44,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_214142) do
     t.integer "winningCard"
     t.integer "winningUser"
     t.integer "p1SecretCard"
+    t.string "phase", default: "guess"
     t.integer "p2SecretCard"
     t.string "topic"
     t.integer "whosTurn"

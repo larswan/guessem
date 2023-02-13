@@ -88,22 +88,18 @@ const TurnRouter = () => {
 
             
             if(!yourTurn){ setPhase("wait")}
-            else if (gameData.game.currentTurn == 0){setPhase("guess")}
-            else if (opponentsTurn.status=="asked") {
-                console.log("oppTurn", opponentsTurn)
+            else if (gameData.game.phase == "guess"){setPhase("guess")}
+            else if (gameData.game.phase=="respond") {
                 setPhase('answer')
             }
-            else if (opponentsTurn.status == "answered" || opponentsTurn.status == null) {
-                console.log("oppTurn", opponentsTurn)
-                setPhase('guess')
-            }
+            // else if (opponentsTurn.status == "answered" || opponentsTurn.status == null) {
+            //     console.log("oppTurn", opponentsTurn)
+            //     setPhase('guess')
+            // }
             else {
                 console.log("oppTurn", opponentsTurn)
                 setPhase(null)}
             }
-
-            // if user.id == gameData.game.whosTurn && gameData.game.currentTurn == 1 => navigate(questionScreen)
-            // elseif user.id == gameData.game.whosTurn navigate(answerScreen)
         }
     ,[gameData])
 

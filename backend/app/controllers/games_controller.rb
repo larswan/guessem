@@ -61,9 +61,9 @@ class GamesController < ApplicationController
 
   def answerQuestion
     turn = Turn.find_by(id: params[:turnId])
+    game = Game.find_by(id: turn.gameId)
     
-    if turn.update(answer: params[:answer], status: "answered")
-      game = Game.find_by(id: turn.gameId)
+    if turn.update(answer: params[:answer], status: "answered") && game.update(phase: "guess")
       p1SecretCard = Card.find_by(id: game.p1SecretCard)
       p2SecretCard = Card.find_by(id: game.p2SecretCard)
       player1 = User.find_by!(id: game.p1)
@@ -82,7 +82,7 @@ class GamesController < ApplicationController
 
     prevTurn.update(question: params[:question], flippedCards: params[:cards], guessedCard: nil, status: "asked")
     incrementTurn = (prevTurn.turn + 1)
-    game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn)
+    game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn, phase: "respond")
 
     incrementTurn2 = (prevTurn.turn + 2)
     nextTurn = Turn.new(turn: incrementTurn2, flippedCards: params[:cards], playerId: prevTurn.playerId, gameId: prevTurn.gameId)
@@ -127,7 +127,7 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:winningQuestion, :winningAnswer, :winningCard, :winningUser, :p1SecretCard, :p2SecretCard, :whosTurn, :p1, :p2, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
+      params.require(:game).permit(:phase, :winningQuestion, :winningAnswer, :winningCard, :winningUser, :p1SecretCard, :p2SecretCard, :whosTurn, :p1, :p2, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
     end
 end
 
