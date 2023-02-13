@@ -5,6 +5,7 @@ import GuessQ from "./GuessQ"
 import Wait from "./Wait"
 import AnswerQ from "./AnswerQ"
 import Header from "../components/Header"
+import WinningScreen from "./WinningScreen"
 
 // TBD
 import GameBoard from "./GameBoard"
@@ -68,14 +69,14 @@ const TurnRouter = () => {
                 setPlayer(gameData.p1);
                 setOpponent(gameData.p2)
                 setSecretCard(gameData.p1SecretCard)
-                setOpponentSecret(gameData.game.p2SecretCard)
+                setOpponentSecret(gameData.p2SecretCard)
                 // console.log('player set to 1');
             }
             else if (gameData.game.p2 == user.id) {
                 setPlayer(gameData.p2);
                 setOpponent(gameData.p1)
                 setSecretCard(gameData.p2SecretCard)
-                setOpponentSecret(gameData.game.p1SecretCard)
+                setOpponentSecret(gameData.p1SecretCard)
                 // console.log('player set to 2')
             }
             else { console.log("cant tell which players turn it is. check GuessQ component. Gamedata.game.p1= ", gameData.game.p1, " and user.id= ", user.id) }
@@ -92,10 +93,9 @@ const TurnRouter = () => {
             else if (gameData.game.phase=="respond") {
                 setPhase('answer')
             }
-            // else if (opponentsTurn.status == "answered" || opponentsTurn.status == null) {
-            //     console.log("oppTurn", opponentsTurn)
-            //     setPhase('guess')
-            // }
+            else if (gameData.game.status=="won") {
+                setPhase("won")
+            }
             else {
                 console.log("oppTurn", opponentsTurn)
                 setPhase(null)}
@@ -109,7 +109,9 @@ const TurnRouter = () => {
         case 'answer':
             return <AnswerQ opponent={opponent} allCards={allCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} gameData={gameData} opponentsTurn={opponentsTurn} setGameData={setGameData} user={user} setPhase={setPhase} />;
         case 'guess':
-            return <GuessQ opponent={opponent} setCards={setCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards}  gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
+            return <GuessQ opponent={opponent} setCards={setCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} prevTurn={prevTurn} gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
+        case 'won':
+            return <WinningScreen opponent={opponent} setCards={setCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} prevTurn={prevTurn} gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
         default:
             return (
             <div>

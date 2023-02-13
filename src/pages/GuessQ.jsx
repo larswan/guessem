@@ -4,7 +4,7 @@ import CardPlayDisplay from "../components/CardPlayDisplay"
 import GuessModeButton from "../components/GuessModeButton"
 import AnswerDisplay from "../components/AnswerDisplay"
 
-const GuessQ = ({opponent, opponentSecret, setPhase, gameData, setGameData, user, secretCard, player, cards, setCards }) => {
+const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGameData, user, secretCard, player, cards, setCards }) => {
     const [question, setQuestion] = useState('')
     const [guessMode, setGuessMode] = useState(false)
     
@@ -16,9 +16,24 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, setGameData, user
     }
 
     const clickGuessCard = async (card, i) => {
-        console.log("clickGuessedCard fired")
-        // logic to see if winning
-        // patch to game 
+        console.log("clickGuessedCard fired", card)
+        
+        // if right
+        if (card.id==opponentSecret.id){
+            console.log("WIN")
+            setPhase("won")
+
+        }
+        else {
+            console.log(card, opponentSecret)
+        
+            // flip card
+            // if wrong
+            // turn answered, question: Is it ${card.name}? "No"
+            // player turn => opp
+            // 
+        }
+
     }
 
     const handleSendQuestion = async (e) => {
@@ -44,10 +59,13 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, setGameData, user
     return (
         <div className='px-2'>
             <Header user={user} />
-            {/* {
-                if turn>1 
-                <AnswerDisplay prevTurn />
-            } */}
+            {
+                (gameData.game.currentTurn>1) ? 
+                    <div>
+                        <AnswerDisplay prevTurn={prevTurn}/>
+                    </div>
+                    : null
+            }
             <div className="flex flex-column flex-wrap space-x-1 space-y-1 justify-center">
                 {
                     cards?.map((card, i)=>{
@@ -66,7 +84,7 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, setGameData, user
                 <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>
             </form>
             <h1 className="flex justify-center">or</h1>
-            <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} />
+            <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} setQuestion={setQuestion} />
         </div>
     )
 }
