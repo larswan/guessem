@@ -128,9 +128,9 @@ class GamesController < ApplicationController
       player1 = User.find_by!(id: game.p1)
       player2= User.find_by!(id: game.p2)
       turns = Turn.where(gameId: game.id)
-      p1SecretCard = Card.find_by(id: game.p1SecretCard)
-      p2SecretCard = Card.find_by(id: game.p2SecretCard)
-      render json: {game: game, p1: player1, p2: player2, turns: turns,p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
+      winningCard = Card.find_by!(id: game.winningCard)
+   
+      render json: {game: game, p1: player1, p2: player2, turns: turns, winningCard: winningCard}
     else 
       render json: {error: "guessedRight error in backend"}, status:400
     end
