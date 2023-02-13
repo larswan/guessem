@@ -17,21 +17,52 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGame
 
     const clickGuessCard = async (card, i) => {
         console.log("clickGuessedCard fired", card)
+
+        //generate question
+        const guessedQuestion = `Is it ${card.name}?`
         
         // if right
         if (card.id==opponentSecret.id){
-            console.log("WIN")
-            setPhase("won")
-
+            console.log("win! prevTurn is: ", prevTurn)
+            let req = await fetch("http://localhost:3000/guessedRight", {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    turnId: gameData.turns[gameData.game.currentTurn].id,
+                    gameId: gameData.game.id,
+                    winningQuestion: prevTurn.question,
+                    winningAnswer: prevTurn.answer,
+                    winningUser: user.id,
+                    winningCard: card.id,
+                })
+            })
+            let res = await req.json()
+            console.log("guessedRight ran heres the res ", res)
+            setGameData(res)
         }
         else {
             console.log(card, opponentSecret)
-        
-            // flip card
-            // if wrong
-            // turn answered, question: Is it ${card.name}? "No"
-            // player turn => opp
-            // 
+
+            // flip the guessed card
+            let newCard = { ...card, "faceUp": !card.faceUp }
+            let newCards = [...cards]
+            newCards[i] = newCard
+
+            let req = await fetch("http://localhost:3000/guessedWrong", {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    turnId: gameData.turns[gameData.game.currentTurn].id,
+                    question: guessedQuestion,
+                    gameId: gameData.game.id,
+                    whosTurnNext: opponent.id,
+                    cards: newCards,
+                    guessedCard: card.id,
+                })
+            })
+            let res = await req.json()
+            console.log("guessedWrong ran heres the res ", res)
+            setGameData(res)
         }
 
     }

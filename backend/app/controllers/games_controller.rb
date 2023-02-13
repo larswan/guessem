@@ -96,14 +96,34 @@ class GamesController < ApplicationController
     else 
       render json: {error: "nextTurn didnt save but atleast this error is showing"}, status:400
     end
-    # CAN I CALL "SHOW" HERE? game.show()
-    # self.show
-    # this is a duplicate of SHOW method
-    # player1 = User.find_by!(id: game.p1)
-    # player2= User.find_by!(id: game.p2)
-    # turns = Turn.where(gameId: game.id)
-    # render json: {game: game, p1: player1, p2: player2, turns: turns}
   end
+
+  ######################################################
+  def guessedWrong
+    game = Game.find_by(id: params[:gameId])
+    prevTurn = Turn.find_by(id: params[:turnId])
+
+    prevTurn.update(question: params[:question], answer: "Nope.",flippedCards: params[:cards], guessedCard: params[:guessedCard], status: "answered")
+    incrementTurn = (prevTurn.turn + 1)
+    game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn, phase: "respond")
+
+    incrementTurn2 = (prevTurn.turn + 2)
+    nextTurn = Turn.new(turn: incrementTurn2, flippedCards: params[:cards], playerId: prevTurn.playerId, gameId: prevTurn.gameId)
+    if nextTurn.save
+      player1 = User.find_by!(id: game.p1)
+      player2= User.find_by!(id: game.p2)
+      turns = Turn.where(gameId: game.id)
+      p1SecretCard = Card.find_by(id: game.p1SecretCard)
+      p2SecretCard = Card.find_by(id: game.p2SecretCard)
+      render json: {game: game, p1: player1, p2: player2, turns: turns,p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
+    else 
+      render json: {error: "nextTurn didnt save but atleast this error is showing"}, status:400
+    end
+  end
+###################################################################
+
+
+
 
   # PATCH/PUT /games/1
   def update
@@ -127,7 +147,7 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:phase, :winningQuestion, :winningAnswer, :winningCard, :winningUser, :p1SecretCard, :p2SecretCard, :whosTurn, :p1, :p2, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
+      params.require(:game).permit(:guessedCard, :phase, :winningQuestion, :winningAnswer, :winningCard, :winningUser, :p1SecretCard, :p2SecretCard, :whosTurn, :p1, :p2, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
     end
 end
 
