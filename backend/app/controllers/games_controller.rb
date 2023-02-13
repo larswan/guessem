@@ -71,7 +71,7 @@ class GamesController < ApplicationController
       turns = Turn.where(gameId: game.id)
       render json: {game: game, p1: player1, p2: player2, turns: turns, p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
     else  
-      render json: {error: "turn didnt update. :/"}, status: 400
+      render json: {error: "turn didnt update"}, status: 400
     end
 
   end
@@ -98,7 +98,6 @@ class GamesController < ApplicationController
     end
   end
 
-  ######################################################
   def guessedWrong
     game = Game.find_by(id: params[:gameId])
     prevTurn = Turn.find_by(id: params[:turnId])
@@ -117,13 +116,26 @@ class GamesController < ApplicationController
       p2SecretCard = Card.find_by(id: game.p2SecretCard)
       render json: {game: game, p1: player1, p2: player2, turns: turns,p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
     else 
-      render json: {error: "nextTurn didnt save but atleast this error is showing"}, status:400
+      render json: {error: "guessedWrogn backend error"}, status:400
     end
   end
-###################################################################
 
-
-
+  ##############################
+  def guessedRight
+    game = Game.find_by(id: params[:gameId])
+  
+    if game.update(inProgress: false, phase: "won", winningAnswer: params[:winningAnswer], winningQuestion: params[:winningQuestion], winningUser: params[:winningUser], winningCard: params[:winningCard])
+      player1 = User.find_by!(id: game.p1)
+      player2= User.find_by!(id: game.p2)
+      turns = Turn.where(gameId: game.id)
+      p1SecretCard = Card.find_by(id: game.p1SecretCard)
+      p2SecretCard = Card.find_by(id: game.p2SecretCard)
+      render json: {game: game, p1: player1, p2: player2, turns: turns,p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
+    else 
+      render json: {error: "guessedRight error in backend"}, status:400
+    end
+  end
+  ################################
 
   # PATCH/PUT /games/1
   def update

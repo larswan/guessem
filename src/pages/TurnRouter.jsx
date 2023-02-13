@@ -93,7 +93,7 @@ const TurnRouter = () => {
             else if (gameData.game.phase=="respond") {
                 setPhase('answer')
             }
-            else if (gameData.game.status=="won") {
+            else if (gameData.game.phase=="won") {
                 setPhase("won")
             }
             else {
