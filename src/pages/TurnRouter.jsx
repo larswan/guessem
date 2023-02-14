@@ -62,6 +62,9 @@ const TurnRouter = () => {
                 setPrevTurn(gameData.turns.find(t => t.turn === (gameData.game.currentTurn - 2)))
             }  
 
+            setCards(gameData.turns[gameData.game.currentTurn].flippedCards)
+            setAllCards(gameData.game.cards)
+
             if (gameData.game.p1 == user.id) {
                 setPlayer(gameData.p1)
                 setOpponent(gameData.p2)
@@ -75,9 +78,6 @@ const TurnRouter = () => {
                 setOpponentSecret(gameData.p1SecretCard)
             }
             else { console.log("error setting players on gameData useEffect: ", gameData)}
-            
-            setCards(gameData.turns[gameData.game.currentTurn].flippedCards)
-            setAllCards(gameData.game.cards)
 
             let yourTurn = (gameData.game.whosTurn == user.id)
 
