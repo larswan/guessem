@@ -25,14 +25,14 @@ const TurnRouter = () => {
     const [prevTurn, setPrevTurn] = useState()
 
     useEffect(()=>{
-        // get user info
+        // get user info from cookies
         let cookieUserId = Cookies.get('userId')
         let cookieUserName = Cookies.get('userName')
         let cookieUserImage = Cookies.get('userImage')
         if (!cookieUserId) { navigate('/login') }
         else { setUser({ id: cookieUserId, name: cookieUserName, image: cookieUserImage }) } 
         
-        // retrieve gameId from the navigation from home screen or newGame component
+        // get gameId from navigation from home screen or newGame component 
         if (!gameId) {gameId = state.gameId}
 
         // fetch and set gameData 
@@ -55,16 +55,13 @@ const TurnRouter = () => {
     // Redefine phase and set cards, allCards and secretCards when new gameData is returned
     useEffect(()=>{
         if (gameData && user){
-            
-            // setting the current turn whenever a post req goes through
+            // setting the current turn whenever a gameData is updated by a post request
             setCurrentTurn(gameData.turns.find(t => t.turn === (gameData.game.currentTurn)))
-            //setting your last turn if a full round has elapsed
+            // set the previous turn questions and answers that will be displayed
             if (gameData.game.currentTurn > 1) {
                 setPrevTurn(gameData.turns.find(t => t.turn === (gameData.game.currentTurn - 2)))
             }  
 
-            console.log(gameData.game.p1, user.id)
-            // determine which card is based on which user is viewing
             if (gameData.game.p1 == user.id) {
                 setPlayer(gameData.p1)
                 setOpponent(gameData.p2)
