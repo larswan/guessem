@@ -24,7 +24,6 @@ const AllGames = ({ userObj, setUserObj }) => {
             let req = await fetch(`http://localhost:3000/active_games/${cookieUserId}`)
             let res= await req.json()
             if(req.ok) {
-                console.log(res)
                 setCurrentGames(res)
             }
             else {err=>{console.log(err)}}

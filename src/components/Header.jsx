@@ -8,7 +8,7 @@ const Header = ({user}) => {
             {
                 user ? 
                     <div>
-                        <h1>Current user: {user.name}</h1>
+                        {/* <h1>Current user: {user.name}</h1> */}
                         {/* <img src={user.image} className ="" /> */}
                     </div>
                  : null

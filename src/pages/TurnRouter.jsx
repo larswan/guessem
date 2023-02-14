@@ -44,12 +44,10 @@ const TurnRouter = () => {
         const request = async () => {
             let req= await fetch(`http://localhost:3000/games/${gameId}`)
             let res = await req.json()
-
-            console.log("GameId= ", gameId, " and at TurnRouter line 48 game object is: ", res)
             setGameData(res)   
             
             // setting the current turn
-            setCurrentTurn(res.turns.find(t => t.turn === res.game.currentTurn))
+            setCurrentTurn(res.turns.find(t => t.turn === (res.game.currentTurn)))
             //setting your last turn if a full round has elapsed
             if (res.game.currentTurn > 1) { 
                 console.log("line 55 of turnrouter ran")
@@ -63,7 +61,7 @@ const TurnRouter = () => {
     useEffect(()=>{
         if (gameData && user){
             // setting the current turn whenever a post req goes through
-            setCurrentTurn(gameData.turns.find(t => t.turn === gameData.game.currentTurn))
+            setCurrentTurn(gameData.turns.find(t => t.turn === (gameData.game.currentTurn)))
             //setting your last turn if a full round has elapsed
             if (gameData.game.currentTurn >= 2) {
                 setPrevTurn(gameData.turns.find(t => t.turn === (gameData.game.currentTurn - 2)))

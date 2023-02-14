@@ -6,9 +6,13 @@ const AnswerQ = ({ opponent, currentTurn, opponentSecret, setPhase, gameData, se
     const [answer, setAnswer] = useState('')
     const [allCards, setAllCards] = useState()
 
+    useEffect(() => {
+        console.log("AnswerQ useEffect. gameData.game.currentTurn: ", gameData.game.currentTurn, "currentTurn: ", currentTurn)
+    }, [])
+
     const handleAnswer = async (e) => {
         e.preventDefault()
-        
+
         let req = await fetch("http://localhost:3000/answerQuestion", {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -19,6 +23,7 @@ const AnswerQ = ({ opponent, currentTurn, opponentSecret, setPhase, gameData, se
             })
         })
         let res = await req.json()
+
         if (req.ok){
             console.log("handle answer response ", res)
             setGameData(res)
@@ -29,7 +34,7 @@ const AnswerQ = ({ opponent, currentTurn, opponentSecret, setPhase, gameData, se
         <div>
         <Header user={user}/>
         <h1 className="font-black">ANSWER THEM</h1>
-        <h1>{opponent.givenName} asked "{currentTurn.question}"</h1>
+        <h1>{opponent.givenName} asked "{currentTurn}"</h1>
         {
             secretCard ?
             <div className=" flex justify-center">
