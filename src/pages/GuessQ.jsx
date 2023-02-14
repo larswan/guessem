@@ -4,13 +4,9 @@ import CardPlayDisplay from "../components/CardPlayDisplay"
 import GuessModeButton from "../components/GuessModeButton"
 import AnswerDisplay from "../components/AnswerDisplay"
 
-const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGameData, user, secretCard, player, cards, setCards }) => {
+const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user, secretCard, cards, setCards }) => {
     const [question, setQuestion] = useState('')
     const [guessMode, setGuessMode] = useState(false)
-
-    useEffect(()=>{
-        console.log("GuessQ useEffect. gameData.game.currentTurn: ", gameData.game.currentTurn, "prevTurn: ", prevTurn)
-    },[])
     
     const clickFlipCard = (card, i) => {
         let newCard = { ...card, "faceUp": !card.faceUp }
@@ -20,7 +16,6 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGame
     }
 
     const clickGuessCard = async (card, i) => {
-        //generate question
         const guessedQuestion = `Is it ${card.name}?`
         
         // if right
@@ -45,7 +40,6 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGame
         else {
             console.log("guessedWrong about to fire. Guessed card:  ", card, "oppSecretCard: ", opponentSecret)
 
-            // flip the guessed card
             let newCard = { ...card, "faceUp": !card.faceUp }
             let newCards = [...cards]
             newCards[i] = newCard
@@ -66,12 +60,11 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGame
             console.log("guessedWrong ran heres the res ", res)
             setGameData(res)
         }
-
     }
 
     const handleSendQuestion = async (e) => {
         e.preventDefault()
-        console.log("sendQuestion ran gameData.game.currentTurn is: ", gameData.game.currentTurn)
+        console.log("handle send ", gameData.game.id)
 
         let req = await fetch("http://localhost:3000/sendQuestion",{ 
             method: 'POST',
