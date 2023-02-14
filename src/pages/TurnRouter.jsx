@@ -51,7 +51,10 @@ const TurnRouter = () => {
             // setting the current turn
             setCurrentTurn(res.turns.find(t => t.turn === res.game.currentTurn))
             //setting your last turn if a full round has elapsed
-            if (res.game.currentTurn >= 2) { res.turns.find(t => t.turn === (res.game.currentTurn-2)) }  
+            if (res.game.currentTurn > 1) { 
+                console.log("line 55 of turnrouter ran")
+                setPrevTurn(res.turns.find(t => t.turn === (res.game.currentTurn-2)))
+            }  
         }
         request()
     },[])
@@ -62,7 +65,9 @@ const TurnRouter = () => {
             // setting the current turn whenever a post req goes through
             setCurrentTurn(gameData.turns.find(t => t.turn === gameData.game.currentTurn))
             //setting your last turn if a full round has elapsed
-            if (gameData.game.currentTurn >= 2) {gameData.turns.find(t => t.turn === (gameData.game.currentTurn - 2))}  
+            if (gameData.game.currentTurn >= 2) {
+                setPrevTurn(gameData.turns.find(t => t.turn === (gameData.game.currentTurn - 2)))
+            }  
 
             if (gameData.game.p1 == user.id) {
                 setPlayer(gameData.p1);

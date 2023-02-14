@@ -7,6 +7,10 @@ import AnswerDisplay from "../components/AnswerDisplay"
 const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGameData, user, secretCard, player, cards, setCards }) => {
     const [question, setQuestion] = useState('')
     const [guessMode, setGuessMode] = useState(false)
+
+    useEffect(()=>{
+        console.log("GuessQ useEffect. gameData.game.currentTurn: ", gameData.game.currentTurn, "prevTurn: ", prevTurn)
+    },[])
     
     const clickFlipCard = (card, i) => {
         let newCard = { ...card, "faceUp": !card.faceUp }
@@ -16,8 +20,6 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGame
     }
 
     const clickGuessCard = async (card, i) => {
-        console.log("clickGuessedCard fired", card)
-
         //generate question
         const guessedQuestion = `Is it ${card.name}?`
         
@@ -41,7 +43,7 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGame
             setGameData(res)
         }
         else {
-            console.log(card, opponentSecret)
+            console.log("guessedWrong about to fire. Guessed card:  ", card, "oppSecretCard: ", opponentSecret)
 
             // flip the guessed card
             let newCard = { ...card, "faceUp": !card.faceUp }
