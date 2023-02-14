@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom"
-import { useEffect, useReducer, useState } from "react"
+import { useEffect, useState } from "react"
 import Cookies from 'js-cookie'
 import GuessQ from "./GuessQ"
 import Wait from "./Wait"
@@ -7,15 +7,11 @@ import AnswerQ from "./AnswerQ"
 import Header from "../components/Header"
 import WinningScreen from "./WinningScreen"
 
-// TBD
-import GameBoard from "./GameBoard"
-import WaitingForOtherPlayer from "./WaitingForOtherPlayer"
-import BackButton from "../components/BackButton"
-
 const TurnRouter = () => {
     const navigate = useNavigate()
     const { state } = useLocation();
-
+    
+    let gameId
     const [gameData, setGameData] = useState(null)
     const [cards, setCards] = useState()
     const [allCards, setAllCards] = useState()
@@ -28,8 +24,6 @@ const TurnRouter = () => {
     const [currentTurn, setCurrentTurn] = useState()
     const [prevTurn, setPrevTurn] = useState()
 
-    let gameId
-
     useEffect(()=>{
         // get user info
         let cookieUserId = Cookies.get('userId')
@@ -38,43 +32,47 @@ const TurnRouter = () => {
         if (!cookieUserId) { navigate('/login') }
         else { setUser({ id: cookieUserId, name: cookieUserName, image: cookieUserImage }) } 
         
-        //get game info
+        // retrieve gameId from the navigation from home screen or newGame component
         if (!gameId) {gameId = state.gameId}
 
+        // fetch and set gameData 
         const request = async () => {
             let req= await fetch(`http://localhost:3000/games/${gameId}`)
             let res = await req.json()
             setGameData(res)   
             
-            // setting the current turn
+            // set the turn that will be updated by the user
             setCurrentTurn(res.turns.find(t => t.turn === (res.game.currentTurn)))
-            //setting your last turn if a full round has elapsed
+            
+            // set the previous turn questions and answers that will be displayed
             if (res.game.currentTurn > 1) { 
-                console.log("line 55 of turnrouter ran")
                 setPrevTurn(res.turns.find(t => t.turn === (res.game.currentTurn-2)))
             }  
         }
         request()
     },[])
 
-    // Once game state has settled, define phase and set player, cards, allCards and secretCards
+    // Redefine phase and set cards, allCards and secretCards when new gameData is returned
     useEffect(()=>{
         if (gameData && user){
+            
             // setting the current turn whenever a post req goes through
             setCurrentTurn(gameData.turns.find(t => t.turn === (gameData.game.currentTurn)))
             //setting your last turn if a full round has elapsed
-            if (gameData.game.currentTurn >= 2) {
+            if (gameData.game.currentTurn > 1) {
                 setPrevTurn(gameData.turns.find(t => t.turn === (gameData.game.currentTurn - 2)))
             }  
 
+            console.log(gameData.game.p1, user.id)
+            // determine which card is based on which user is viewing
             if (gameData.game.p1 == user.id) {
-                setPlayer(gameData.p1);
+                setPlayer(gameData.p1)
                 setOpponent(gameData.p2)
                 setSecretCard(gameData.p1SecretCard)
                 setOpponentSecret(gameData.p2SecretCard)
             }
             else if (gameData.game.p2 == user.id) {
-                setPlayer(gameData.p2);
+                setPlayer(gameData.p2)
                 setOpponent(gameData.p1)
                 setSecretCard(gameData.p2SecretCard)
                 setOpponentSecret(gameData.p1SecretCard)
@@ -86,17 +84,12 @@ const TurnRouter = () => {
 
             let yourTurn = (gameData.game.whosTurn == user.id)
 
-            
             if(!yourTurn){ setPhase("wait")}
-            else if (gameData.game.phase == "guess"){setPhase("guess")}
-            else if (gameData.game.phase=="respond") {
-                setPhase('answer')
-            }
-            else if (gameData.game.phase=="won") {
-                setPhase("won")
-            }
+            else if (gameData.game.phase === "guess"){setPhase("guess")}
+            else if (gameData.game.phase === "respond") {setPhase("answer")}
+            else if (gameData.game.phase === "won") {setPhase("won")}
             else {
-                console.log("error setting phase on gaemData useEffect", gameData)
+                console.log("Error setting phase on gameData useEffect.", gameData)
                 setPhase(null)}
             }
         }
@@ -104,13 +97,13 @@ const TurnRouter = () => {
 
     switch (phase) {
         case 'wait':
-            return <Wait opponent={opponent} secretCard={secretCard} player={player} cards={cards} gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase} />;
+            return <Wait opponent={opponent} secretCard={secretCard} cards={cards} gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase} />;
         case 'answer':
-            return <AnswerQ opponent={opponent} allCards={allCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} gameData={gameData} currentTurn={currentTurn} setGameData={setGameData} user={user} setPhase={setPhase} />;
+            return <AnswerQ opponent={opponent} allCards={allCards} secretCard={secretCard} gameData={gameData} currentTurn={currentTurn} setGameData={setGameData} user={user}/>;
         case 'guess':
-            return <GuessQ opponent={opponent} setCards={setCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} prevTurn={prevTurn} gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
+            return <GuessQ opponent={opponent} setCards={setCards} opponentSecret={opponentSecret} secretCard={secretCard} cards={cards} prevTurn={prevTurn} gameData={gameData} setGameData={setGameData} user={user}/>;
         case 'won':
-            return <WinningScreen opponent={opponent} setCards={setCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} prevTurn={prevTurn} gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
+            return <WinningScreen opponent={opponent} gameData={gameData} user={user} setPhase={setPhase}/>;
         default:
             return (
             <div>
@@ -118,15 +111,15 @@ const TurnRouter = () => {
                     gameData? 
                     <div>
                         <Header />
-                        <h1> Whos turn: {gameData.game.whosTurn}</h1>
-                        <h1>Current Player Id: {user.id}</h1>
+                        <h1>Error setting phase</h1>
+                        <h1>Whos turn: {gameData.game.whosTurn}</h1>
                         <h1>Turn #: {gameData.game.currentTurn}</h1>
-                    </div>
-                    : null
+                    </div> 
+                    : <h1>Error: No gameData</h1> 
                 }
-            </div>);
+            </div>
+            );
     }
-
 }
 
 export default TurnRouter

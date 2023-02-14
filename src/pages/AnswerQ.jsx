@@ -2,13 +2,9 @@ import Header from "../components/Header"
 import { useState, useEffect } from "react"
 import SecretCardAnswer from "../components/SecretCardAnswer"
 
-const AnswerQ = ({ opponent, currentTurn, opponentSecret, setPhase, gameData, setGameData, user, secretCard, player, cards }) => {
+const AnswerQ = ({ opponent, currentTurn, gameData, setGameData, user, secretCard}) => {
     const [answer, setAnswer] = useState('')
     const [allCards, setAllCards] = useState()
-
-    useEffect(() => {
-        console.log("AnswerQ useEffect. gameData.game.currentTurn: ", gameData.game.currentTurn, "currentTurn: ", currentTurn)
-    }, [])
 
     const handleAnswer = async (e) => {
         e.preventDefault()

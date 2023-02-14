@@ -5,6 +5,7 @@ const Wait = ({ gameData, setGameData, user, setPhase }) => {
         <div>
             <Header />
             <div>Wait</div>
+            <img src="backend/app/assets/images/designAssetts/logo transparent.png"/>
         </div>
     )
 }
