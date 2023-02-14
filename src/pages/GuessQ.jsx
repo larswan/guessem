@@ -28,7 +28,7 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGame
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    turnId: gameData.turns[gameData.game.currentTurn].id,
+                    turnNumber: gameData.game.currentTurn,
                     gameId: gameData.game.id,
                     winningQuestion: prevTurn.question,
                     winningAnswer: prevTurn.answer,
@@ -52,7 +52,7 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGame
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    turnId: gameData.turns[gameData.game.currentTurn].id,
+                    turnNumber: gameData.game.currentTurn,
                     question: guessedQuestion,
                     gameId: gameData.game.id,
                     whosTurnNext: opponent.id,
@@ -69,13 +69,13 @@ const GuessQ = ({opponent, opponentSecret, setPhase, gameData, prevTurn, setGame
 
     const handleSendQuestion = async (e) => {
         e.preventDefault()
-        console.log("sendQuestion ran. Question is: ", question)
+        console.log("sendQuestion ran gameData.game.currentTurn is: ", gameData.game.currentTurn)
 
         let req = await fetch("http://localhost:3000/sendQuestion",{ 
             method: 'POST',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
-                turnId: gameData.turns[gameData.game.currentTurn].id,
+                turnNumber: gameData.game.currentTurn,
                 question: question,
                 gameId: gameData.game.id,
                 whosTurnNext: opponent.id,

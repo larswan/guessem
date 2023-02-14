@@ -60,15 +60,16 @@ class GamesController < ApplicationController
   end
 
   def answerQuestion
-    turn = Turn.find_by(id: params[:turnId])
+    turn = Turn.find_by(turn: params[:turnNumber], gameId: params[:gameId])
     game = Game.find_by(id: turn.gameId)
-    
-    if turn.update(answer: params[:answer], status: "answered") && game.update(phase: "guess")
+    incrementTurn = game.currentTurn + 1
+    if turn.update(answer: params[:answer], status: "answered") && game.update(phase: "guess", currentTurn: incrementTurn)
       p1SecretCard = Card.find_by(id: game.p1SecretCard)
       p2SecretCard = Card.find_by(id: game.p2SecretCard)
       player1 = User.find_by!(id: game.p1)
       player2= User.find_by!(id: game.p2)
       turns = Turn.where(gameId: game.id)
+      
       render json: {game: game, p1: player1, p2: player2, turns: turns, p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
     else  
       render json: {error: "turn didnt update"}, status: 400
@@ -78,11 +79,10 @@ class GamesController < ApplicationController
 
   def sendQuestion
     game = Game.find_by(id: params[:gameId])
-    prevTurn = Turn.find_by(id: params[:turnId])
+    prevTurn = Turn.find_by(turn: params[:turnNumber], gameId: params[:gameId])
 
     prevTurn.update(question: params[:question], flippedCards: params[:cards], guessedCard: nil, status: "asked")
-    incrementTurn = (prevTurn.turn + 1)
-    game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn, phase: "respond")
+    game.update(whosTurn: params[:whosTurnNext], phase: "respond")
 
     incrementTurn2 = (prevTurn.turn + 2)
     nextTurn = Turn.new(turn: incrementTurn2, flippedCards: params[:cards], playerId: prevTurn.playerId, gameId: prevTurn.gameId)
@@ -100,14 +100,17 @@ class GamesController < ApplicationController
 
   def guessedWrong
     game = Game.find_by(id: params[:gameId])
-    prevTurn = Turn.find_by(id: params[:turnId])
-
-    prevTurn.update(question: params[:question], answer: "Nope.",flippedCards: params[:cards], guessedCard: params[:guessedCard], status: "answered")
+    prevTurn = Turn.find_by(turn: params[:turnNumber], gameId: params[:gameId])
+    
+    
+    prevTurn.update(question: params[:question], answer: "Nope.", flippedCards: params[:cards], guessedCard: params[:guessedCard], status: "answered")
+    
     incrementTurn = (prevTurn.turn + 1)
-    game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn, phase: "respond")
-
+    game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn, phase: "guess")
+    
     incrementTurn2 = (prevTurn.turn + 2)
     nextTurn = Turn.new(turn: incrementTurn2, flippedCards: params[:cards], playerId: prevTurn.playerId, gameId: prevTurn.gameId)
+
     if nextTurn.save
       player1 = User.find_by!(id: game.p1)
       player2= User.find_by!(id: game.p2)
@@ -159,7 +162,7 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:guessedCard, :phase, :winningQuestion, :winningAnswer, :winningCard, :winningUser, :p1SecretCard, :p2SecretCard, :whosTurn, :p1, :p2, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
+      params.require(:game).permit(:turnNumber, :guessedCard, :phase, :winningQuestion, :winningAnswer, :winningCard, :winningUser, :p1SecretCard, :p2SecretCard, :whosTurn, :p1, :p2, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
     end
 end
 

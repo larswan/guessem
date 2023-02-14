@@ -14,7 +14,7 @@ class CreateGames < ActiveRecord::Migration[7.0]
       t.string :topic
       t.integer :whosTurn
       t.boolean :inProgress, default: true
-      t.integer :currentTurn, default: 0
+      t.integer :currentTurn, default: 1
 
       t.timestamps
     end
