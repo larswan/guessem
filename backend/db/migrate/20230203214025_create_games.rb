@@ -6,14 +6,15 @@ class CreateGames < ActiveRecord::Migration[7.0]
       t.integer :p2
       t.string :winningQuestion, default: ""
       t.string :winningAnswer, default: ""
-      t.jsonb :winningCard, default: {}
+      t.integer :winningCard
       t.integer :winningUser, default: nil
-      t.jsonb :p1SecretCard, default: {}
-      t.jsonb :p2SecretCard, default: {}
+      t.integer :p1SecretCard
+      t.string :phase, default: "guess"
+      t.integer :p2SecretCard
       t.string :topic
       t.integer :whosTurn
       t.boolean :inProgress, default: true
-      t.integer :currentTurn, default: 0
+      t.integer :currentTurn, default: 1
 
       t.timestamps
     end

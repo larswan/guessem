@@ -33,7 +33,7 @@ const AddFriend = ({user, setFriends}) =>{
         <div>
             <form className="py-2" onSubmit={handleSubmit} name="addFriend">
                 <input  className="p-1" name="email" type="email" required placeholder="Add friend by e-mail" value={text} onChange={(e)=>{setText(e.target.value)}}></input>
-                <button className="font-black rounded-sm text-white bg-green-600 py-1 px-2 ml-2">+ ADD</button>
+                <button className="font-black rounded-sm text-white bg-blue py-1 px-2 ml-2">+ ADD</button>
             </form>        
         </div>
     )

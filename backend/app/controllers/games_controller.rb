@@ -12,8 +12,10 @@ class GamesController < ApplicationController
     newGame = @game.dup
     player1 = User.find_by!(id: @game.p1)
     player2= User.find_by!(id: @game.p2)
+    p1SecretCard = Card.find_by(id: newGame.p1SecretCard)
+    p2SecretCard = Card.find_by(id: newGame.p2SecretCard)
     turns = Turn.where(gameId: @game.id)
-    render json: {game: @game, p1: player1, p2: player2, turns: turns}
+    render json: {game: @game, p1: player1, p2: player2, turns: turns, p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
   end
 
   def active_games
@@ -57,13 +59,30 @@ class GamesController < ApplicationController
     end
   end
 
+  def answerQuestion
+    turn = Turn.find_by(turn: params[:turnNumber], gameId: params[:gameId])
+    game = Game.find_by(id: turn.gameId)
+    incrementTurn = game.currentTurn + 1
+    if turn.update(answer: params[:answer], status: "answered") && game.update(phase: "guess", currentTurn: incrementTurn)
+      p1SecretCard = Card.find_by(id: game.p1SecretCard)
+      p2SecretCard = Card.find_by(id: game.p2SecretCard)
+      player1 = User.find_by!(id: game.p1)
+      player2= User.find_by!(id: game.p2)
+      turns = Turn.where(gameId: game.id)
+      
+      render json: {game: game, p1: player1, p2: player2, turns: turns, p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
+    else  
+      render json: {error: "turn didnt update"}, status: 400
+    end
+
+  end
+
   def sendQuestion
     game = Game.find_by(id: params[:gameId])
-    prevTurn = Turn.find_by(id: params[:turnId])
+    prevTurn = Turn.find_by(turn: params[:turnNumber], gameId: params[:gameId])
 
     prevTurn.update(question: params[:question], flippedCards: params[:cards], guessedCard: nil, status: "asked")
-    incrementTurn = (prevTurn.turn + 1)
-    game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn)
+    game.update(whosTurn: params[:whosTurnNext], phase: "respond")
 
     incrementTurn2 = (prevTurn.turn + 2)
     nextTurn = Turn.new(turn: incrementTurn2, flippedCards: params[:cards], playerId: prevTurn.playerId, gameId: prevTurn.gameId)
@@ -71,19 +90,55 @@ class GamesController < ApplicationController
       player1 = User.find_by!(id: game.p1)
       player2= User.find_by!(id: game.p2)
       turns = Turn.where(gameId: game.id)
-      render json: {game: game, p1: player1, p2: player2, turns: turns}
+      p1SecretCard = Card.find_by(id: game.p1SecretCard)
+      p2SecretCard = Card.find_by(id: game.p2SecretCard)
+      render json: {game: game, p1: player1, p2: player2, turns: turns,p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
     else 
       render json: {error: "nextTurn didnt save but atleast this error is showing"}, status:400
     end
-    # CAN I CALL "SHOW" HERE? game.show()
-    # self.show
-    # this is a duplicate of SHOW method
-    # player1 = User.find_by!(id: game.p1)
-    # player2= User.find_by!(id: game.p2)
-    # turns = Turn.where(gameId: game.id)
-    # render json: {game: game, p1: player1, p2: player2, turns: turns}
-
   end
+
+  def guessedWrong
+    game = Game.find_by(id: params[:gameId])
+    prevTurn = Turn.find_by(turn: params[:turnNumber], gameId: params[:gameId])
+    
+    
+    prevTurn.update(question: params[:question], answer: "Nope.", flippedCards: params[:cards], guessedCard: params[:guessedCard], status: "answered")
+    
+    incrementTurn = (prevTurn.turn + 1)
+    game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn, phase: "guess")
+    
+    incrementTurn2 = (prevTurn.turn + 2)
+    nextTurn = Turn.new(turn: incrementTurn2, flippedCards: params[:cards], playerId: prevTurn.playerId, gameId: prevTurn.gameId)
+
+    if nextTurn.save
+      player1 = User.find_by!(id: game.p1)
+      player2= User.find_by!(id: game.p2)
+      turns = Turn.where(gameId: game.id)
+      p1SecretCard = Card.find_by(id: game.p1SecretCard)
+      p2SecretCard = Card.find_by(id: game.p2SecretCard)
+      render json: {game: game, p1: player1, p2: player2, turns: turns,p1SecretCard: p1SecretCard, p2SecretCard: p2SecretCard}
+    else 
+      render json: {error: "guessedWrogn backend error"}, status:400
+    end
+  end
+
+  ##############################
+  def guessedRight
+    game = Game.find_by(id: params[:gameId])
+  
+    if game.update(inProgress: false, phase: "won", winningAnswer: params[:winningAnswer], winningQuestion: params[:winningQuestion], winningUser: params[:winningUser], winningCard: params[:winningCard])
+      player1 = User.find_by!(id: game.p1)
+      player2= User.find_by!(id: game.p2)
+      turns = Turn.where(gameId: game.id)
+      winningCard = Card.find_by!(id: game.winningCard)
+   
+      render json: {game: game, p1: player1, p2: player2, turns: turns, winningCard: winningCard}
+    else 
+      render json: {error: "guessedRight error in backend"}, status:400
+    end
+  end
+  ################################
 
   # PATCH/PUT /games/1
   def update
@@ -107,6 +162,10 @@ class GamesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def game_params
-      params.require(:game).permit(:winningQuestion, :winningAnswer, winningCard: [:id, :image, :name, :faceUp, :created_at, :updated_at] , :winningUser, p1SecretCard: [:id, :image, :name, :faceUp, :created_at, :updated_at] , p2SecretCard: [:id, :image, :name, :faceUp, :created_at, :updated_at] , :whosTurn, :p1, :p2, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
+      params.require(:game).permit(:turnNumber, :guessedCard, :phase, :winningQuestion, :winningAnswer, :winningCard, :winningUser, :p1SecretCard, :p2SecretCard, :whosTurn, :p1, :p2, :topic, :inProgress, :currentTurn, cards: [:id, :image, :name, :faceUp, :created_at, :updated_at])
     end
 end
+
+# winningCard: [:id, :image, :name, :faceUp, :created_at, :updated_at] 
+# p1SecretCard: [:id, :image, :name, :faceUp, :created_at, :updated_at]
+# p2SecretCard: [:id, :image, :name, :faceUp, :created_at, :updated_at]

@@ -41,14 +41,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_214142) do
     t.integer "p2"
     t.string "winningQuestion", default: ""
     t.string "winningAnswer", default: ""
-    t.jsonb "winningCard", default: {}
+    t.integer "winningCard"
     t.integer "winningUser"
-    t.jsonb "p1SecretCard", default: {}
-    t.jsonb "p2SecretCard", default: {}
+    t.integer "p1SecretCard"
+    t.string "phase", default: "guess"
+    t.integer "p2SecretCard"
     t.string "topic"
     t.integer "whosTurn"
     t.boolean "inProgress", default: true
-    t.integer "currentTurn", default: 0
+    t.integer "currentTurn", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -56,7 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_214142) do
   create_table "turns", force: :cascade do |t|
     t.string "status", default: "new"
     t.integer "gameId"
-    t.integer "turn", default: 1
+    t.integer "turn", default: 0
     t.integer "playerId"
     t.string "question"
     t.string "answer"

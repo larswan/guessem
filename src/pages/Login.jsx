@@ -5,7 +5,6 @@ import { gapi } from 'gapi-script';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import Cookies from 'js-cookie'
 
-
 const Login = ({ userObj, setUserObj } ) => {
     const navigate = useNavigate()
     const clientId = import.meta.env.VITE_GAPI_CLIENT_ID
@@ -28,12 +27,10 @@ const Login = ({ userObj, setUserObj } ) => {
         Cookies.remove('userImage')
         setUserObj(null);
         navigate("/login")
-        
     };
 
     const onSuccess = async (res) => {
         setUserObj(res);
-        
         // console.log(res)
 
         let request = async () => {
@@ -69,8 +66,11 @@ const Login = ({ userObj, setUserObj } ) => {
     };
 
     return (
-        <div className="footerContainer">
-            <div className="login">
+        <div className="Login">
+            
+            <img className="w-2/3" name="logo" alt="GuessDaMate Logo" src="backend/app/assets/images/designAssetts/logo.png"/>
+            <div className="h-40"></div>
+            <div className="flex justify-center fixed bottom-20rem left-0 right-0">
                 {userObj ? (<GoogleLogout clientId={clientId} buttonText="Log out" onLogoutSuccess={logOut} />) : (
                     <GoogleLogin
                         clientId={clientId}

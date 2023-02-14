@@ -24,7 +24,6 @@ const AllGames = ({ userObj, setUserObj }) => {
             let req = await fetch(`http://localhost:3000/active_games/${cookieUserId}`)
             let res= await req.json()
             if(req.ok) {
-                console.log(res)
                 setCurrentGames(res)
             }
             else {err=>{console.log(err)}}
@@ -65,8 +64,9 @@ const AllGames = ({ userObj, setUserObj }) => {
                 })
             }
             <NewGameButton />
-
-            <LogoutButton userObj={userObj} setUserObj={setUserObj} />
+            <div className="flex justify-center fixed bottom-2 left-0 right-0">
+                <LogoutButton userObj={userObj} setUserObj={setUserObj} />
+            </div>
         </div>
     )
 }
