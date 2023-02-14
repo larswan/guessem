@@ -40,10 +40,6 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
         else {
             console.log("guessedWrong about to fire. Guessed card:  ", card, "oppSecretCard: ", opponentSecret)
 
-            let newCard = { ...card, "faceUp": !card.faceUp }
-            let newCards = [...cards]
-            newCards[i] = newCard
-
             let req = await fetch("http://localhost:3000/guessedWrong", {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -52,7 +48,7 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
                     question: guessedQuestion,
                     gameId: gameData.game.id,
                     whosTurnNext: opponent.id,
-                    cards: newCards,
+                    cards: cards,
                     guessedCard: card.id,
                 })
             })
