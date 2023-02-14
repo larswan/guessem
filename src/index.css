@@ -2,41 +2,108 @@
 @tailwind components;
 @tailwind utilities;
 
+/* font-family: 'Aladin', cursive;
+font-family: 'Gurajada', serif;
+font-family: 'Lemon', cursive;
+font-family: 'Molengo', sans-serif;
+font-family: 'Molle', cursive;
+font-family: 'Noto Sans Display', sans-serif;
+font-family: 'Patua One', cursive;
+font-family: 'Rum Raisin', sans-serif;
+font-family: 'Sonsie One', cursive;
+font-family: 'Sora', sans-serif; */
+
 .App {
-    background-color: #ECEEEC;
+    background-color: #FDD669;
     min-height: 100vh;
     width: 100%;
     position: absolute;
     top: 0;
     left: 0;
+}
+
+.Subheader {
+    font-family: 'Sora', bold sans-serif;   
+    /* text-shadow: 1px 2px 3px rgba(255, 255, 255, 0.434); */
+    color: #080708;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .Login {
+    text-align: center;
     background-color: #FDCA40;
-    min-height: 100vh;
+    height: 100%;
     width: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    justify-content: center;
     flex-direction: column;
 }
 
-.Title {
+.loginHeader {
+    font-family: 'Aladin', cursive;
+    font-size: 42pt;
     color: #080708;
+    margin-top: 10%;
+    text-shadow: 1px 2px 3px rgba(255, 255, 255, 0.434);
+}
+
+.googleLogin {
+ margin-top: 17%;
+ /* position: fixed; */
+ /* bottom: 5em; */
 }
 
 .cardContainer {
-    border: solid #423A42 2px;
+    border: solid transparent 4px;
     position: relative;
-    border-radius: 2px;
+    border-radius: .1em;
+}
+.cardContainerSelected {
+    filter: drop-shadow(2px 2px 2px #00000098);
+    position: relative;
+    border-radius: .1em;
+}
+
+.cardImage {
+    border-radius: .1em;
 }
 
 .cardName {
     font-size: small;
     position: absolute;
     font-weight: bold;
-    text-shadow: 0px 0px 5px black;
+    text-shadow: 1px 1px 2px black;
     color: white;
-    bottom: 0
+    bottom: 0;
+    margin-left: .2em;
+}
+
+.topicContainer {
+    position: relative;
+    margin: 20px;
+}
+
+.topicImage {
+    border-radius: .2em;
+    filter: drop-shadow(2px 3px 4px #0000006b);
+}
+
+.topicText{
+    position: absolute;
+    bottom: 0;
+    font-size: 24pt;
+    font-family: 'Sora';
+    color: white;
+    margin-left: .3em;
+    font-weight: bold;
+    text-shadow: 2px 1px 2px black;
+}
+
+.cardPlayImage {
+    /* border: solid #0055ff 2px; */
+        filter: drop-shadow(2px 2px 2px #00000098);
+        position: relative;
+        border-radius: .1em;
 }

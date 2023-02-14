@@ -29,7 +29,7 @@ const AnswerQ = ({ opponent, currentTurn, gameData, setGameData, user, secretCar
     return (
         <div>
         <Header user={user}/>
-        <h1 className="font-black">ANSWER THEM</h1>
+        <h1 className="Subheader">ANSWER THEM</h1>
         <h1>{opponent.givenName} asked "{currentTurn.question}"</h1>
         {
             secretCard ?

@@ -70,9 +70,11 @@ const Login = ({ userObj, setUserObj } ) => {
             
             <img className="w-2/3" name="logo" alt="GuessDaMate Logo" src="backend/app/assets/images/designAssetts/logo.png"/>
             <div className="h-40"></div>
-            <div className="flex justify-center fixed bottom-20rem left-0 right-0">
-                {userObj ? (<GoogleLogout clientId={clientId} buttonText="Log out" onLogoutSuccess={logOut} />) : (
-                    <GoogleLogin
+
+            
+                <h1 className="loginHeader">GuessDaMate</h1>
+                {userObj ? (<GoogleLogout className="googleLogin" clientId={clientId} buttonText="Log out" onLogoutSuccess={logOut} />) : (
+                    <GoogleLogin className="googleLogin"
                         clientId={clientId}
                         buttonText="Sign in with Google"
                         onSuccess={onSuccess}
@@ -80,7 +82,7 @@ const Login = ({ userObj, setUserObj } ) => {
                         cookiePolicy={'single_host_origin'}
                         isSignedIn={true} />
                 )}
-            </div>
+            
         </div>
     )
 }

@@ -29,18 +29,19 @@ const ChooseTopic = () => {
 
     
     return (
-        <div className="p-3">
-            <h1 className="font-black" >ChooseTopic</h1>
-            {
-                topics?.map((topic)=>{
-                    return(
-                        <div onClick={()=>{handleClick(topic)}} key={topic.id}>
-                            <TopicDisplay topic={topic} />
-                        </div>
-                    )
-                })
-            }
-
+        <div>
+            <h1 className="Subheader" >Pick A Topic</h1>
+            <div className="p-3 flex-column justify-center">
+                {
+                    topics?.map((topic)=>{
+                        return(
+                            <div onClick={()=>{handleClick(topic)}} key={topic.id}>
+                                <TopicDisplay topic={topic} />
+                            </div>
+                        )
+                    })
+                }
+            </div>
         </div>
     )
 }

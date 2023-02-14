@@ -77,12 +77,12 @@ const SelectCards = () => {
 
     return (
         <div className="">
-            <h1 className="font-black" >Select 12 Cards:</h1>
-            <div className="flex flex-column flex-wrap space-x-1 space-y-1 justify-center">    
+            <h1 className="Subheader" >Select 12 Cards:</h1>
+            <div className="flex flex-wrap justify-center">    
                 {
                     cards?.map((card, i)=>{
                         return(
-                            <div key={card.id} className="w-3/12" onClick={()=>{handleClick(card, i)}}>
+                            <div key={card.id} className="mx-1 my-1 w-3/12" onClick={()=>{handleClick(card, i)}}>
                                 <CardSetDisplay card={card} />
                             </div>
                         )

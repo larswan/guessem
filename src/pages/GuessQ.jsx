@@ -87,12 +87,13 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
             <Header user={user} />
             {
                 (gameData.game.currentTurn>1) ? 
-                    <div>
+                <div>
                         <AnswerDisplay prevTurn={prevTurn}/>
                     </div>
                     : null
-            }
-            <div className="flex flex-column flex-wrap space-x-1 space-y-1 justify-center">
+                }
+                <h1 className="Subheader">MAKE A GUESS</h1>
+            <div className="flex flex-column px-2 flex-wrap space-x-1 space-y-1 justify-center">
                 {
                     cards?.map((card, i)=>{
                         return(
@@ -103,7 +104,6 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
                     })
                 }
             </div>
-            <h1 className="font-black">MAKE A GUESS</h1>
 
             <form onSubmit={handleSendQuestion} className="py-2 flex justify-center">
                 <input className="py-1" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>

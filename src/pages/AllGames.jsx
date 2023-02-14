@@ -38,7 +38,7 @@ const AllGames = ({ userObj, setUserObj }) => {
     return(
         <div className="p-3">
             {user?<h1>signed in as {user.name}</h1>: null}
-            <h1 className="font-black" >Your Turn</h1>
+            <h1 className="Subheader" >Your Turn</h1>
 
             {
                 //render current games (only if active, send back other users name, and game id)
@@ -51,7 +51,7 @@ const AllGames = ({ userObj, setUserObj }) => {
                         )
                 })
             }
-            <h1 className="font-black" >Their Turn</h1>
+            <h1 className="Subheader" >Their Turn</h1>
 
             {
                 //render current games (only if active, send back other users name, and game id)
