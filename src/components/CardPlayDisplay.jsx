@@ -3,7 +3,7 @@ const CardSetDisplay = ({card, guessMode}) => {
         // <div className="border-2 border-lightBlackish position-relative">
         <div className="cardContainer">
             <img className="cardPlayImage" src={card.faceUp ? card.image : "backend/app/assets/images/designAssetts/logo.png"} />
-            <h1 className="cardName">{card.name}</h1>
+            { card.faceUp ? <h1 className="cardName">{card.name}</h1> : null }
         </div>
     )
 }

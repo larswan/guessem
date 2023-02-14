@@ -5,6 +5,7 @@ import LogoutButton from "../components/LogoutButton"
 import Cookies from 'js-cookie'
 import GameBar from "../components/GameBar"
 import NewGameButton from "../components/NewGameButton"
+import Header from "../components/Header"
 
 
 const AllGames = ({ userObj, setUserObj }) => {
@@ -37,7 +38,7 @@ const AllGames = ({ userObj, setUserObj }) => {
 
     return(
         <div>
-            {/* {user?<h1>signed in as {user.name}</h1>: null} */}
+            <Header home={true} text={"HOME"} />
             <h1 className="Subheader" >Your Turn</h1>
             <div className="pb-1.5">
             {

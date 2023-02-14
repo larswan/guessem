@@ -1,11 +1,11 @@
 import Header from '../components/Header'
 
-const Wait = ({ gameData, setGameData, user, setPhase }) => {
+const Wait = ({ gameData, setGameData, user, setPhase, opponent }) => {
     return (
         <div>
-            <Header />
-            <div className='Subheader'>Wait</div>
-            <img className="w-full p-2" src="backend/app/assets/images/designAssetts/logo transparent.png"/>
+            <Header text={"THEIR TURN"}/>
+            <img className="w-full px-2" src="backend/app/assets/images/designAssetts/logo transparent.png"/>
+            <div className='Subheader'>Waiting for {opponent.givenName} to play...</div>
         </div>
     )
 }

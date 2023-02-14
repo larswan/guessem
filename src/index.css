@@ -85,6 +85,22 @@ font-family: 'Sora', sans-serif; */
     margin-left: .2em;
 }
 
+.cardNameBig {
+    font-size: x-large;
+    position: absolute;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+    color: white;
+    bottom: 0;
+    margin-left: .2em;
+}
+
+.cardBig {
+    border-radius: .2em;
+    filter: drop-shadow(2px 3px 4px #0000006b);
+
+}
+
 .topicContainer {
     position: relative;
     margin: 20px;
@@ -108,13 +124,28 @@ font-family: 'Sora', sans-serif; */
 
 .cardPlayImage {
     /* border: solid #0055ff 2px; */
-        filter: drop-shadow(2px 2px 2px #00000098);
-        position: relative;
-        border-radius: .1em;
+    filter: drop-shadow(2px 2px 2px #00000098);
+    position: relative;
+    border-radius: .1em;
 }
 
 .textForm {
     padding: .4em;
     border-radius: .2em;
     width: 70%;
+    border: solid black 1px;
+}
+
+.QAheader {
+    font-family: 'Sora', bold sans-serif;   
+    /* text-shadow: 1px 2px 3px rgba(255, 255, 255, 0.434); */
+    color: #080708;
+    font-weight: bold;
+    font-size: 17px;
+    padding-right: .5em;
+}
+
+.QAtext {
+    font-family: 'Sora', bold sans-serif;   
+    font-size: 17px;
 }

@@ -44,9 +44,9 @@ const StartGame = () => {
 
     return (
         <div className="p-3">
-            <Header user={user}/>
+            <Header user={user} text={"CHOOSE A FRIEND:"}/>
 
-            <h1 className="Subheader" >Choose a Friend:</h1>
+            {/* <h1 className="Subheader" >Choose a Friend:</h1> */}
             {friends ? (
                 friends.map((friend) => {
                     return (

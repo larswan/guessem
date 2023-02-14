@@ -53,6 +53,7 @@ Card.create(cardSetId: cardset1.id, name: 'MikeGPT',image: 'backend/app/assets/i
 Card.create(cardSetId: cardset1.id, name: 'Mohamed',image: 'backend/app/assets/images/staff/Mohamed Muflahi.jpg')
 Card.create(cardSetId: cardset1.id, name: 'Ricardo',image: 'backend/app/assets/images/staff/Ricardo Guerra.jpg')
 Card.create(cardSetId: cardset1.id, name: 'Slack Admin',image: 'backend/app/assets/images/staff/Slack Admin.png')
+Card.create(cardSetId: cardset1.id, name: 'Valencia',image: 'backend/app/assets/images/staff/Valencia Starr.jpg')
 
 Card.create(cardSetId: cardset2.id, name: 'Amneet',image: 'backend/app/assets/images/phase5/amneet.jpg')
 Card.create(cardSetId: cardset2.id, name: 'Colter',image: 'backend/app/assets/images/phase5/colter.png')
@@ -70,6 +71,8 @@ Card.create(cardSetId: cardset2.id, name: 'Shivani',image: 'backend/app/assets/i
 Card.create(cardSetId: cardset2.id, name: 'Trevor',image: 'backend/app/assets/images/phase5/trevor.jpg')
 Card.create(cardSetId: cardset2.id, name: 'Vincent',image: 'backend/app/assets/images/phase5/vincent.png')
 Card.create(cardSetId: cardset2.id, name: 'Zaid',image: 'backend/app/assets/images/phase5/zaid.jpg')
+
+
 
 # game1=Game.create(p1: user1.id, p2: user2.id, p1SecretCard: card1, p2SecretCard: card2)
 
