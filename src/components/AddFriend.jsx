@@ -30,9 +30,9 @@ const AddFriend = ({user, setFriends}) =>{
     }
 
     return(
-        <div>
+        <div className="flex justify-center fixed bottom-2 left-0 right-0">
             <form className="py-2" onSubmit={handleSubmit} name="addFriend">
-                <input  className="p-1" name="email" type="email" required placeholder="Add friend by e-mail" value={text} onChange={(e)=>{setText(e.target.value)}}></input>
+                <input  className="textForm" name="email" type="email" required placeholder="Add friend by e-mail" value={text} onChange={(e)=>{setText(e.target.value)}}></input>
                 <button className="font-black rounded-sm text-white bg-blue py-1 px-2 ml-2">+ ADD</button>
             </form>        
         </div>

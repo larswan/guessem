@@ -20,6 +20,7 @@ font-family: 'Sora', sans-serif; */
     position: absolute;
     top: 0;
     left: 0;
+    padding: 0.75rem;
 }
 
 .Subheader {
@@ -28,6 +29,7 @@ font-family: 'Sora', sans-serif; */
     color: #080708;
     font-weight: bold;
     font-size: 20px;
+    text-align: right;
 }
 
 .Login {
@@ -69,7 +71,10 @@ font-family: 'Sora', sans-serif; */
 .cardImage {
     border-radius: .1em;
 }
-
+.cardNameDiv {
+    background-color: #080708;
+    width: 100%;
+}
 .cardName {
     font-size: small;
     position: absolute;
@@ -106,4 +111,10 @@ font-family: 'Sora', sans-serif; */
         filter: drop-shadow(2px 2px 2px #00000098);
         position: relative;
         border-radius: .1em;
+}
+
+.textForm {
+    padding: .4em;
+    border-radius: .2em;
+    width: 70%;
 }

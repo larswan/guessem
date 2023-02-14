@@ -112,7 +112,7 @@ const TurnRouter = () => {
                         <h1>Whos turn: {gameData.game.whosTurn}</h1>
                         <h1>Turn #: {gameData.game.currentTurn}</h1>
                     </div> 
-                    : <h1>Error: No gameData</h1> 
+                    : null
                 }
             </div>
             );

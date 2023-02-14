@@ -40,7 +40,7 @@ const AnswerQ = ({ opponent, currentTurn, gameData, setGameData, user, secretCar
         }
 
         <form onSubmit={handleAnswer} className="py-2 ">
-            <input className="p-1" name="answer" type="text" required placeholder="Answer..." value={answer} onChange={(e)=>{setAnswer(e.target.value)}}></input>
+            <input className="textForm" name="answer" type="text" required placeholder="Answer..." value={answer} onChange={(e)=>{setAnswer(e.target.value)}}></input>
             <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm">SEND</button>
         </form>
     </div>

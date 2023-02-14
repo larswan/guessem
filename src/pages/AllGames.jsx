@@ -36,10 +36,10 @@ const AllGames = ({ userObj, setUserObj }) => {
             gameId: id }})}
 
     return(
-        <div className="p-3">
-            {user?<h1>signed in as {user.name}</h1>: null}
+        <div>
+            {/* {user?<h1>signed in as {user.name}</h1>: null} */}
             <h1 className="Subheader" >Your Turn</h1>
-
+            <div className="pb-1.5">
             {
                 //render current games (only if active, send back other users name, and game id)
                 currentGames?.map((game)=>{
@@ -51,6 +51,8 @@ const AllGames = ({ userObj, setUserObj }) => {
                         )
                 })
             }
+            </div>
+            <hr className="my-3"></hr>
             <h1 className="Subheader" >Their Turn</h1>
 
             {
@@ -63,7 +65,9 @@ const AllGames = ({ userObj, setUserObj }) => {
                             </div> )
                 })
             }
-            <NewGameButton />
+            <div className="pt-3">
+                <NewGameButton />
+            </div>
             <div className="flex justify-center fixed bottom-2 left-0 right-0">
                 <LogoutButton userObj={userObj} setUserObj={setUserObj} />
             </div>
