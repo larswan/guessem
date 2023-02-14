@@ -83,7 +83,6 @@ const TurnRouter = () => {
             
             setCards(gameData.turns[gameData.game.currentTurn].flippedCards)
             setAllCards(gameData.game.cards)
-            setCurrentTurn(gameData.game.currentTurn)
 
             let yourTurn = (gameData.game.whosTurn == user.id)
 

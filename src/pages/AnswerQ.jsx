@@ -34,7 +34,7 @@ const AnswerQ = ({ opponent, currentTurn, opponentSecret, setPhase, gameData, se
         <div>
         <Header user={user}/>
         <h1 className="font-black">ANSWER THEM</h1>
-        <h1>{opponent.givenName} asked "{currentTurn}"</h1>
+        <h1>{opponent.givenName} asked "{currentTurn.question}"</h1>
         {
             secretCard ?
             <div className=" flex justify-center">
