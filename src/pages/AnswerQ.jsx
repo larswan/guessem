@@ -15,11 +15,14 @@ const AnswerQ = ({ opponent, currentTurn, opponentSecret, setPhase, gameData, se
             body: JSON.stringify({
                 turnNumber: gameData.game.currentTurn,
                 answer: answer,
+                gameId: gameData.game.id
             })
         })
         let res = await req.json()
-        console.log("handle answer response ", res)
-        setGameData(res)
+        if (req.ok){
+            console.log("handle answer response ", res)
+            setGameData(res)
+        }
     }
 
     return (
