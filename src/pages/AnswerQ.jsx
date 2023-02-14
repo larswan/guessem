@@ -2,7 +2,7 @@ import Header from "../components/Header"
 import { useState, useEffect } from "react"
 import SecretCardAnswer from "../components/SecretCardAnswer"
 
-const AnswerQ = ({ opponent, opponentsTurn, opponentSecret, setPhase, gameData, setGameData, user, secretCard, player, cards }) => {
+const AnswerQ = ({ opponent, currentTurn, opponentSecret, setPhase, gameData, setGameData, user, secretCard, player, cards }) => {
     const [answer, setAnswer] = useState('')
     const [allCards, setAllCards] = useState()
 
@@ -26,7 +26,7 @@ const AnswerQ = ({ opponent, opponentsTurn, opponentSecret, setPhase, gameData, 
         <div>
         <Header user={user}/>
         <h1 className="font-black">ANSWER THEM</h1>
-        <h1>{opponent.givenName} asked "{opponentsTurn.question}"</h1>
+        <h1>{opponent.givenName} asked "{currentTurn.question}"</h1>
         {
             secretCard ?
             <div className=" flex justify-center">

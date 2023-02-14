@@ -27,7 +27,6 @@ const TurnRouter = () => {
     const [opponentSecret, setOpponentSecret] = useState()
     const [currentTurn, setCurrentTurn] = useState()
     const [prevTurn, setPrevTurn] = useState()
-    const [opponentsTurn, setOpponentsTurn] = useState()
 
     let gameId
 
@@ -48,11 +47,11 @@ const TurnRouter = () => {
 
             console.log("GameId= ", gameId, " and at TurnRouter line 48 game object is: ", res)
             setGameData(res)   
-
-            // setting opponents turn to the last 
-            if (res.game.currentTurn > 0) { setOpponentsTurn(res.turns[(res.game.currentTurn - 1)]) }   
-            //setting your last turn
-            if (res.game.currentTurn > 1) { setPrevTurn(res.turns[(res.game.currentTurn - 2)]) }  
+            
+            // setting the current turn
+            setCurrentTurn(res.turns.find(t => t.turn === res.game.currentTurn))
+            //setting your last turn if a full round has elapsed
+            if (res.game.currentTurn >= 2) { res.turns.find(t => t.turn === (res.game.currentTurn-2)) }  
         }
         request()
     },[])
@@ -60,26 +59,24 @@ const TurnRouter = () => {
     // Once game state has settled, define phase and set player, cards, allCards and secretCards
     useEffect(()=>{
         if (gameData && user){
-            if (gameData.game.currentTurn > 0) { setOpponentsTurn(gameData.turns[(gameData.game.currentTurn - 1)]) }
-            //setting your last turn
-            if (gameData.game.currentTurn > 1) { setPrevTurn(gameData.turns[(gameData.game.currentTurn - 2)]) }
-            
-            console.log("turn router useEffect [gameData] use effect GAMEDATA: ", gameData)
+            // setting the current turn whenever a post req goes through
+            setCurrentTurn(gameData.turns.find(t => t.turn === gameData.game.currentTurn))
+            //setting your last turn if a full round has elapsed
+            if (gameData.game.currentTurn >= 2) {gameData.turns.find(t => t.turn === (gameData.game.currentTurn - 2))}  
+
             if (gameData.game.p1 == user.id) {
                 setPlayer(gameData.p1);
                 setOpponent(gameData.p2)
                 setSecretCard(gameData.p1SecretCard)
                 setOpponentSecret(gameData.p2SecretCard)
-                // console.log('player set to 1');
             }
             else if (gameData.game.p2 == user.id) {
                 setPlayer(gameData.p2);
                 setOpponent(gameData.p1)
                 setSecretCard(gameData.p2SecretCard)
                 setOpponentSecret(gameData.p1SecretCard)
-                // console.log('player set to 2')
             }
-            else { console.log("cant tell which players turn it is. check GuessQ component. Gamedata.game.p1= ", gameData.game.p1, " and user.id= ", user.id) }
+            else { console.log("error setting players on gameData useEffect: ", gameData)}
             
             setCards(gameData.turns[gameData.game.currentTurn].flippedCards)
             setAllCards(gameData.game.cards)
@@ -97,7 +94,7 @@ const TurnRouter = () => {
                 setPhase("won")
             }
             else {
-                console.log("oppTurn", opponentsTurn)
+                console.log("error setting phase on gaemData useEffect", gameData)
                 setPhase(null)}
             }
         }
@@ -107,7 +104,7 @@ const TurnRouter = () => {
         case 'wait':
             return <Wait opponent={opponent} secretCard={secretCard} player={player} cards={cards} gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase} />;
         case 'answer':
-            return <AnswerQ opponent={opponent} allCards={allCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} gameData={gameData} opponentsTurn={opponentsTurn} setGameData={setGameData} user={user} setPhase={setPhase} />;
+            return <AnswerQ opponent={opponent} allCards={allCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} gameData={gameData} currentTurn={currentTurn} setGameData={setGameData} user={user} setPhase={setPhase} />;
         case 'guess':
             return <GuessQ opponent={opponent} setCards={setCards} opponentSecret={opponentSecret} secretCard={secretCard} player={player} cards={cards} prevTurn={prevTurn} gameData={gameData} setGameData={setGameData} user={user} setPhase={setPhase}/>;
         case 'won':
