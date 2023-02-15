@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import CardPlayDisplay from "../components/CardPlayDisplay"
 import GuessModeButton from "../components/GuessModeButton"
 import AnswerDisplay from "../components/AnswerDisplay"
+import SecretCardQuestion from "../components/SecretCardQuestion"
 
 const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user, secretCard, cards, setCards }) => {
     const [question, setQuestion] = useState('')
@@ -105,7 +106,10 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
                 <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>
             </form>
             <h1 className="flex justify-center">or</h1>
-            <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} setQuestion={setQuestion} />
+            <div className="flex-row">
+                <SecretCardQuestion secretCard={secretCard}/>
+                <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} setQuestion={setQuestion} />
+            </div>
         </div>
     )
 }

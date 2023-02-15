@@ -162,3 +162,9 @@ font-family: 'Sora', sans-serif; */
 .gameBar {
     display: flex
 } */
+
+.secretCardQuestion {
+    width: 60%;
+    border-radius: .2em;
+    filter: drop-shadow(4px 4px 5px #00000098);
+}

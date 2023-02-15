@@ -7,7 +7,7 @@ const GuessModeButton = ({guessMode, setGuessMode, setQuestion}) => {
             console.log(guessMode)
         }
         else{
-            setQuestion("Select a card!")
+            setQuestion("Click a card!")
             setGuessMode(!guessMode)
             console.log(guessMode)
         }

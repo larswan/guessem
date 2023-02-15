@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import CardSetDisplay from "../components/CardSetDisplay.jsx"
+import Header from "../components/Header.jsx"
 
 const SelectCards = () => {
     const navigate = useNavigate()
@@ -77,7 +78,7 @@ const SelectCards = () => {
 
     return (
         <div className="">
-            <h1 className="Subheader" >Select 12 Cards:</h1>
+            <Header text={"PICK 12 CARDS:"} />
             <div className="flex flex-wrap justify-center">    
                 {
                     cards?.map((card, i)=>{
