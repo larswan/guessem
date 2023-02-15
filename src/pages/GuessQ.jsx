@@ -61,6 +61,10 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
 
     const handleSendQuestion = async (e) => {
         e.preventDefault()
+        
+        let madeQuestion = question
+        if (question.slice(-1) != "?") {madeQuestion = question + "?"}
+
         console.log("handle send ", gameData.game.id)
 
         let req = await fetch("http://localhost:3000/sendQuestion",{ 
@@ -68,7 +72,7 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 turnNumber: gameData.game.currentTurn,
-                question: question,
+                question: madeQuestion,
                 gameId: gameData.game.id,
                 whosTurnNext: opponent.id,
                 cards: cards,
