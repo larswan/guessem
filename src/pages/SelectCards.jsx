@@ -63,7 +63,7 @@ const SelectCards = () => {
                 let res = await req.json()
             
                 if(req.ok){
-                    console.log("selectCards res ", res)
+                    // console.log("selectCards res ", res)
                     navigate('/play',{state:{
                         gameId: res.game.id
                     }})
