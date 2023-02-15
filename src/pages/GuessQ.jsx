@@ -105,7 +105,7 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
                 <input className="textForm" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
                 <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>
             </form>
-            <h1 className="flex justify-center">or</h1>
+            {/* <h1 className="flex justify-center">or</h1> */}
             <div className="flex-row">
                 <SecretCardQuestion secretCard={secretCard}/>
                 <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} setQuestion={setQuestion} />

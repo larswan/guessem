@@ -15,8 +15,8 @@ const GuessModeButton = ({guessMode, setGuessMode, setQuestion}) => {
 
     return(
         <div className="flex justify-center">
-            <div onClick={()=>{handleClick()}} className="font-black bg-lightBlackish ml-2 my-2 rounded-full w-1/4">
-                <img src="backend/app/assets/images/designAssetts/logo trans grey color.png" className="drop-shadow-xl rounded-full" />
+            <div onClick={()=>{handleClick()}} className="font-black bg-lightBlackish p-2 ml-2 my-2 rounded-lg w-1/4">
+                <img src="backend/app/assets/images/designAssetts/logo trans grey color.png"  />
             </div>
         </div>
     )

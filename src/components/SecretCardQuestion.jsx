@@ -10,7 +10,7 @@ const SecretCard = ({secretCard}) => {
     
     return(
         <div className="flex-column">
-            <h1 className="Subheader">Your Card</h1>
+            {/* <h1 className="Subheader">Your Card</h1> */}
             <img className="secretCardQuestion" onClick={() => { handleClick() }} src={showSecret ? secretCard.image : "backend/app/assets/images/designAssetts/logo alt color.png"} />
         </div>
     )

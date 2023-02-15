@@ -166,5 +166,16 @@ font-family: 'Sora', sans-serif; */
 .secretCardQuestion {
     width: 60%;
     border-radius: .2em;
-    filter: drop-shadow(4px 4px 5px #00000098);
+    filter: drop-shadow(5px 6px 10px #00000076);
+}
+
+.gameBar {
+    display: flex;
+    /* border: 1px solid black; */
+    border-radius: .2em;
+    background-color: white;
+    margin-top: .6em;
+    margin-bottom: .6em;
+    padding: .4rem;
+    filter: drop-shadow(2px 3px 3px #0000005e);
 }
