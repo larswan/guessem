@@ -61,7 +61,7 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
 
     const handleSendQuestion = async (e) => {
         e.preventDefault()
-        
+
         let madeQuestion = question
         if (question.slice(-1) != "?") {madeQuestion = question + "?"}
 
