@@ -94,7 +94,7 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
                 }
             </div>
             {
-                (gameData.game.currentTurn > 1) ?
+                (gameData.game.currentTurn > 1) && prevTurn ?
                     <div>
                         <AnswerDisplay prevTurn={prevTurn} opponent={opponent} />
                     </div> : null

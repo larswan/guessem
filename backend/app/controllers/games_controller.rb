@@ -102,16 +102,16 @@ class GamesController < ApplicationController
     game = Game.find_by(id: params[:gameId])
     prevTurn = Turn.find_by(turn: params[:turnNumber], gameId: params[:gameId])
     
+    prevTurn.update(question: params[:question], answer: "Nope.", flippedCards: params[:cards], guessedCard: params[:guessedCard], status: "this turn was updated at game cntrl 105")
     
-    prevTurn.update(question: params[:question], answer: "Nope.", flippedCards: params[:cards], guessedCard: params[:guessedCard], status: "answered")
-    
-    incrementTurn = (prevTurn.turn + 1)
-    game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn, phase: "guess")
     
     incrementTurn2 = (prevTurn.turn + 2)
     nextTurn = Turn.new(turn: incrementTurn2, flippedCards: params[:cards], playerId: prevTurn.playerId, gameId: prevTurn.gameId)
+    
+    incrementTurn = (prevTurn.turn + 1)
+    
 
-    if nextTurn.save
+    if nextTurn.save && game.update(whosTurn: params[:whosTurnNext], currentTurn: incrementTurn, phase: "guess")
       player1 = User.find_by!(id: game.p1)
       player2= User.find_by!(id: game.p2)
       turns = Turn.where(gameId: game.id)
