@@ -224,4 +224,7 @@ font-family: 'Sora', sans-serif; */
     transition: ease-in-out .1s;
 }
 
-
+.headerRightSide {
+    position: absolute;
+    right: 0;
+}

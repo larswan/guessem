@@ -17,9 +17,10 @@ const AllGames = ({ userObj, setUserObj }) => {
         let cookieUserId = Cookies.get('userId')
         let cookieUserName = Cookies.get('userName')
         let cookieUserImage = Cookies.get('userImage')
+        let cookieGivenName = Cookies.get('givenName')
 
         if (!cookieUserId) { navigate('/login') }
-        else { setUser({ id: cookieUserId, name: cookieUserName, image: cookieUserImage }) } 
+        else { setUser({ id: cookieUserId, name: cookieUserName, image: cookieUserImage, givenName: cookieGivenName }) } 
         
         const request = async()=>{
             let req = await fetch(`http://localhost:3000/active_games/${cookieUserId}`)
@@ -38,7 +39,7 @@ const AllGames = ({ userObj, setUserObj }) => {
 
     return(
         <div>
-            <Header home={true} text={"HOME"} />
+            <Header home={true} user={user}/>
             <h1 className="Subheader" >Your Turn</h1>
             <div className="pb-1.5">
             {

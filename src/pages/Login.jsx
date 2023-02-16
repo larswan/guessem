@@ -25,6 +25,7 @@ const Login = ({ userObj, setUserObj } ) => {
         Cookies.remove('userId')
         Cookies.remove('userName')
         Cookies.remove('userImage')
+        Cookies.remove('givenName')
         setUserObj(null);
         navigate("/login")
     };
@@ -54,6 +55,7 @@ const Login = ({ userObj, setUserObj } ) => {
 
             // add user object cookie
             Cookies.set('userId', postRes.id)
+            Cookies.set('givenName', postRes.givenName)
             Cookies.set('userName', postRes.name)
             Cookies.set('userImage', postRes.googleImageUrl)
             navigate("/")
