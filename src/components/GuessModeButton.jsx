@@ -14,10 +14,11 @@ const GuessModeButton = ({guessMode, setGuessMode, setQuestion}) => {
     }
 
     return(
-        <div className="flex justify-center">
-            <div onClick={()=>{handleClick()}} className="font-black bg-lightBlackish p-2 ml-2 my-2 rounded-lg w-1/4">
+        <div className={guessMode ? "guessButtonOn" : "guessButtonOff" } >
+            <button onClick={() => { handleClick() }} className="font-black bg-lightBlackish py-1 px-2 text-lightYellow my-4 rounded-sm" >GUESS A CARD</button>
+            {/* <div onClick={()=>{handleClick()}} className="font-black bg-lightBlackish p-2 ml-2 my-2 rounded-lg w-1/4">
                 <img src="backend/app/assets/images/designAssetts/logo trans grey color.png"  />
-            </div>
+            </div> */}
         </div>
     )
 }

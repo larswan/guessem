@@ -179,3 +179,17 @@ font-family: 'Sora', sans-serif; */
     padding: .4rem;
     filter: drop-shadow(2px 3px 3px #0000005e);
 }
+
+.guessQBottomScreen {
+
+}
+
+.guessButtonOn {
+    display: flex;
+    justify-content: center
+}
+
+.guessButtonOff {
+    display: flex;
+    justify-content: center
+}

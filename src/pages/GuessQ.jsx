@@ -110,9 +110,9 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
                 <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>
             </form>
             {/* <h1 className="flex justify-center">or</h1> */}
-            <div className="flex-row">
-                <SecretCardQuestion secretCard={secretCard}/>
                 <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} setQuestion={setQuestion} />
+            <div className="guessQBottomScreen">
+                <SecretCardQuestion secretCard={secretCard}/>
             </div>
         </div>
     )
