@@ -83,7 +83,7 @@ const SelectCards = () => {
                 {
                     cards?.map((card, i)=>{
                         return(
-                            <div key={card.id} className="mx-1 my-1 w-3/12" onClick={()=>{handleClick(card, i)}}>
+                            <div key={card.id} className={card.faceUp ? "cardContainerSelected" : "cardContainer"} onClick={()=>{handleClick(card, i)}}>
                                 <CardSetDisplay card={card} />
                             </div>
                         )

@@ -87,11 +87,11 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
         <div className='px-2'>
             <Header user={user} text={"MAKE A GUESS"}/>
            
-            <div className="flex flex-column px-2 flex-wrap space-x-1 space-y-1 justify-center">
+            <div className="cardBox">
                 {
                     cards?.map((card, i)=>{
                         return(
-                            <div className="w-3/12" onClick={()=>{guessMode ? clickGuessCard(card, i) : clickFlipCard(card, i) }}>
+                            <div className="cardContainer" onClick={()=>{guessMode ? clickGuessCard(card, i) : clickFlipCard(card, i) }}>
                                 <CardPlayDisplay  card={card} />
                             </div>
                         )
