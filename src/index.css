@@ -32,6 +32,15 @@ font-family: 'Sora', sans-serif; */
     text-align: right;
 }
 
+.Header {
+    font-family: 'Sora', bold sans-serif;   
+    /* text-shadow: 1px 2px 3px rgba(255, 255, 255, 0.434); */
+    color: #ECEEEC;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: right;
+}
+
 .Login {
     text-align: center;
     background-color: #FDCA40;
@@ -226,5 +235,5 @@ font-family: 'Sora', sans-serif; */
 
 .headerRightSide {
     position: absolute;
-    right: 0;
+    right: 1em;
 }
