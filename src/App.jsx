@@ -3,7 +3,6 @@ import { Route, Routes, BrowserRouter } from "react-router-dom"
 
 import Login from './pages/Login'
 import Profile from './pages/Profile'
-import Test from './pages/Test'
 import AllGames from './pages/AllGames'
 import ChooseTopic from './pages/ChooseTopic'
 import SelectCards from './pages/SelectCards'
@@ -29,7 +28,6 @@ function App() {
           <Route path="/play" element={<TurnRouter />} />
 
           <Route path="/profile" element={<Profile />} />
-          <Route path="/test" element={<Test />} />
         </Routes>  
       </ BrowserRouter>
     </div>

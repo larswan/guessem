@@ -29,21 +29,24 @@ const AnswerQ = ({ opponent, currentTurn, gameData, setGameData, user, secretCar
     return (
         <div>
         <Header user={user} text={"ANSWER THEM"}/>
-        {
-            secretCard ?
-            <div className=" flex justify-center">
-                <SecretCardAnswer card={secretCard} />
-            </div>    
-            : null
-        }
-        <div className="flex py-3">
-            <h1 className="QAheader">{opponent.givenName} asked: </h1>
-            <h1 className="QAtext">"{currentTurn.question}"</h1>
-        </div>
-            <form onSubmit={handleAnswer} className="py-2 flex justify-center">
-            <input className="textForm" name="answer" type="text" required placeholder="Answer..." value={answer} onChange={(e)=>{setAnswer(e.target.value)}}></input>
-            <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm">SEND</button>
-        </form>
+            <div className="PagePadder">
+
+                {
+                    secretCard ?
+                    <div className=" flex justify-center">
+                        <SecretCardAnswer card={secretCard} />
+                    </div>    
+                    : null
+                }
+                <div className="flex py-3">
+                    <h1 className="QAheader">{opponent.givenName} asked: </h1>
+                    <h1 className="QAtext">"{currentTurn.question}"</h1>
+                </div>
+                    <form onSubmit={handleAnswer} className="py-2 flex justify-center">
+                    <input className="textForm" name="answer" type="text" required placeholder="Answer..." value={answer} onChange={(e)=>{setAnswer(e.target.value)}}></input>
+                    <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm">SEND</button>
+                </form>
+            </div>
     </div>
     )
 }

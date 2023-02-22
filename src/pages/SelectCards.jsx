@@ -79,16 +79,19 @@ const SelectCards = () => {
     return (
         <div className="">
             <Header text={"PICK 12 CARDS:"} />
-            <div className="flex flex-wrap justify-center">    
-                {
-                    cards?.map((card, i)=>{
-                        return(
-                            <div key={card.id} className={card.faceUp ? "cardContainerSelected" : "cardContainer"} onClick={()=>{handleClick(card, i)}}>
-                                <CardSetDisplay card={card} />
-                            </div>
-                        )
-                    })
-                }
+            <div className="PagePadder">
+
+                <div className="flex flex-wrap justify-center">    
+                    {
+                        cards?.map((card, i)=>{
+                            return(
+                                <div key={card.id} className={card.faceUp ? "cardContainerSelected" : "cardContainer"} onClick={()=>{handleClick(card, i)}}>
+                                    <CardSetDisplay card={card} />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
         </div>
     )

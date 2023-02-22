@@ -45,20 +45,21 @@ const StartGame = () => {
     return (
         <div className="p-3">
             <Header user={user} text={"CHOOSE A FRIEND:"}/>
-
-            {/* <h1 className="Subheader" >Choose a Friend:</h1> */}
-            {friends ? (
-                friends.map((friend) => {
-                    return (
-                        <div onClick={() => handleClick(friend)} key={friend.id}>
-                            <NameBar info={friend.name} />
-                        </div>
-                    );
-                })
-            ) : (
-                <div>You don't have any friends.. and you never will... unless you add them by e-mail.</div>
-            )}
-            <AddFriend user={user} setFriends={setFriends}/>
+            <div className="PagePadder">
+                {/* <h1 className="Subheader" >Choose a Friend:</h1> */}
+                {friends ? (
+                    friends.map((friend) => {
+                        return (
+                            <div onClick={() => handleClick(friend)} key={friend.id}>
+                                <NameBar info={friend.name} />
+                            </div>
+                        );
+                    })
+                ) : (
+                    <div>You don't have any friends.. and you never will... unless you add them by e-mail.</div>
+                )}
+                <AddFriend user={user} setFriends={setFriends}/>
+            </div>
         </div>
     )
 }

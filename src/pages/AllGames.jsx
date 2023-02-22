@@ -40,38 +40,41 @@ const AllGames = ({ userObj, setUserObj }) => {
     return(
         <div>
             <Header home={true} user={user}/>
-            <h1 className="Subheader" >Your Turn</h1>
-            <div className="pb-1.5">
-            {
-                //render current games (only if active, send back other users name, and game id)
-                currentGames?.map((game)=>{
-                    if(game.whosTurn == user.id)
-                        return(
-                            <div key={i} onClick={() => { handleClick(game.id) }}>
-                                <GameBar game={game}/>
-                            </div>
-                        )
-                })
-            }
-            </div>
-            <hr className="my-3"></hr>
-            <h1 className="Subheader" >Their Turn</h1>
+            <div className="PagePadder">
 
-            {
-                //render current games (only if active, send back other users name, and game id)
-                currentGames?.map((game, i)=>{
-                    if (game.whosTurn != user.id)
-                        return(
-                            <div key={i} onClick={() => { handleClick(game.id) }}>
-                                <GameBar game={game} />
-                            </div> )
-                })
-            }
-            <div className="pt-3">
-                <NewGameButton />
-            </div>
-            <div className="flex justify-center fixed bottom-2 left-0 right-0">
-                <LogoutButton userObj={userObj} setUserObj={setUserObj} />
+                <h1 className="Subheader" >Your Turn</h1>
+                <div className="pb-1.5">
+                {
+                    //render current games (only if active, send back other users name, and game id)
+                    currentGames?.map((game)=>{
+                        if(game.whosTurn == user.id)
+                            return(
+                                <div key={i} onClick={() => { handleClick(game.id) }}>
+                                    <GameBar game={game}/>
+                                </div>
+                            )
+                    })
+                }
+                </div>
+                <hr className="my-3"></hr>
+                <h1 className="Subheader" >Their Turn</h1>
+
+                {
+                    //render current games (only if active, send back other users name, and game id)
+                    currentGames?.map((game, i)=>{
+                        if (game.whosTurn != user.id)
+                            return(
+                                <div key={i} onClick={() => { handleClick(game.id) }}>
+                                    <GameBar game={game} />
+                                </div> )
+                    })
+                }
+                <div className="pt-3">
+                    <NewGameButton />
+                </div>
+                <div className="flex justify-center fixed bottom-2 left-0 right-0">
+                    <LogoutButton userObj={userObj} setUserObj={setUserObj} />
+                </div>
             </div>
         </div>
     )

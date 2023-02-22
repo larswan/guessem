@@ -30,17 +30,18 @@ const ChooseTopic = () => {
     return (
         <div>
             <Header text={"PICK A TOPIC"} />
-            {/* <h1 className="Subheader" >Pick A Topic</h1> */}
-            <div className="p-3 flex-column justify-center">
-                {
-                    topics?.map((topic)=>{
-                        return(
-                            <div onClick={()=>{handleClick(topic)}} key={topic.id}>
-                                <TopicDisplay topic={topic} />
-                            </div>
-                        )
-                    })
-                }
+            <div className="PagePadder">
+                <div className="p-3 flex-column justify-center">
+                    {
+                        topics?.map((topic)=>{
+                            return(
+                                <div onClick={()=>{handleClick(topic)}} key={topic.id}>
+                                    <TopicDisplay topic={topic} />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
         </div>
     )

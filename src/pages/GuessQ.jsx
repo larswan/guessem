@@ -18,7 +18,7 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
 
     const clickGuessCard = async (card, i) => {
         const guessedQuestion = `Is it ${card.name}?`
-        
+        console.log("guessed: ", card)
         // if right
         if (card.id==opponentSecret.id){
             console.log("win! prevTurn is: ", prevTurn)
@@ -84,35 +84,36 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
     }
 
     return (
-        <div className='px-2'>
+        <div>
             <Header user={user} text={"MAKE A GUESS"}/>
-           
-            <div className="cardBox">
+            <div className="PagePadder">
+                <div className="cardBox">
+                    {
+                        cards?.map((card, i)=>{
+                            return(
+                                <div className="playCard" onClick={()=>{guessMode ? clickGuessCard(card, i) : clickFlipCard(card, i) }}>
+                                    <CardPlayDisplay  card={card} />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
                 {
-                    cards?.map((card, i)=>{
-                        return(
-                            <div className="cardContainer" onClick={()=>{guessMode ? clickGuessCard(card, i) : clickFlipCard(card, i) }}>
-                                <CardPlayDisplay  card={card} />
-                            </div>
-                        )
-                    })
+                    (gameData.game.currentTurn > 1) && prevTurn ?
+                        <div>
+                            <AnswerDisplay prevTurn={prevTurn} opponent={opponent} />
+                        </div> : null
                 }
-            </div>
-            {
-                (gameData.game.currentTurn > 1) && prevTurn ?
-                    <div>
-                        <AnswerDisplay prevTurn={prevTurn} opponent={opponent} />
-                    </div> : null
-            }
 
-            <form onSubmit={handleSendQuestion} className="py-2 flex justify-center">
-                <input className="textForm" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
-                <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>
-            </form>
-            {/* <h1 className="flex justify-center">or</h1> */}
-                <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} setQuestion={setQuestion} />
-            <div className="guessQBottomScreen">
-                <SecretCardQuestion secretCard={secretCard}/>
+                <form onSubmit={handleSendQuestion} className="py-2 flex justify-center">
+                    <input className="textForm" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
+                    <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>
+                </form>
+                {/* <h1 className="flex justify-center">or</h1> */}
+                    <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} setQuestion={setQuestion} />
+                <div className="guessQBottomScreen">
+                    <SecretCardQuestion secretCard={secretCard}/>
+                </div>
             </div>
         </div>
     )
