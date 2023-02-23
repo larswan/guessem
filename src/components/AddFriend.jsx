@@ -13,6 +13,7 @@ const AddFriend = ({user, setFriends}) =>{
         //     return;
         // }
 
+
         let req= await fetch("http://localhost:3000/friendships", {
             method: 'POST',
             headers: {
@@ -26,6 +27,7 @@ const AddFriend = ({user, setFriends}) =>{
         let res = await req.json()
         console.log(res)
         if (res.ok && !res.error){setFriends((prev)=>{[...prev, res]})}
+        else (alert(res.error))
         setText('')
     }
 
