@@ -58,9 +58,11 @@ class FriendshipsController < ApplicationController
     else
       friendship = Friendship.new(p1Id: friend1.id, p2Id: friend2.id)
       if friendship.save
-        render json: friend2, status: :created, location: friendship
+        # friend = User.find_by(id: friendship.p2Id)
+        print friend2
+        render json: friend2
       else
-        render json: friendship.errors, status: :unprocessable_entity
+        render json: friendship.errors.full_messages, status: :unprocessable_entity
       end
     end
   end

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import CardPlayDisplay from "../components/CardPlayDisplay"
 import GuessModeButton from "../components/GuessModeButton"
 import AnswerDisplay from "../components/AnswerDisplay"
+import SecretCardQuestion from "../components/SecretCardQuestion"
 
 const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user, secretCard, cards, setCards }) => {
     const [question, setQuestion] = useState('')
@@ -17,7 +18,7 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
 
     const clickGuessCard = async (card, i) => {
         const guessedQuestion = `Is it ${card.name}?`
-        
+        console.log("guessed: ", card)
         // if right
         if (card.id==opponentSecret.id){
             console.log("win! prevTurn is: ", prevTurn)
@@ -40,10 +41,6 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
         else {
             console.log("guessedWrong about to fire. Guessed card:  ", card, "oppSecretCard: ", opponentSecret)
 
-            let newCard = { ...card, "faceUp": !card.faceUp }
-            let newCards = [...cards]
-            newCards[i] = newCard
-
             let req = await fetch("http://localhost:3000/guessedWrong", {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -52,7 +49,7 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
                     question: guessedQuestion,
                     gameId: gameData.game.id,
                     whosTurnNext: opponent.id,
-                    cards: newCards,
+                    cards: cards,
                     guessedCard: card.id,
                 })
             })
@@ -64,6 +61,10 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
 
     const handleSendQuestion = async (e) => {
         e.preventDefault()
+
+        let madeQuestion = question
+        if (question.slice(-1) != "?") {madeQuestion = question + "?"}
+
         console.log("handle send ", gameData.game.id)
 
         let req = await fetch("http://localhost:3000/sendQuestion",{ 
@@ -71,7 +72,7 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
                 turnNumber: gameData.game.currentTurn,
-                question: question,
+                question: madeQuestion,
                 gameId: gameData.game.id,
                 whosTurnNext: opponent.id,
                 cards: cards,
@@ -83,34 +84,37 @@ const GuessQ = ({opponent, opponentSecret, gameData, prevTurn, setGameData, user
     }
 
     return (
-        <div className='px-2'>
-            <Header user={user} />
-            {
-                (gameData.game.currentTurn>1) ? 
-                    <div>
-                        <AnswerDisplay prevTurn={prevTurn}/>
-                    </div>
-                    : null
-            }
-            <div className="flex flex-column flex-wrap space-x-1 space-y-1 justify-center">
+        <div>
+            <Header user={user} text={"MAKE A GUESS"}/>
+            <div className="PagePadder">
+                <div className="cardBox">
+                    {
+                        cards?.map((card, i)=>{
+                            return(
+                                <div className="playCard" onClick={()=>{guessMode ? clickGuessCard(card, i) : clickFlipCard(card, i) }}>
+                                    <CardPlayDisplay  card={card} />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
                 {
-                    cards?.map((card, i)=>{
-                        return(
-                            <div className="w-3/12" onClick={()=>{guessMode ? clickGuessCard(card, i) : clickFlipCard(card, i) }}>
-                                <CardPlayDisplay  card={card} />
-                            </div>
-                        )
-                    })
+                    (gameData.game.currentTurn > 1) && prevTurn ?
+                        <div>
+                            <AnswerDisplay prevTurn={prevTurn} opponent={opponent} />
+                        </div> : null
                 }
-            </div>
-            <h1 className="font-black">MAKE A GUESS</h1>
 
-            <form onSubmit={handleSendQuestion} className="py-2 flex justify-center">
-                <input className="py-1" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
-                <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>
-            </form>
-            <h1 className="flex justify-center">or</h1>
-            <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} setQuestion={setQuestion} />
+                <form onSubmit={handleSendQuestion} className="py-2 flex justify-center">
+                    <input className="textForm" name="question" type="text" required placeholder="Ask a question..." value={question} onChange={(e) => { setQuestion(e.target.value) }}></input>
+                    <button className="font-black bg-blue py-1 px-2 text-white ml-2 rounded-sm" >ASK</button>
+                </form>
+                {/* <h1 className="flex justify-center">or</h1> */}
+                    <GuessModeButton guessMode={guessMode} setGuessMode={setGuessMode} setQuestion={setQuestion} />
+                <div className="guessQBottomScreen">
+                    <SecretCardQuestion secretCard={secretCard}/>
+                </div>
+            </div>
         </div>
     )
 }

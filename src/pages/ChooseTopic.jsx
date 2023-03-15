@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom"
 import { useEffect, useState } from "react"
 import TopicDisplay from "../components/TopicDisplay.jsx"
+import Header from "../components/Header.jsx"
 
 const ChooseTopic = () => {
     const navigate = useNavigate()
@@ -26,21 +27,22 @@ const ChooseTopic = () => {
         navigate("/select_cards", {state} )
     }
 
-
-    
     return (
-        <div className="p-3">
-            <h1 className="font-black" >ChooseTopic</h1>
-            {
-                topics?.map((topic)=>{
-                    return(
-                        <div onClick={()=>{handleClick(topic)}} key={topic.id}>
-                            <TopicDisplay topic={topic} />
-                        </div>
-                    )
-                })
-            }
-
+        <div>
+            <Header text={"PICK A TOPIC"} />
+            <div className="PagePadder">
+                <div className="p-3 flex-column justify-center">
+                    {
+                        topics?.map((topic)=>{
+                            return(
+                                <div onClick={()=>{handleClick(topic)}} key={topic.id}>
+                                    <TopicDisplay topic={topic} />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            </div>
         </div>
     )
 }

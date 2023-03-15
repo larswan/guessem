@@ -55,12 +55,19 @@ const TurnRouter = () => {
     // Redefine phase and set cards, allCards and secretCards when new gameData is returned
     useEffect(()=>{
         if (gameData && user){
+
+            const statelessCurrentTurn = gameData.turns.find(t => t.turn === (gameData.game.currentTurn))
+            console.log(gameData)
+            
             // setting the current turn whenever a gameData is updated by a post request
-            setCurrentTurn(gameData.turns.find(t => t.turn === (gameData.game.currentTurn)))
+            setCurrentTurn(statelessCurrentTurn)
             // set the previous turn questions and answers that will be displayed
             if (gameData.game.currentTurn > 1) {
                 setPrevTurn(gameData.turns.find(t => t.turn === (gameData.game.currentTurn - 2)))
             }  
+
+            setCards(statelessCurrentTurn.flippedCards)
+            setAllCards(gameData.game.cards)
 
             if (gameData.game.p1 == user.id) {
                 setPlayer(gameData.p1)
@@ -75,9 +82,6 @@ const TurnRouter = () => {
                 setOpponentSecret(gameData.p1SecretCard)
             }
             else { console.log("error setting players on gameData useEffect: ", gameData)}
-            
-            setCards(gameData.turns[gameData.game.currentTurn].flippedCards)
-            setAllCards(gameData.game.cards)
 
             let yourTurn = (gameData.game.whosTurn == user.id)
 
@@ -112,7 +116,7 @@ const TurnRouter = () => {
                         <h1>Whos turn: {gameData.game.whosTurn}</h1>
                         <h1>Turn #: {gameData.game.currentTurn}</h1>
                     </div> 
-                    : <h1>Error: No gameData</h1> 
+                    : null
                 }
             </div>
             );

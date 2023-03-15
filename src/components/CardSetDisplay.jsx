@@ -1,7 +1,11 @@
 const CardSetDisplay = ({card}) => {
     return(
-        <div className={card.faceUp ? "border-2 border-l-blackish" : "drop-shadow-2xl"}>
-            <img  src={card.image} />
+        <div>
+            <img className="cardImage" src={card.image} />
+            <div className="cardNameDiv">
+                <h1 className="cardName">{card.name}</h1>
+            </div>
+
         </div>
     )
 }

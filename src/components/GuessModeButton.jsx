@@ -7,17 +7,18 @@ const GuessModeButton = ({guessMode, setGuessMode, setQuestion}) => {
             console.log(guessMode)
         }
         else{
-            setQuestion("Select a card!")
+            setQuestion("Press again to turn off guess mode...")
             setGuessMode(!guessMode)
             console.log(guessMode)
         }
     }
 
     return(
-        <div className="flex justify-center">
-            <div onClick={()=>{handleClick()}} className="font-black bg-lightBlackish ml-2 my-2 rounded-full w-1/4">
-                <img src="backend/app/assets/images/designAssetts/logo trans grey color.png" className="drop-shadow-xl rounded-full" />
-            </div>
+        <div className={guessMode ? "guessButtonOn" : "guessButtonOff" } >
+            <button onClick={() => { handleClick() }} className="font-black bg-red w-full py-1 px-2 text-lightYellow my-4 rounded-md" >{guessMode ? "CHOOSE A CARD!" :"GUESS A CARD"}</button>
+            {/* <div onClick={()=>{handleClick()}} className="font-black bg-lightBlackish p-2 ml-2 my-2 rounded-lg w-1/4">
+                <img src="backend/app/assets/images/designAssetts/logo trans grey color.png"  />
+            </div> */}
         </div>
     )
 }

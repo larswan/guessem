@@ -25,10 +25,13 @@ const StartGame = () => {
         const request= async()=>{
             let req = await fetch(`http://localhost:3000/friendships/${cookieUserId}`)
             let res = await req.json()
-            console.log(req.ok)
-            if (req.ok) {setFriends(res)}
-            else if (req.error){alert(req.error)}
-            console.log(friends)
+            // console.log(req.ok)
+            if (req.ok) {
+                setFriends(res);
+                console.log(res)
+            }
+            else if (req.error)
+            {alert(req.error)}
         }
         request()
     },[])
@@ -41,24 +44,30 @@ const StartGame = () => {
         })
     }
 
+    useEffect(()=>{
+
+        console.log("friends change... now its: ", friends)
+    },[friends])
+
 
     return (
         <div className="p-3">
-            <Header user={user}/>
-
-            <h1 className="font-black" >Choose a Friend:</h1>
-            {friends ? (
-                friends.map((friend) => {
-                    return (
-                        <div onClick={() => handleClick(friend)} key={friend.id}>
-                            <NameBar info={friend.name} />
-                        </div>
-                    );
-                })
-            ) : (
-                <div>You don't have any friends.. and you never will... unless you add them by e-mail.</div>
-            )}
-            <AddFriend user={user} setFriends={setFriends}/>
+            <Header user={user} text={"CHOOSE A FRIEND:"}/>
+            <div className="PagePadder">
+                {/* <h1 className="Subheader" >Choose a Friend:</h1> */}
+                {friends ? (
+                    friends.map((friend) => {
+                        return (
+                            <div onClick={() => handleClick(friend)} key={friend.id}>
+                                <NameBar info={friend.name} />
+                            </div>
+                        );
+                    })
+                ) : (
+                    <div>You don't have any friends.. and you never will... unless you add them by e-mail.</div>
+                )}
+                <AddFriend user={user} setFriends={setFriends}/>
+            </div>
         </div>
     )
 }

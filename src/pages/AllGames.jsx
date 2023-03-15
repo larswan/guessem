@@ -5,6 +5,7 @@ import LogoutButton from "../components/LogoutButton"
 import Cookies from 'js-cookie'
 import GameBar from "../components/GameBar"
 import NewGameButton from "../components/NewGameButton"
+import Header from "../components/Header"
 
 
 const AllGames = ({ userObj, setUserObj }) => {
@@ -16,9 +17,10 @@ const AllGames = ({ userObj, setUserObj }) => {
         let cookieUserId = Cookies.get('userId')
         let cookieUserName = Cookies.get('userName')
         let cookieUserImage = Cookies.get('userImage')
+        let cookieGivenName = Cookies.get('givenName')
 
         if (!cookieUserId) { navigate('/login') }
-        else { setUser({ id: cookieUserId, name: cookieUserName, image: cookieUserImage }) } 
+        else { setUser({ id: cookieUserId, name: cookieUserName, image: cookieUserImage, givenName: cookieGivenName }) } 
         
         const request = async()=>{
             let req = await fetch(`http://localhost:3000/active_games/${cookieUserId}`)
@@ -36,36 +38,43 @@ const AllGames = ({ userObj, setUserObj }) => {
             gameId: id }})}
 
     return(
-        <div className="p-3">
-            {user?<h1>signed in as {user.name}</h1>: null}
-            <h1 className="font-black" >Your Turn</h1>
+        <div>
+            <Header home={true} user={user}/>
+            <div className="PagePadder">
 
-            {
-                //render current games (only if active, send back other users name, and game id)
-                currentGames?.map((game)=>{
-                    if(game.whosTurn == user.id)
-                        return(
-                            <div key={i} onClick={() => { handleClick(game.id) }}>
-                                <GameBar game={game}/>
-                            </div>
-                        )
-                })
-            }
-            <h1 className="font-black" >Their Turn</h1>
+                <h1 className="Subheader" >Your Turn</h1>
+                <div className="pb-1.5">
+                {
+                    //render current games (only if active, send back other users name, and game id)
+                    currentGames?.map((game)=>{
+                        if(game.whosTurn == user.id)
+                            return(
+                                <div key={i} onClick={() => { handleClick(game.id) }}>
+                                    <GameBar game={game}/>
+                                </div>
+                            )
+                    })
+                }
+                </div>
+                <hr className="my-3"></hr>
+                <h1 className="Subheader" >Their Turn</h1>
 
-            {
-                //render current games (only if active, send back other users name, and game id)
-                currentGames?.map((game, i)=>{
-                    if (game.whosTurn != user.id)
-                        return(
-                            <div key={i} onClick={() => { handleClick(game.id) }}>
-                                <GameBar game={game} />
-                            </div> )
-                })
-            }
-            <NewGameButton />
-            <div className="flex justify-center fixed bottom-2 left-0 right-0">
-                <LogoutButton userObj={userObj} setUserObj={setUserObj} />
+                {
+                    //render current games (only if active, send back other users name, and game id)
+                    currentGames?.map((game, i)=>{
+                        if (game.whosTurn != user.id)
+                            return(
+                                <div key={i} onClick={() => { handleClick(game.id) }}>
+                                    <GameBar game={game} />
+                                </div> )
+                    })
+                }
+                <div className="pt-3">
+                    <NewGameButton />
+                </div>
+                <div className="flex justify-center fixed bottom-2 left-0 right-0">
+                    <LogoutButton userObj={userObj} setUserObj={setUserObj} />
+                </div>
             </div>
         </div>
     )

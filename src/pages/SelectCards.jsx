@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import CardSetDisplay from "../components/CardSetDisplay.jsx"
+import Header from "../components/Header.jsx"
 
 const SelectCards = () => {
     const navigate = useNavigate()
@@ -63,7 +64,7 @@ const SelectCards = () => {
                 let res = await req.json()
             
                 if(req.ok){
-                    console.log("selectCards res ", res)
+                    // console.log("selectCards res ", res)
                     navigate('/play',{state:{
                         gameId: res.game.id
                     }})
@@ -77,17 +78,20 @@ const SelectCards = () => {
 
     return (
         <div className="">
-            <h1 className="font-black" >Select 12 Cards:</h1>
-            <div className="flex flex-column flex-wrap space-x-1 space-y-1 justify-center">    
-                {
-                    cards?.map((card, i)=>{
-                        return(
-                            <div key={card.id} className="w-3/12" onClick={()=>{handleClick(card, i)}}>
-                                <CardSetDisplay card={card} />
-                            </div>
-                        )
-                    })
-                }
+            <Header text={"PICK 12 CARDS:"} />
+            <div className="PagePadder">
+
+                <div className="flex flex-wrap justify-center">    
+                    {
+                        cards?.map((card, i)=>{
+                            return(
+                                <div key={card.id} className={card.faceUp ? "cardContainerSelected" : "cardContainer"} onClick={()=>{handleClick(card, i)}}>
+                                    <CardSetDisplay card={card} />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
             </div>
         </div>
     )
