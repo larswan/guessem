@@ -98,4 +98,24 @@ Card.create(cardSetId: cardset3.id, name: 'Ronald Reagan', image: 'backend/app/a
 Card.create(cardSetId: cardset3.id, name: 'Theodore Roosevelt', image: 'backend/app/assets/images/presidents/Theodore Roosevelt Cropped.png')
 Card.create(cardSetId: cardset3.id, name: 'Thomas Jefferson', image: 'backend/app/assets/images/presidents/Thomas Jefferson Cropped.png')
 
+cardset4= CardSet.create(topicName: "Musicians")
+Card.create(cardSetId: cardset4.id, name: '21 Savage', image: 'backend/app/assets/images/musicians/21 Savage Cropped.png')
+Card.create(cardSetId: cardset4.id, name: 'Ariana Grande', image: 'backend/app/assets/images/musicians/Ariana Grande Cropped.jpg')
+Card.create(cardSetId: cardset4.id, name: 'Bad Bunny', image: 'backend/app/assets/images/musicians/Bad Bunny.jpg')
+Card.create(cardSetId: cardset4.id, name: 'Billie Eilish', image: 'backend/app/assets/images/musicians/Billie Eilish.png')
+Card.create(cardSetId: cardset4.id, name: 'Cardi B', image: 'backend/app/assets/images/musicians/Cardi B.jpg')
+Card.create(cardSetId: cardset4.id, name: 'Doja Cat', image: 'backend/app/assets/images/musicians/Doja Cat Cropped.jpg')
+Card.create(cardSetId: cardset4.id, name: 'Drake', image: 'backend/app/assets/images/musicians/Drake Cropped.png')
+Card.create(cardSetId: cardset4.id, name: 'Dua Lipa', image: 'backend/app/assets/images/musicians/Dua Lipa.jpg')
+Card.create(cardSetId: cardset4.id, name: 'Ed Sheeran', image: 'backend/app/assets/images/musicians/Ed Sheeran.jpg')
+Card.create(cardSetId: cardset4.id, name: 'Jay-Z', image: 'backend/app/assets/images/musicians/Jay Z Cropped.png')
+Card.create(cardSetId: cardset4.id, name: 'Justin Bieber', image: 'backend/app/assets/images/musicians/Justin Bieber.jpg')
+Card.create(cardSetId: cardset4.id, name: 'Nicki Minaj', image: 'backend/app/assets/images/musicians/Nicki Minaj Cropped.png')
+Card.create(cardSetId: cardset4.id, name: 'Post Malone', image: 'backend/app/assets/images/musicians/Post Malone Cropped.png')
+Card.create(cardSetId: cardset4.id, name: 'Rihanna Cropped', image: 'backend/app/assets/images/musicians/Rihanna Cropped.jpg')
+Card.create(cardSetId: cardset4.id, name: 'Taylor Swift', image: 'backend/app/assets/images/musicians/Taylor Swift Cropped.png')
+Card.create(cardSetId: cardset4.id, name: 'Tyler, The Creator', image: 'backend/app/assets/images/musicians/Tyler The Creator Cropped.png')
+# Card.create(cardSetId: cardset4.id, name: '', image: '')
+
+
 puts '🫃 Done seeding!'
