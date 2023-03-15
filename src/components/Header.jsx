@@ -2,7 +2,7 @@ import BackButton from "./BackButton"
 import { useNavigate } from "react-router-dom"
 
 const Header = ({user, text, home}) => {
-    console.log(user)
+    // console.log(user)
     
     return(
         <div id='header' className='flex h-10 w-full items-center relative bg-blackish p-2'>   

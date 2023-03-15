@@ -25,10 +25,13 @@ const StartGame = () => {
         const request= async()=>{
             let req = await fetch(`http://localhost:3000/friendships/${cookieUserId}`)
             let res = await req.json()
-            console.log(req.ok)
-            if (req.ok) {setFriends(res)}
-            else if (req.error){alert(req.error)}
-            console.log(friends)
+            // console.log(req.ok)
+            if (req.ok) {
+                setFriends(res);
+                console.log(res)
+            }
+            else if (req.error)
+            {alert(req.error)}
         }
         request()
     },[])
@@ -40,6 +43,11 @@ const StartGame = () => {
         }
         })
     }
+
+    useEffect(()=>{
+
+        console.log("friends change... now its: ", friends)
+    },[friends])
 
 
     return (
