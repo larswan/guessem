@@ -45,7 +45,6 @@ const StartGame = () => {
     }
 
     useEffect(()=>{
-
         console.log("friends change... now its: ", friends)
     },[friends])
 
